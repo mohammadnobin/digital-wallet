@@ -88,8 +88,8 @@ export default function Navbar() {
         <div className="absolute top-16 left-0 w-full bg-white shadow-md md:hidden flex flex-col gap-4 p-4 text-gray-600">
           <Link href="/transfer" className="hover:text-purple-600">Transfer</Link>
           <Link href="/dashboard" className="hover:text-purple-600 ">Dashboard</Link>
-          <Link href="/cards" className="hover:text-purple-600">Card</Link>
-          <Link href="/bills" className="hover:text-purple-600">Bill</Link>
+          <Link href="/cards" className="hover:text-purple-600">Cards</Link>
+          <Link href="/bills" className="hover:text-purple-600">Bills</Link>
           <Link href="/history" className="hover:text-purple-600">History</Link>
         </div>
       )}
