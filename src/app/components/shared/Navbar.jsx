@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Bell, LogOut, HelpCircle, Settings, Shield, Wallet, Menu, X, Wallet2Icon, WalletCards } from "lucide-react";
+import { Bell, LogOut, HelpCircle, Settings, Shield, Wallet, Menu, X, Wallet2Icon, WalletCards, ScanLineIcon } from "lucide-react";
 
 export default function Navbar() {
   const [notificationCount] = useState(3);
@@ -31,6 +31,10 @@ export default function Navbar() {
         {/* Notifications */}
         <div className="relative cursor-pointer">
           <Bell className="w-6 h-6 text-gray-700" />
+        </div>
+
+        <div className="relative cursor-pointer">
+          <ScanLineIcon className="w-6 h-6 text-gray-700" />
         </div>
 
         {/* User Dropdown */}
