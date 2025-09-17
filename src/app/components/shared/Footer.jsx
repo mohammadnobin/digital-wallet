@@ -5,6 +5,7 @@ const Footer = () => {
         <div>
             hello this is footer component
             <h1>Added By nila</h1>
+            <h1>hello</h1>
         </div>
     );
 };
