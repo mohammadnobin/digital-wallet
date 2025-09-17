@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Bell, LogOut, HelpCircle, Settings, Shield, Wallet, Menu, X, Wallet2Icon, WalletCards, ScanLineIcon } from "lucide-react";
 
 export default function Navbar() {
-  const [notificationCount] = useState(3);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -74,6 +73,7 @@ export default function Navbar() {
           )}
         </div>
 
+        {/* Mobile Menu Button */}
         {/* Mobile Menu Button */}
         <button
           className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
