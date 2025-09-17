@@ -8,6 +8,7 @@ const Hero = () => {
    <div>Hero</div>;
    <div>Hero</div>;
   </>
+  return <div>Hero</div>;
 };
 
 export default Hero;
