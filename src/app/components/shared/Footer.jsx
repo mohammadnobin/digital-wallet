@@ -110,7 +110,7 @@ export default function FooterSection() {
                   <input
                     type="email"
                     placeholder="Enter your email address"
-                    className="w-full px-6 py-4 bg-white bg-opacity-10 backdrop-blur-sm border border-purple-400 border-opacity-30 rounded-xl text-black placeholder-purple-200 focus:outline-none focus:border-purple-300 focus:bg-opacity-20 transition-all duration-300"
+                    className="w-full px-6 py-4 bg-white bg-opacity-10 backdrop-blur-sm border border-purple-400 border-opacity-30 rounded-xl text-black placeholder-purple-600 focus:outline-none focus:border-purple-300 focus:bg-opacity-20 transition-all duration-300"
                   />
                 </div>
                 <button className="bg-purple-600 hover:bg-purple-700 px-8 py-4 rounded-xl font-semibold transition-colors duration-300 flex items-center">
