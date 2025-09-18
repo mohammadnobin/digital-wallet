@@ -18,7 +18,6 @@ export default function Navbar() {
         <span className="text-xl font-bold text-purple-700">DigitalWallet</span>
       </div>
         </Link>
-
       {/* Desktop Links */}
       <div className="hidden md:flex gap-6 text-gray-700 font-medium">
         <Link href="/dashboard" className="hover:text-purple-600">Dashboard</Link>
