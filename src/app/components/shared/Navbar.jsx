@@ -11,11 +11,13 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-white shadow-sm px-6 py-3 flex justify-between items-center relative">
       {/* Logo */}
+      {/* its for gone home page */}
+        <Link href='/' >
       <div className="flex items-center gap-2">
         <WalletCards className="w-7 h-7 text-purple-600" />
         <span className="text-xl font-bold text-purple-700">DigitalWallet</span>
       </div>
-
+        </Link>
       {/* Desktop Links */}
       <div className="hidden md:flex gap-6 text-gray-700 font-medium">
         <Link href="/dashboard" className="hover:text-purple-600">Dashboard</Link>

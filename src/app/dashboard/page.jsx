@@ -4,6 +4,7 @@ export default function page(props) {
     return (
         <div>
             this is Dashboard
+            
         </div>
     );
 }
