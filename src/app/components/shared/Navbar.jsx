@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Bell, LogOut, HelpCircle, Settings, Shield, Wallet, Menu, X, Wallet2Icon, WalletCards, ScanLineIcon } from "lucide-react";
+import { Bell, LogOut, HelpCircle, Settings, Shield, Wallet, Menu, X, WalletCards, ScanLineIcon } from "lucide-react";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
