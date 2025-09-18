@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Shield, Zap, CreditCard, Smartphone, TrendingUp } from 'lucide-react';
+import Link from 'next/link';
 
 export default function HeroSection() {
   return (
@@ -29,7 +30,7 @@ export default function HeroSection() {
 
       <div className="relative z-10 container mx-auto px-6 py-20">
         <div className="flex flex-col lg:flex-row items-center justify-between min-h-screen">
-          
+
           {/* Left Content */}
           <div className="flex-1 text-center lg:text-left lg:pr-12 mb-12 lg:mb-0">
             <div className="inline-flex items-center px-4 py-2 bg-purple-600 bg-opacity-20 backdrop-blur-sm rounded-full text-purple-100 text-sm font-medium mb-6 border border-purple-400 border-opacity-30">
@@ -45,15 +46,17 @@ export default function HeroSection() {
             </h1>
 
             <p className="text-xl text-purple-100 mb-8 max-w-2xl leading-relaxed">
-              Experience the future of digital payments with our secure, lightning-fast wallet. 
+              Experience the future of digital payments with our secure, lightning-fast wallet.
               Send, receive, and manage your money with unprecedented ease and security.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <button className="group bg-white text-purple-700 px-8 py-4 rounded-lg font-semibold hover:bg-purple-50 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center">
-                Get Started Free
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
+              <Link href="/login">
+                <button className="group bg-white text-purple-700 px-8 py-4 rounded-lg font-semibold hover:bg-purple-50 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center">
+                  Sign In
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </button>
+              </Link>
               <button className="border-2 border-purple-300 text-purple-100 px-8 py-4 rounded-lg font-semibold hover:bg-purple-600 hover:bg-opacity-20 backdrop-blur-sm transition-all duration-300 transform hover:scale-105">
                 Watch Demo
               </button>
@@ -82,14 +85,14 @@ export default function HeroSection() {
               {/* Phone Frame */}
               <div className="relative w-80 h-160 bg-gradient-to-b from-gray-900 to-gray-800 rounded-3xl p-3 shadow-2xl transform rotate-12 hover:rotate-6 transition-transform duration-500">
                 <div className="w-full h-full bg-gradient-to-b from-purple-600 to-purple-800 rounded-2xl overflow-hidden relative">
-                  
+
                   {/* Screen Content */}
                   <div className="p-6 text-white">
                     <div className="flex justify-between items-center mb-8">
                       <div className="text-lg font-semibold">PurpleWallet</div>
                       <div className="w-8 h-8 bg-purple-400 rounded-full"></div>
                     </div>
-                    
+
                     {/* Balance Card */}
                     <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-6 mb-6 shadow-xl">
                       <div className="text-purple-100 text-sm mb-2">Total Balance</div>
@@ -151,7 +154,7 @@ export default function HeroSection() {
       {/* Bottom Wave */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,100 C240,150 480,50 720,100 C960,150 1200,50 1440,100 L1440,200 L0,200 Z" fill="white" fillOpacity="0.1"/>
+          <path d="M0,100 C240,150 480,50 720,100 C960,150 1200,50 1440,100 L1440,200 L0,200 Z" fill="white" fillOpacity="0.1" />
         </svg>
       </div>
     </div>

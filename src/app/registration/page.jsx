@@ -13,6 +13,7 @@ import {
   ArrowRight,
   CheckCircle,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -249,13 +250,12 @@ export default function RegisterPage() {
                       Password strength:
                     </span>
                     <span
-                      className={`text-xs font-medium ${
-                        passwordStrength <= 2
+                      className={`text-xs font-medium ${passwordStrength <= 2
                           ? "text-red-600"
                           : passwordStrength <= 3
-                          ? "text-yellow-600"
-                          : "text-green-600"
-                      }`}
+                            ? "text-yellow-600"
+                            : "text-green-600"
+                        }`}
                     >
                       {getPasswordStrengthText()}
                     </span>
@@ -392,15 +392,13 @@ export default function RegisterPage() {
             </div>
 
             {/* Sign In Link */}
-            <button
-              onClick={() => {
-                // Navigate to login page
-                console.log("Navigate to login page");
-              }}
-              className="w-full flex justify-center py-3 px-4 border-2 border-gray-200 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200 cursor-pointer"
-            >
-              Sign In Instead
-            </button>
+            <Link href="/login">
+              <button
+                className="w-full flex justify-center py-3 px-4 border-2 border-gray-200 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200 cursor-pointer"
+              >
+                Sign In Instead
+              </button>
+            </Link>
           </div>
         </div>
 
