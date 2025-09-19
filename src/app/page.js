@@ -1,5 +1,6 @@
 import FeaturesSection from "./components/Home/Features";import HeroSection from "./components/Home/Hero";
 import SecurityTrustSection from "./components/Home/SecurityTrust";
+import TestimonialsSection from "./components/Home/Testimonials";
 import UserBenefitsSection from "./components/Home/UserBenefits";
 import HowItWorksSection from "./components/Home/worksSection";
 
@@ -11,6 +12,7 @@ export default function Home() {
       <HowItWorksSection />
       <SecurityTrustSection />
       <UserBenefitsSection />
+      <TestimonialsSection />
      </>
   );
 }
