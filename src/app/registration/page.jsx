@@ -94,9 +94,11 @@ export default function RegisterPage() {
         {/* Header */}
         <div className="text-center">
           <div className="flex justify-center mb-6">
+            <Link href='/'>
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-2xl shadow-lg">
               <Wallet className="h-10 w-10 text-white" />
             </div>
+            </Link>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Create Account
