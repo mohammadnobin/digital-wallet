@@ -320,14 +320,6 @@ export default function HowItWorksSection() {
             <div className="text-purple-200">Customer Support</div>
           </div>
         </div>
-
-        {/* CTA */}
-        <div className="text-center mt-12">
-          <button className="bg-white text-purple-700 px-8 py-4 rounded-lg font-semibold hover:bg-purple-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl inline-flex items-center">
-            Start Your Journey Today
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </button>
-        </div>
       </div>
     </section>
   );
