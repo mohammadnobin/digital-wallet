@@ -224,7 +224,7 @@ export default function UserBenefitsSection() {
 
         {/* CTA Button (violet/reacty) */}
         <div className="text-center mt-6">
-          <Link href="#faq" aria-label="Go to FAQ" className="inline-flex items-center gap-3 bg-gradient-to-r from-violet-600 to-violet-500 hover:from-violet-700 hover:to-violet-600 text-white px-8 py-3 rounded-2xl font-semibold shadow-2xl transform transition-all duration-200 hover:-translate-y-1">
+          <Link href="/faq" aria-label="Go to FAQ" className="inline-flex items-center gap-3 bg-gradient-to-r from-violet-600 to-violet-500 hover:from-violet-700 hover:to-violet-600 text-white px-8 py-3 rounded-2xl font-semibold shadow-2xl transform transition-all duration-200 hover:-translate-y-1">
             <span>See our FAQ</span>
             <ArrowRight className="w-5 h-5" />
           </Link>
