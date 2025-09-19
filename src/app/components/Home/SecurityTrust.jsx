@@ -35,13 +35,6 @@ export default function SecurityTrustSection() {
       color: "from-purple-600 to-purple-800"
     },
     {
-      icon: <Fingerprint className="w-8 h-8" />,
-      title: "Biometric Authentication",
-      description: "Fingerprint, Face ID, and voice recognition for secure access",
-      detail: "Multi-factor authentication with 99.99% accuracy rate",
-      color: "from-purple-700 to-indigo-700"
-    },
-    {
       icon: <Eye className="w-8 h-8" />,
       title: "24/7 Fraud Monitoring",
       description: "AI-powered systems detect suspicious activity in real-time",
@@ -57,28 +50,6 @@ export default function SecurityTrustSection() {
     }
   ];
 
-  const trustIndicators = [
-    {
-      icon: <Award className="w-6 h-6" />,
-      title: "Bank-Grade Security",
-      value: "SOC 2 Certified"
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      title: "Trusted by Millions",
-      value: "5M+ Users"
-    },
-    {
-      icon: <Globe className="w-6 h-6" />,
-      title: "Global Compliance",
-      value: "50+ Countries"
-    },
-    {
-      icon: <TrendingUp className="w-6 h-6" />,
-      title: "Success Rate",
-      value: "99.97%"
-    }
-  ];
 
   const certifications = [
     { name: "PCI DSS", level: "Level 1", color: "bg-green-500" },
@@ -328,60 +299,9 @@ export default function SecurityTrustSection() {
           </div>
         </div>
 
-        {/* Trust Indicators */}
-        <div className="grid md:grid-cols-4 gap-8 mb-16">
-          {trustIndicators.map((indicator, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-center border border-gray-100 hover:border-purple-200"
-            >
-              <div className="inline-flex p-3 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-xl text-purple-700 mb-4">
-                {indicator.icon}
-              </div>
-              <div className="text-2xl font-bold text-gray-900 mb-2">{indicator.value}</div>
-              <div className="text-gray-600">{indicator.title}</div>
-            </div>
-          ))}
-        </div>
+       
 
-        {/* Compliance Badges */}
-        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
-            Certified & Compliant
-          </h3>
-          <div className="grid md:grid-cols-4 gap-6">
-            {certifications.map((cert, index) => (
-              <div
-                key={index}
-                className="bg-gray-50 p-6 rounded-xl text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-              >
-                <div className={`w-12 h-12 ${cert.color} rounded-full flex items-center justify-center text-white font-bold text-lg mx-auto mb-4`}>
-                  <CheckCircle className="w-6 h-6" />
-                </div>
-                <div className="font-bold text-gray-900">{cert.name}</div>
-                <div className="text-sm text-gray-600">{cert.level}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-12">
-          <div className="bg-gradient-to-r from-purple-700 to-indigo-700 rounded-2xl p-8 text-white">
-            <h3 className="text-2xl font-bold mb-4">Your Security is Our Priority</h3>
-            <p className="text-purple-100 mb-6 max-w-2xl mx-auto">
-              Join millions who trust us with their financial security. Experience peace of mind with every transaction.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-purple-700 px-8 py-4 rounded-lg font-semibold hover:bg-purple-50 transition-all duration-300 transform hover:scale-105">
-                Learn More About Security
-              </button>
-              <button className="border-2 border-purple-300 text-purple-100 px-8 py-4 rounded-lg font-semibold hover:bg-purple-600 hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105">
-                View Security Report
-              </button>
-            </div>
-          </div>
-        </div>
+       
       </div>
     </section>
   );
