@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import FooterSection from "./components/shared/Footer";
-import { Wallet } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
