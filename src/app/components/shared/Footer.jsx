@@ -99,7 +99,7 @@ export default function FooterSection() {
             <div>
               <h3 className="text-3xl font-bold mb-4">
                 Stay Updated with 
-                <span className="text-purple-300"> PurpleWallet</span>
+                <span className="text-purple-300"> DigitalWallet</span>
               </h3>
               <p className="text-purple-100 text-lg mb-6">
                 Get the latest updates, tips, and exclusive offers delivered to your inbox. 
@@ -143,7 +143,7 @@ export default function FooterSection() {
                 <div className="bg-purple-600 p-2 rounded-xl mr-3">
                   <Wallet className="w-8 h-8 text-white" />
                 </div>
-                <span className="text-2xl font-bold">PurpleWallet</span>
+                <span className="text-2xl font-bold">DigitalWallet</span>
               </div>
               
               <p className="text-purple-100 mb-6 leading-relaxed">
@@ -155,7 +155,7 @@ export default function FooterSection() {
               <div className="space-y-3 mb-6">
                 <div className="flex items-center text-purple-200">
                   <Mail className="w-5 h-5 mr-3" />
-                  <span>support@purplewallet.com</span>
+                  <span>digitalwallet666@gmail.com</span>
                 </div>
                 <div className="flex items-center text-purple-200">
                   <Phone className="w-5 h-5 mr-3" />
@@ -197,7 +197,7 @@ export default function FooterSection() {
                   <li key={index}>
                     <a
                       href={link.href}
-                      className="text-purple-100 hover:text-white transition-colors duration-300 hover:pl-2 transform transition-all"
+                      className="text-purple-100 hover:text-white duration-300 hover:pl-2 transform transition-all"
                     >
                       {link.name}
                     </a>
@@ -214,7 +214,7 @@ export default function FooterSection() {
                   <li key={index}>
                     <a
                       href={link.href}
-                      className="text-purple-100 hover:text-white transition-colors duration-300 hover:pl-2 transform transition-all"
+                      className="text-purple-100 hover:text-white  duration-300 hover:pl-2 transform transition-all"
                     >
                       {link.name}
                     </a>
@@ -231,7 +231,7 @@ export default function FooterSection() {
                   <li key={index}>
                     <a
                       href={link.href}
-                      className="text-purple-100 hover:text-white transition-colors duration-300 hover:pl-2 transform transition-all"
+                      className="text-purple-100 hover:text-white duration-300 hover:pl-2 transform transition-all"
                     >
                       {link.name}
                     </a>
@@ -248,7 +248,7 @@ export default function FooterSection() {
                   <li key={index}>
                     <a
                       href={link.href}
-                      className="text-purple-100 hover:text-white transition-colors duration-300 hover:pl-2 transform transition-all"
+                      className="text-purple-100 hover:text-white duration-300 hover:pl-2 transform transition-all"
                     >
                       {link.name}
                     </a>
