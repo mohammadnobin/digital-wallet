@@ -1,7 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function TestimonialsSection() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -45,6 +46,14 @@ export default function TestimonialsSection() {
     }
   ];
 
+  // Auto slide effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
+
   const nextTestimonial = () => {
     setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
   };
@@ -53,23 +62,26 @@ export default function TestimonialsSection() {
     setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  const renderStars = (rating) => {
-    return [...Array(5)].map((_, index) => (
-      <Star
-        key={index}
-        className={`w-5 h-5 ${
-          index < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-        }`}
-      />
-    ));
-  };
+  const StarRating = ({ rating }) => (
+    <div className="flex justify-center mb-4">
+      {[...Array(5)].map((_, index) => (
+        <Star
+          key={index}
+          className={`w-5 h-5 ${
+            index < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+          }`}
+        />
+      ))}
+    </div>
+  );
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-6">
-        {/* Simple Header */}
+    <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3">
             What Our Users Say
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -77,38 +89,38 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        {/* Main Testimonial Display */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <div className="bg-white rounded-2xl p-8 shadow-lg relative">
-            {/* Quote Icon */}
-            <div className="absolute top-6 left-6">
-              <Quote className="w-8 h-8 text-purple-200" />
-            </div>
-
-            <div className="pt-4">
-              {/* Rating */}
-              <div className="flex justify-center mb-6">
-                {renderStars(testimonials[activeTestimonial].rating)}
+        {/* Testimonial */}
+        <div className="max-w-4xl mx-auto relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={testimonials[activeTestimonial].id}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -40 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-2xl p-8 shadow-lg"
+            >
+              <div className="flex justify-center mb-2">
+                <Quote className="w-10 h-10 text-purple-200" />
               </div>
 
-              {/* Testimonial Text */}
-              <blockquote className="text-xl text-gray-700 text-center mb-6 leading-relaxed">
+              <StarRating rating={testimonials[activeTestimonial].rating} />
+
+              <blockquote className="text-lg sm:text-xl text-gray-700 text-center mb-6 leading-relaxed">
                 "{testimonials[activeTestimonial].text}"
               </blockquote>
 
-              {/* Highlight */}
               <div className="text-center mb-6">
                 <span className="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium">
                   {testimonials[activeTestimonial].highlight}
                 </span>
               </div>
 
-              {/* Author Info */}
-              <div className="flex items-center justify-center">
+              <div className="flex flex-col sm:flex-row items-center justify-center text-center sm:text-left">
                 <img
                   src={testimonials[activeTestimonial].avatar}
                   alt={testimonials[activeTestimonial].name}
-                  className="w-12 h-12 rounded-full object-cover mr-4"
+                  className="w-14 h-14 rounded-full object-cover mr-0 sm:mr-4 mb-3 sm:mb-0"
                 />
                 <div>
                   <div className="font-semibold text-gray-900">
@@ -119,50 +131,49 @@ export default function TestimonialsSection() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
+          </AnimatePresence>
 
-            {/* Navigation Arrows */}
-            <button
-              onClick={prevTestimonial}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors duration-200"
-            >
-              <ChevronLeft className="w-5 h-5 text-gray-600" />
-            </button>
-            <button
-              onClick={nextTestimonial}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors duration-200"
-            >
-              <ChevronRight className="w-5 h-5 text-gray-600" />
-            </button>
-          </div>
+          {/* Navigation */}
+          <button
+            aria-label="Previous testimonial"
+            onClick={prevTestimonial}
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md rounded-full p-3 hover:bg-gray-100 transition"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-600" />
+          </button>
+          <button
+            aria-label="Next testimonial"
+            onClick={nextTestimonial}
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white shadow-md rounded-full p-3 hover:bg-gray-100 transition"
+          >
+            <ChevronRight className="w-5 h-5 text-gray-600" />
+          </button>
         </div>
 
-        {/* Testimonial Thumbnails */}
-        <div className="flex justify-center space-x-4 mb-12">
-          {testimonials.map((testimonial, index) => (
+        {/* Thumbnails */}
+        <div className="flex justify-center flex-wrap gap-4 mt-10">
+          {testimonials.map((t, index) => (
             <button
-              key={testimonial.id}
+              key={t.id}
               onClick={() => setActiveTestimonial(index)}
               className={`relative transition-all duration-200 ${
                 index === activeTestimonial
-                  ? 'transform scale-110'
-                  : 'opacity-60 hover:opacity-80'
+                  ? 'scale-110 ring-4 ring-purple-400 ring-opacity-50 rounded-full'
+                  : 'opacity-60 hover:opacity-90'
               }`}
             >
               <img
-                src={testimonial.avatar}
-                alt={testimonial.name}
-                className="w-16 h-16 rounded-full object-cover"
+                src={t.avatar}
+                alt={t.name}
+                className="w-14 h-14 rounded-full object-cover"
               />
-              {index === activeTestimonial && (
-                <div className="absolute inset-0 ring-4 ring-purple-400 ring-opacity-50 rounded-full"></div>
-              )}
             </button>
           ))}
         </div>
 
-        {/* Simple Stats */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-2xl mx-auto">
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto mt-12">
           <div className="text-center">
             <div className="text-3xl font-bold text-gray-900 mb-2">4.9/5</div>
             <div className="text-gray-600">Average Rating</div>
@@ -177,15 +188,15 @@ export default function TestimonialsSection() {
           </div>
         </div>
 
-        {/* Simple CTA */}
+        {/* CTA */}
         <div className="text-center mt-12">
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-4">
             Ready to join thousands of satisfied users?
           </p>
           <Link href="/login">
-            <button className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-200">
-            Start Free Today
-          </button>
+            <button className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+              Start Free Today
+            </button>
           </Link>
         </div>
       </div>
