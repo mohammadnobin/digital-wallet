@@ -176,65 +176,6 @@ export default function UserBenefitsSection() {
             ))}
           </div>
         </div>
-
-        {/* Stats Section with Creative Layout */}
-        <div className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl p-8 md:p-12 text-white mb-16 relative overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-4 left-4 w-8 h-8 border-2 border-white rounded-full"></div>
-            <div className="absolute top-8 right-12 w-6 h-6 border-2 border-white rounded-full"></div>
-            <div className="absolute bottom-8 left-16 w-10 h-10 border-2 border-white rounded-full"></div>
-            <div className="absolute bottom-4 right-4 w-12 h-12 border-2 border-white rounded-full"></div>
-          </div>
-
-          <div className="relative z-10">
-            <div className="text-center mb-8">
-              <h3 className="text-3xl font-bold mb-2">Trusted by Millions</h3>
-              <p className="text-purple-100">Numbers that speak for themselves</p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div className="group">
-                <div className="text-4xl md:text-5xl font-black mb-2 group-hover:scale-110 transition-transform duration-300">5M+</div>
-                <div className="text-purple-200">Happy Users</div>
-              </div>
-              <div className="group">
-                <div className="text-4xl md:text-5xl font-black mb-2 group-hover:scale-110 transition-transform duration-300">99.9%</div>
-                <div className="text-purple-200">Uptime</div>
-              </div>
-              <div className="group">
-                <div className="text-4xl md:text-5xl font-black mb-2 group-hover:scale-110 transition-transform duration-300">$2B+</div>
-                <div className="text-purple-200">Processed</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Simple but Beautiful CTA */}
-        <div className="text-center">
-          <div className="inline-block bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
-            <div className="flex items-center justify-center mb-4">
-              <div className="flex -space-x-2">
-                <div className="w-12 h-12 bg-purple-400 rounded-full border-4 border-white"></div>
-                <div className="w-12 h-12 bg-blue-400 rounded-full border-4 border-white"></div>
-                <div className="w-12 h-12 bg-green-400 rounded-full border-4 border-white"></div>
-                <div className="w-12 h-12 bg-red-400 rounded-full border-4 border-white flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">5M+</span>
-                </div>
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              Join the Revolution
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Start experiencing these benefits today
-            </p>
-            <button className="bg-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-purple-700 transition-colors duration-300 inline-flex items-center shadow-lg hover:shadow-xl">
-              Get Started Free
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </button>
-          </div>
-        </div>
       </div>
     </section>
   );
