@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import Link from 'next/link';
 
 export default function TestimonialsSection() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -181,9 +182,11 @@ export default function TestimonialsSection() {
           <p className="text-gray-600 mb-6">
             Ready to join thousands of satisfied users?
           </p>
-          <button className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-200">
+          <Link href="/login">
+            <button className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-200">
             Start Free Today
           </button>
+          </Link>
         </div>
       </div>
     </section>
