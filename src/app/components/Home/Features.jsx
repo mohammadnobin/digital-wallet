@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { 
   Shield, 
   Zap, 
@@ -16,6 +16,33 @@ import {
   Star,
   Sparkles
 } from 'lucide-react';
+
+const AdditionalFeature = memo(({ feature, index }) => {
+  return (
+    <div
+      className="group bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 border border-gray-100 hover:border-purple-200 relative overflow-hidden"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <div className={`absolute inset-0 bg-gradient-to-br ${feature.accent} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+      <div 
+        className={`inline-flex p-4 bg-gradient-to-br ${feature.accent} rounded-2xl text-white mb-6 shadow-lg transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 animate-float`}
+        style={{ animationDelay: `${index * 0.2}s` }}
+      >
+        {feature.icon}
+      </div>
+      <h4 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-purple-700 transition-colors duration-300">
+        {feature.title}
+      </h4>
+      <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+        {feature.description}
+      </p>
+      <div className={`w-0 h-1 bg-gradient-to-r ${feature.accent} rounded-full mt-6 group-hover:w-full transition-all duration-700 shadow-sm`}></div>
+      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <Sparkles className="w-4 h-4 text-purple-400 animate-pulse" />
+      </div>
+    </div>
+  );
+});
 
 export default function FeaturesSection() {
   const [activeFeature, setActiveFeature] = useState(0);
@@ -254,7 +281,7 @@ export default function FeaturesSection() {
                 <div className="absolute inset-4 bg-gradient-to-br from-white/10 to-transparent rounded-full"></div>
               </div>
 
-              {/* CHANGED: Slower orbiting elements with different speeds and sizes */}
+              {/* Slower orbiting elements with different speeds and sizes */}
               <div className="absolute inset-0 animate-spin" style={{ animationDuration: '20s' }}>
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-6">
                   <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full opacity-70 shadow-lg"></div>
@@ -270,7 +297,7 @@ export default function FeaturesSection() {
                 </div>
               </div>
 
-              {/* ADDED: Counter-rotating inner orbit */}
+              {/* Counter-rotating inner orbit */}
               <div className="absolute inset-8 animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse' }}>
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-3">
                   <div className="w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full opacity-60 shadow-md"></div>
@@ -280,7 +307,7 @@ export default function FeaturesSection() {
                 </div>
               </div>
 
-              {/* ADDED: Outer decorative ring */}
+              {/* Outer decorative ring */}
               <div className="absolute -inset-4 border-2 border-purple-300/30 rounded-full animate-pulse"></div>
               <div className="absolute -inset-8 border border-indigo-200/20 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
             </div>
@@ -296,32 +323,7 @@ export default function FeaturesSection() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {additionalFeatures.map((feature, index) => (
-              <div
-                key={index}
-                className="group bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 border border-gray-100 hover:border-purple-200 relative overflow-hidden"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {/* Background gradient on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.accent} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-                
-                <div className={`inline-flex p-4 bg-gradient-to-br ${feature.accent} rounded-2xl text-white mb-6 shadow-lg transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}>
-                  {feature.icon}
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-purple-700 transition-colors duration-300">
-                  {feature.title}
-                </h4>
-                <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
-                  {feature.description}
-                </p>
-                
-                {/* Enhanced hover effect indicator */}
-                <div className={`w-0 h-1 bg-gradient-to-r ${feature.accent} rounded-full mt-6 group-hover:w-full transition-all duration-700 shadow-sm`}></div>
-                
-                {/* Sparkle effect on hover */}
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <Sparkles className="w-4 h-4 text-purple-400 animate-pulse" />
-                </div>
-              </div>
+              <AdditionalFeature key={index} feature={feature} index={index} />
             ))}
           </div>
         </div>
@@ -329,11 +331,16 @@ export default function FeaturesSection() {
 
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(180deg); }
+          0%, 100% { 
+            transform: translateY(0) rotate(0deg); 
+          }
+          50% { 
+            transform: translateY(-8px) rotate(2deg); 
+          }
         }
         .animate-float {
-          animation: float 6s ease-in-out infinite;
+          animation: float 4s ease-in-out infinite;
+          animation-delay: var(--animation-delay);
         }
       `}</style>
     </section>
