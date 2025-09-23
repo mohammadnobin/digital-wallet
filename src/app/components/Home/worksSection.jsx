@@ -5,13 +5,10 @@ import {
   CreditCard, 
   Send, 
   CheckCircle,
-  ArrowRight,
-  Smartphone,
-  Shield,
   Zap,
   Download,
   Link,
-  ArrowDown
+  Shield
 } from 'lucide-react';
 
 export default function HowItWorksSection() {
@@ -25,7 +22,7 @@ export default function HowItWorksSection() {
       title: "Download & Sign Up",
       description: "Get the app from App Store or Google Play and create your account in under 2 minutes",
       details: "Verify your identity with just your phone number and email. No lengthy paperwork required.",
-      color: "from-purple-600 to-purple-800",
+      color: "from-fuchsia-600 to-purple-700",
       image: "signup"
     },
     {
@@ -34,7 +31,7 @@ export default function HowItWorksSection() {
       title: "Connect Your Accounts",
       description: "Link your bank accounts, cards, or crypto wallets securely with bank-level encryption",
       details: "Support for 100+ banks and financial institutions. Your data is protected with 256-bit encryption.",
-      color: "from-purple-700 to-indigo-700",
+      color: "from-indigo-600 to-blue-700",
       image: "connect"
     },
     {
@@ -43,7 +40,7 @@ export default function HowItWorksSection() {
       title: "Start Transacting",
       description: "Send money, pay bills, or make purchases instantly with just a few taps",
       details: "Lightning-fast transfers worldwide. Track all transactions in real-time with smart notifications.",
-      color: "from-indigo-600 to-purple-600",
+      color: "from-blue-600 to-violet-600",
       image: "transact"
     },
     {
@@ -52,7 +49,7 @@ export default function HowItWorksSection() {
       title: "Enjoy Peace of Mind",
       description: "Monitor your finances with AI-powered insights and industry-leading security",
       details: "24/7 fraud monitoring, spending analytics, and instant alerts keep you in control.",
-      color: "from-purple-800 to-indigo-800",
+      color: "from-purple-700 to-indigo-800",
       image: "security"
     }
   ];
@@ -60,7 +57,7 @@ export default function HowItWorksSection() {
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % steps.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -73,7 +70,7 @@ export default function HowItWorksSection() {
       signup: (
         <div className="p-4 text-white">
           <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-purple-400 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <div className="w-16 h-16 bg-fuchsia-400 rounded-full mx-auto mb-4 flex items-center justify-center">
               <UserPlus className="w-8 h-8" />
             </div>
             <h3 className="text-lg font-bold">Create Account</h3>
@@ -87,7 +84,7 @@ export default function HowItWorksSection() {
               <div className="text-xs text-purple-200 mb-1">Email</div>
               <div className="text-sm">user@email.com</div>
             </div>
-            <button className="w-full bg-white text-purple-700 py-3 rounded-lg font-semibold">
+            <button className="w-full bg-white text-purple-700 py-3 rounded-lg font-semibold hover:bg-purple-200 transition">
               Get Started
             </button>
           </div>
@@ -96,7 +93,7 @@ export default function HowItWorksSection() {
       connect: (
         <div className="p-4 text-white">
           <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-purple-400 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <div className="w-16 h-16 bg-blue-400 rounded-full mx-auto mb-4 flex items-center justify-center">
               <Link className="w-8 h-8" />
             </div>
             <h3 className="text-lg font-bold">Link Accounts</h3>
@@ -124,7 +121,7 @@ export default function HowItWorksSection() {
       transact: (
         <div className="p-4 text-white">
           <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-purple-400 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <div className="w-16 h-16 bg-violet-400 rounded-full mx-auto mb-4 flex items-center justify-center">
               <Send className="w-8 h-8" />
             </div>
             <h3 className="text-lg font-bold">Send Money</h3>
@@ -138,7 +135,7 @@ export default function HowItWorksSection() {
               <span className="text-purple-200">Transfer Fee</span>
               <span className="text-white">Free</span>
             </div>
-            <button className="w-full bg-white text-purple-700 py-3 rounded-lg font-semibold">
+            <button className="w-full bg-white text-purple-700 py-3 rounded-lg font-semibold hover:bg-purple-200 transition">
               Send Now
             </button>
           </div>
@@ -147,7 +144,7 @@ export default function HowItWorksSection() {
       security: (
         <div className="p-4 text-white">
           <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-purple-400 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <div className="w-16 h-16 bg-green-400 rounded-full mx-auto mb-4 flex items-center justify-center">
               <Shield className="w-8 h-8" />
             </div>
             <h3 className="text-lg font-bold">Protected</h3>
@@ -174,15 +171,15 @@ export default function HowItWorksSection() {
 
   return (
     <section className="py-20 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 relative overflow-hidden">
-      {/* Animated Background Elements */}
+      {/* Background Orbs */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-64 h-64 bg-purple-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-indigo-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse animation-delay-4000"></div>
+        <div className="absolute top-10 left-10 w-64 h-64 bg-fuchsia-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse animation-delay-2000"></div>
+        <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-violet-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-4000"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
+        {/* Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-4 py-2 bg-purple-600 bg-opacity-20 backdrop-blur-sm rounded-full text-purple-100 text-sm font-medium mb-6 border border-purple-400 border-opacity-30">
             <Zap className="w-4 h-4 mr-2" />
@@ -190,7 +187,7 @@ export default function HowItWorksSection() {
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Get Started in
-            <span className="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent block">
+            <span className="bg-gradient-to-r from-fuchsia-300 to-pink-300 bg-clip-text text-transparent block">
               4 Easy Steps
             </span>
           </h2>
@@ -200,9 +197,8 @@ export default function HowItWorksSection() {
           </p>
         </div>
 
-        {/* Main Process Flow */}
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-          {/* Steps List */}
+          {/* Step List */}
           <div className="space-y-6">
             {steps.map((step, index) => (
               <div
@@ -217,34 +213,29 @@ export default function HowItWorksSection() {
                     ? `bg-gradient-to-r ${step.color} shadow-2xl` 
                     : 'bg-purple-800 bg-opacity-30 backdrop-blur-sm hover:bg-opacity-50'
                 }`}>
-                  {/* Step Number */}
                   <div className={`absolute -left-3 top-6 w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-300 ${
                     activeStep === index 
-                      ? 'bg-white text-purple-700' 
+                      ? 'bg-amber-300 text-purple-700' 
                       : 'bg-purple-600 text-white'
                   }`}>
                     {step.id}
                   </div>
-
-                  {/* Content */}
                   <div className="pl-6">
                     <div className={`flex items-center mb-4 ${
                       activeStep === index ? 'text-white' : 'text-purple-200'
                     }`}>
                       <div className={`p-2 rounded-lg mr-4 transition-colors duration-300 ${
-                        activeStep === index ? 'bg-white bg-opacity-20' : 'bg-purple-700'
+                        activeStep === index ? 'bg-purple-700 bg-opacity-20' : 'bg-purple-700'
                       }`}>
                         {step.icon}
                       </div>
                       <h3 className="text-xl font-bold">{step.title}</h3>
                     </div>
-                    
                     <p className={`text-lg mb-3 ${
                       activeStep === index ? 'text-purple-100' : 'text-purple-300'
                     }`}>
                       {step.description}
                     </p>
-                    
                     <p className={`text-sm transition-all duration-300 ${
                       activeStep === index 
                         ? 'text-purple-200 opacity-100' 
@@ -253,8 +244,6 @@ export default function HowItWorksSection() {
                       {step.details}
                     </p>
                   </div>
-
-                  {/* Connection Line */}
                   {index < steps.length - 1 && (
                     <div className="absolute -bottom-6 left-6 w-0.5 h-12 bg-purple-500 opacity-30"></div>
                   )}
@@ -263,41 +252,48 @@ export default function HowItWorksSection() {
             ))}
           </div>
 
-          {/* Interactive Phone Demo */}
+          {/* iPhone 16 Pro Mockup */}
           <div className="flex justify-center">
             <div className="relative">
-              {/* Phone Frame */}
-              <div className={`relative w-72 h-144 bg-gradient-to-b from-gray-900 to-gray-800 rounded-3xl p-3 shadow-2xl transition-transform duration-1000 ${
-                isVisible ? 'transform rotate-0' : 'transform rotate-12'
+              {/* iPhone Frame */}
+              <div className={`relative w-80 h-[35rem] bg-black rounded-[3rem] border-[6px] border-gray-700 shadow-2xl overflow-hidden transition-transform duration-1000 ${
+                isVisible ? 'rotate-0 scale-100' : 'rotate-12 scale-95'
               }`}>
-                <div className={`w-full h-full bg-gradient-to-b ${steps[activeStep].color} rounded-2xl overflow-hidden transition-all duration-500`}>
+                {/* Notch */}
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-b-3xl z-20"></div>
+                {/* Side Buttons */}
+                <div className="absolute top-20 -left-1 w-1.5 h-10 bg-gray-600 rounded-r-lg"></div>
+                <div className="absolute top-40 -left-1 w-1.5 h-20 bg-gray-600 rounded-r-lg"></div>
+                <div className="absolute top-28 -right-1 w-1.5 h-16 bg-gray-600 rounded-l-lg"></div>
+
+                {/* Screen */}
+                <div className={`relative w-full h-full bg-gradient-to-b ${steps[activeStep].color} rounded-[2.5rem] overflow-hidden`}>
                   {renderPhoneContent(steps[activeStep].image)}
                 </div>
               </div>
-
-              {/* Floating Action Indicators */}
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-green-400 rounded-full animate-ping opacity-60"></div>
-              <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-400 rounded-full animate-bounce opacity-70"></div>
+              {/* Floating Glow */}
+              <div className="absolute -top-6 -right-6 w-12 h-12 bg-pink-400 rounded-full animate-ping opacity-50"></div>
+              <div className="absolute -bottom-6 -left-6 w-10 h-10 bg-blue-400 rounded-full animate-bounce opacity-70"></div>
             </div>
           </div>
         </div>
 
-        {/* Progress Indicator */}
+        {/* Dots Progress */}
         <div className="flex justify-center mb-12">
           <div className="flex items-center space-x-4">
             {steps.map((_, index) => (
               <React.Fragment key={index}>
                 <div
                   className={`w-4 h-4 rounded-full transition-all duration-300 cursor-pointer ${
-                    index <= activeStep 
-                      ? 'bg-purple-300 transform scale-125' 
+                    index === activeStep 
+                      ? 'bg-pink-400 scale-125' 
                       : 'bg-purple-600 hover:bg-purple-500'
                   }`}
                   onClick={() => setActiveStep(index)}
                 />
                 {index < steps.length - 1 && (
                   <div className={`w-8 h-0.5 transition-colors duration-500 ${
-                    index < activeStep ? 'bg-purple-300' : 'bg-purple-600'
+                    index < activeStep ? 'bg-pink-400' : 'bg-purple-600'
                   }`} />
                 )}
               </React.Fragment>

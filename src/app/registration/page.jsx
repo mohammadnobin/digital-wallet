@@ -30,6 +30,7 @@ export default function RegisterPage() {
     agreeTerms: false,
     agreeMarketing: false,
   });
+
   const [isLoading, setIsLoading] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -75,34 +76,34 @@ export default function RegisterPage() {
       alert("Please enter your first name");
       return false;
     }
-    
+
     if (!formData.lastName.trim()) {
       alert("Please enter your last name");
       return false;
     }
-    
+
     if (!formData.email.trim()) {
       alert("Please enter your email address");
       return false;
     }
-    
+
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       alert("Please enter a valid email address");
       return false;
     }
-    
+
     if (!formData.phone.trim()) {
       alert("Please enter your phone number");
       return false;
     }
-    
+
     if (!formData.password) {
       alert("Please enter a password");
       return false;
     }
-    
+
     if (passwordStrength < 3) {
       alert("Please create a stronger password (at least Medium strength)");
       return false;
@@ -121,29 +122,43 @@ export default function RegisterPage() {
     return true;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    // const form = e.target
+    // const firstName = form.firstName.value
+    // const lastName = form.lastName.value
+    // const email = form.email.value
+    // const phone = form.phone.value
+    // const password = form.password.value
+    // console.log({ email, phone, lastName, firstName, password })
     if (!validateForm()) {
       return;
     }
 
+
+
     setIsLoading(true);
 
     try {
+
+      const { firstName, lastName, email, phone, password } = formData;
+
+      console.log("Submitted Data:", { firstName, lastName, email, phone, password });
       // Simulate API call for user registration
       // In a real application, you would make an actual API call here
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      
+
       console.log("Registration submitted:", formData);
-      
+
       // Show success message
       setShowSuccessMessage(true);
-      
+
       // Wait for a moment to show success message, then navigate
       setTimeout(() => {
         // Navigate to home page after successful registration
         router.push("/");
       }, 1500);
-      
+
     } catch (error) {
       console.error("Registration failed:", error);
       alert("Registration failed. Please try again.");
@@ -185,9 +200,9 @@ export default function RegisterPage() {
         <div className="text-center">
           <div className="flex justify-center mb-6">
             <Link href='/'>
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-2xl shadow-lg">
-              <Wallet className="h-10 w-10 text-white" />
-            </div>
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-2xl shadow-lg">
+                <Wallet className="h-10 w-10 text-white" />
+              </div>
             </Link>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
@@ -199,7 +214,8 @@ export default function RegisterPage() {
         </div>
 
         {/* Registration Card */}
-        <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
+
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
           <div className="space-y-6">
             {/* Name Fields */}
             <div className="grid grid-cols-2 gap-4">
@@ -343,10 +359,10 @@ export default function RegisterPage() {
                     </span>
                     <span
                       className={`text-xs font-medium ${passwordStrength <= 2
-                          ? "text-red-600"
-                          : passwordStrength <= 3
-                            ? "text-yellow-600"
-                            : "text-green-600"
+                        ? "text-red-600"
+                        : passwordStrength <= 3
+                          ? "text-yellow-600"
+                          : "text-green-600"
                         }`}
                     >
                       {getPasswordStrengthText()}
@@ -492,7 +508,7 @@ export default function RegisterPage() {
               </button>
             </Link>
           </div>
-        </div>
+        </form>
 
         {/* Security Notice */}
         <div className="bg-green-50 border border-green-200 rounded-xl p-4">
