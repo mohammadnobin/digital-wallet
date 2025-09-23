@@ -8,10 +8,13 @@ import {
   Lock,
   Mail,
   ArrowRight,
+  CheckCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -19,6 +22,8 @@ export default function LoginPage() {
     rememberMe: false,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [loginError, setLoginError] = useState("");
 
   const handleChange = (e) => {
     const value =
@@ -27,18 +32,115 @@ export default function LoginPage() {
       ...formData,
       [e.target.name]: value,
     });
+    
+    // Clear error message when user starts typing
+    if (loginError) {
+      setLoginError("");
+    }
+  };
+
+  const validateForm = () => {
+    if (!formData.email.trim()) {
+      setLoginError("Please enter your email address");
+      return false;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setLoginError("Please enter a valid email address");
+      return false;
+    }
+    
+    if (!formData.password) {
+      setLoginError("Please enter your password");
+      return false;
+    }
+    
+    if (formData.password.length < 6) {
+      setLoginError("Password must be at least 6 characters long");
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = async () => {
-    setIsLoading(true);
+    if (!validateForm()) {
+      return;
+    }
 
-    // Simulate API call
-    setTimeout(() => {
+    setIsLoading(true);
+    setLoginError("");
+
+    try {
+      // Simulate API call for user authentication
+      // In a real application, you would make an actual API call here
+      await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // Simulate authentication logic
+          // For demo purposes, we'll accept any valid email/password combination
+          // In reality, you'd validate against your backend
+          
+          // Example: Simulate failed login for specific email
+          if (formData.email === "fail@example.com") {
+            reject(new Error("Invalid credentials"));
+          } else {
+            resolve();
+          }
+        }, 2000);
+      });
+      
       console.log("Login submitted:", formData);
+      
+      // Store login state (in a real app, you might use JWT tokens, cookies, etc.)
+      if (formData.rememberMe) {
+        localStorage.setItem("rememberUser", "true");
+        localStorage.setItem("userEmail", formData.email);
+      }
+      
+      // Show success message
+      setShowSuccessMessage(true);
+      
+      // Wait for a moment to show success message, then navigate
+      setTimeout(() => {
+        // Navigate to home page after successful login
+        router.push("/");
+      }, 1500);
+      
+    } catch (error) {
+      console.error("Login failed:", error);
+      setLoginError("Invalid email or password. Please try again.");
+    } finally {
       setIsLoading(false);
-      // Handle successful login - redirect to dashboard
-    }, 2000);
+    }
   };
+
+  // Success message component
+  if (showSuccessMessage) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100 text-center">
+            <div className="flex justify-center mb-6">
+              <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-4 rounded-full">
+                <CheckCircle className="h-12 w-12 text-white" />
+              </div>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Login Successful!
+            </h2>
+            <p className="text-gray-600 mb-4">
+              Welcome back! You will be redirected to your dashboard shortly.
+            </p>
+            <div className="flex justify-center">
+              <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -46,11 +148,11 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center">
           <div className="flex justify-center mb-6">
-                     <Link href='/'>
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-2xl shadow-lg">
-              <Wallet className="h-10 w-10 text-white" />
-            </div>
-                     </Link>
+            <Link href='/'>
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-2xl shadow-lg">
+                <Wallet className="h-10 w-10 text-white" />
+              </div>
+            </Link>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Welcome Back
@@ -63,6 +165,24 @@ export default function LoginPage() {
         {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
           <div className="space-y-6">
+            {/* Error Message */}
+            {loginError && (
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm text-red-800 font-medium">
+                      {loginError}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Email Field */}
             <div>
               <label
@@ -80,7 +200,11 @@ export default function LoginPage() {
                   name="email"
                   type="email"
                   required
-                  className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-gray-900 placeholder-gray-500"
+                  className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition duration-200 text-gray-900 placeholder-gray-500 ${
+                    loginError && loginError.includes("email") 
+                      ? "border-red-300 focus:ring-red-500" 
+                      : "border-gray-300 focus:ring-blue-500"
+                  }`}
                   placeholder="Enter your email address"
                   value={formData.email}
                   onChange={handleChange}
@@ -105,7 +229,11 @@ export default function LoginPage() {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   required
-                  className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-gray-900 placeholder-gray-500"
+                  className={`w-full pl-12 pr-12 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition duration-200 text-gray-900 placeholder-gray-500 ${
+                    loginError && loginError.includes("password") 
+                      ? "border-red-300 focus:ring-red-500" 
+                      : "border-gray-300 focus:ring-blue-500"
+                  }`}
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
@@ -144,12 +272,12 @@ export default function LoginPage() {
               </div>
 
               <div className="text-sm">
-                <a
-                  href="#"
+                <Link
+                  href="/forgot-password"
                   className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
             </div>
 
