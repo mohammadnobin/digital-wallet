@@ -14,8 +14,10 @@ import {
   CheckCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,6 +32,7 @@ export default function RegisterPage() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleChange = (e) => {
     const value =
@@ -67,26 +70,113 @@ export default function RegisterPage() {
     return "Strong";
   };
 
-  const handleSubmit = async () => {
+  const validateForm = () => {
+    if (!formData.firstName.trim()) {
+      alert("Please enter your first name");
+      return false;
+    }
+    
+    if (!formData.lastName.trim()) {
+      alert("Please enter your last name");
+      return false;
+    }
+    
+    if (!formData.email.trim()) {
+      alert("Please enter your email address");
+      return false;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      alert("Please enter a valid email address");
+      return false;
+    }
+    
+    if (!formData.phone.trim()) {
+      alert("Please enter your phone number");
+      return false;
+    }
+    
+    if (!formData.password) {
+      alert("Please enter a password");
+      return false;
+    }
+    
+    if (passwordStrength < 3) {
+      alert("Please create a stronger password (at least Medium strength)");
+      return false;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
-      return;
+      return false;
     }
 
     if (!formData.agreeTerms) {
       alert("Please agree to the terms and conditions!");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Simulate API call for user registration
+      // In a real application, you would make an actual API call here
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      
       console.log("Registration submitted:", formData);
+      
+      // Show success message
+      setShowSuccessMessage(true);
+      
+      // Wait for a moment to show success message, then navigate
+      setTimeout(() => {
+        // Navigate to home page after successful registration
+        router.push("/");
+      }, 1500);
+      
+    } catch (error) {
+      console.error("Registration failed:", error);
+      alert("Registration failed. Please try again.");
+    } finally {
       setIsLoading(false);
-      // Handle successful registration - redirect to verification or login
-    }, 2000);
+    }
   };
+
+  // Success message component
+  if (showSuccessMessage) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100 text-center">
+            <div className="flex justify-center mb-6">
+              <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-4 rounded-full">
+                <CheckCircle className="h-12 w-12 text-white" />
+              </div>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Account Created Successfully!
+            </h2>
+            <p className="text-gray-600 mb-4">
+              Welcome to our platform! You will be redirected to the home page shortly.
+            </p>
+            <div className="flex justify-center">
+              <div className="w-6 h-6 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-indigo-100 flex items-center justify-center p-4">
