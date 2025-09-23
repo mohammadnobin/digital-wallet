@@ -213,18 +213,6 @@ export default function FeaturesSection() {
             ))}
           </div>
         </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <div className="inline-flex flex-col sm:flex-row gap-4">
-            <button className="bg-gradient-to-r from-purple-700 to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold hover:from-purple-800 hover:to-indigo-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl">
-              Start Using PurpleWallet
-            </button>
-            <button className="border-2 border-purple-700 text-purple-700 px-8 py-4 rounded-lg font-semibold hover:bg-purple-700 hover:text-white transition-all duration-300 transform hover:scale-105">
-              Explore All Features
-            </button>
-          </div>
-        </div>
       </div>
     </section>
   );
