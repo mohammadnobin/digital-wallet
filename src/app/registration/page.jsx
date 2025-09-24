@@ -156,7 +156,7 @@ export default function RegisterPage() {
       // Wait for a moment to show success message, then navigate
       setTimeout(() => {
         // Navigate to home page after successful registration
-        router.push("/");
+        router.push("/dashboard");
       }, 1500);
 
     } catch (error) {
