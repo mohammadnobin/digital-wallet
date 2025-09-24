@@ -1,12 +1,11 @@
 import React from 'react';
 import Navbar from '../components/shared/Navbar';
 
-export default function page(props) {
+export default function layout() {
     return (
         <div>
-            <Navbar></Navbar>
-            
+        <Navbar></Navbar>
+        
         </div>
     );
 }
-

@@ -163,6 +163,7 @@
 'use client';
 import React from 'react';
 import { ArrowRight, Shield, CheckCircle, Play, Users, Star } from 'lucide-react';
+import Link from 'next/link';
 
 export default function HeroSection() {
   return (
@@ -171,7 +172,7 @@ export default function HeroSection() {
       <section className="py-32 lg:py-40">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            
+
             {/* Badge */}
             <div className="inline-flex items-center bg-orange-50 border border-orange-200 rounded-full px-4 py-2 mb-8">
               <span className="text-orange-700 text-sm font-medium">Trusted by 10M+ users worldwide</span>
@@ -185,17 +186,19 @@ export default function HeroSection() {
 
             {/* Subheading */}
             <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Send money instantly, pay bills effortlessly, and manage your finances with complete security. 
+              Send money instantly, pay bills effortlessly, and manage your finances with complete security.
               Join millions who trust PayWallet for their daily transactions.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <button className="bg-primary cursor-pointer text-white px-8 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center">
-                Open Free Account
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </button>
-              <button className="border-2 cursor-pointer border-orange-500 text-secondary px-8 py-4 rounded-lg font-semibold hover:bg-orange-50 transition-colors flex items-center justify-center">
+              <Link href="/registration">
+                <button  className="bg-indigo-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center">
+                  Open Free Account
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </button>
+              </Link>
+              <button className="border-2 border-orange-500 text-orange-600 px-8 py-4 rounded-lg font-semibold hover:bg-orange-50 transition-colors flex items-center justify-center">
                 <Play className="mr-2 w-5 h-5" />
                 Watch How It Works
               </button>
@@ -257,17 +260,17 @@ export default function HeroSection() {
       <section className="py-20">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            
+
             {/* Left Content */}
             <div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
                 Everything you need in one app
               </h2>
               <p className="text-xl text-gray-600 mb-8">
-                Simple interface, powerful features. Manage all your payments, 
+                Simple interface, powerful features. Manage all your payments,
                 track expenses, and grow your savings from anywhere.
               </p>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start">
                   <CheckCircle className="w-6 h-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
@@ -302,10 +305,10 @@ export default function HeroSection() {
               <div className="relative">
                 <div className="w-80 h-[600px] bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl">
                   <div className="w-full h-full bg-white rounded-[2rem] overflow-hidden">
-                    
+
                     {/* Phone Screen Content */}
                     <div className="h-full bg-gradient-to-b from-gray-50 to-white">
-                      
+
                       {/* Status Bar */}
                       <div className="flex justify-between items-center px-6 py-4 bg-white">
                         <span className="text-sm font-medium">9:41</span>

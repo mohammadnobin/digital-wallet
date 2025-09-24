@@ -3,6 +3,7 @@ import SecurityTrustSection from "./components/Home/SecurityTrust";
 import TestimonialsSection from "./components/Home/Testimonials";
 import UserBenefitsSection from "./components/Home/UserBenefits";
 import HowItWorksSection from "./components/Home/worksSection";
+import FooterSection from "./components/shared/Footer";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <SecurityTrustSection />
       <UserBenefitsSection />
       <TestimonialsSection />
+      <FooterSection></FooterSection>
      </>
   );
 }
