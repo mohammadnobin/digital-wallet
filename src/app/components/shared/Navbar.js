@@ -19,11 +19,14 @@ export default function Navbar() {
 
       {/* Desktop Links */}
       <div className="hidden md:flex gap-6 text-gray-700 font-medium">
+    
         <Link href="/dashboard" className="hover:text-purple-600">Dashboard</Link>
         <Link href="/transfer" className="hover:text-purple-600">Transfer</Link>
         <Link href="/cards" className="hover:text-purple-600">Cards</Link>
         <Link href="/bills" className="hover:text-purple-600">Bills</Link>
         <Link href="/history" className="hover:text-purple-600">History</Link>
+         <Link href="/components/Login" className="hover:text-purple-600">Login</Link>
+         <Link href="/components/signup" className="hover:text-purple-600">Signup</Link>
       </div>
 
       {/* Right Section */}
