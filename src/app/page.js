@@ -5,6 +5,7 @@ import UserBenefitsSection from "./components/Home/UserBenefits";
 import HowItWorksSection from "./components/Home/worksSection";
 import FooterSection from "./components/shared/Footer";
 
+
 export default function Home() {
   return (
      <>
