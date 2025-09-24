@@ -4,7 +4,7 @@ import Navbar from '../components/shared/Navbar';
 export default function layout({children}) {
     return (
         <div>
-        <Navbar></Navbar>
+            <Navbar />
         {children}
         </div>
     );
