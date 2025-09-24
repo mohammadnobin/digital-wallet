@@ -1,9 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import { 
-  QrCode, 
-  CreditCard, 
-  DollarSign, 
+import {
+  QrCode,
+  CreditCard,
+  DollarSign,
   Users,
   Bell,
   ChevronDown,
@@ -17,18 +17,18 @@ import {
   Plus,
   SquareArrowOutUpRight
 } from 'lucide-react';
+import Link from 'next/link';
 
 const DigitalWalletDashboard = () => {
   const [showBalance, setShowBalance] = useState(true);
- 
 
   const quickActions = [
-  { icon: Plus, label: "Add Money", color: "bg-blue-500" },   // টাকা যোগ করার জন্য Wallet
-  { icon: SquareArrowOutUpRight, label: "Cash Out", color: "bg-green-500" },
-    { icon: QrCode, label: 'Scan QR', color: 'bg-purple-500' },
-    { icon: CreditCard, label: 'Add Card', color: 'bg-orange-500' },
-    { icon: DollarSign, label: 'Request Money', color: 'bg-pink-500' },
-    { icon: Users, label: 'Split Bill', color: 'bg-indigo-500' }
+    { icon: Plus, label: "Add Money", color: "bg-blue-500", href: "/dashboard/addMoney" },
+    { icon: SquareArrowOutUpRight, label: "Cash Out", color: "bg-green-500", href: "/dashboard/cashout" },
+    { icon: QrCode, label: "Scan QR", color: "bg-purple-500", href: "/scan-qr" },
+    { icon: CreditCard, label: "Add Card", color: "bg-orange-500", href: "/add-card" },
+    { icon: DollarSign, label: "Request Money", color: "bg-pink-500", href: "/request-money" },
+    { icon: Users, label: "Split Bill", color: "bg-indigo-500", href: "/split-bill" },
   ];
 
   const recentTransactions = [
@@ -160,15 +160,17 @@ const DigitalWalletDashboard = () => {
               <h2 className="text-lg font-semibold text-gray-900 mb-6">Quick Actions</h2>
               <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
                 {quickActions.map((action, index) => (
-                  <button
-                    key={index}
-                    className="flex flex-col cursor-pointer items-center p-4 rounded-lg hover:bg-gray-50 transition-colors group"
-                  >
-                    <div className={`w-12 h-12 ${action.color} rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-                      <action.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <span className="text-sm font-medium text-gray-700">{action.label}</span>
-                  </button>
+                  <Link href={action.href} key={index}>
+
+                    <button
+                      className="flex flex-col cursor-pointer items-center p-4 rounded-lg hover:bg-gray-50 transition-colors group"
+                    >
+                      <div className={`w-12 h-12 ${action.color} rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+                        <action.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <span className="text-sm font-medium text-gray-700">{action.label}</span>
+                    </button>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -228,7 +230,7 @@ const DigitalWalletDashboard = () => {
             {/* Expense Categories */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-6">Expense Categories</h2>
-              
+
               {/* Donut Chart Representation */}
               <div className="relative w-32 h-32 mx-auto mb-6">
                 <div className="w-full h-full rounded-full border-8 border-blue-500 relative">
