@@ -1,9 +1,10 @@
 import React from 'react';
+import CashoutPage from '../components/Cashout';
 
 function page() {
     return (
         <div>
-          cashout  
+       <CashoutPage />
         </div>
     );
 }
