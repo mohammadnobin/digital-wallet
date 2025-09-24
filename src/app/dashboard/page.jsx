@@ -1,10 +1,8 @@
 import React from 'react';
-import Navbar from '../components/shared/Navbar';
 
-export default function page(props) {
+export default function page() {
     return (
-        <div>
-            <Navbar></Navbar>
+        <div> 
             
         </div>
     );
