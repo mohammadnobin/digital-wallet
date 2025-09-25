@@ -1,25 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { 
-  Shield, 
-  Lock, 
-  Eye, 
-  Fingerprint,
-  Award,
-  Users,
-  CheckCircle,
-  AlertTriangle,
-  Key,
-  Globe,
-  Server,
-  Smartphone,
-  Bell,
-  Activity,
-  TrendingUp,
-  Star,
-  Building2,
-  CreditCard
-} from 'lucide-react';
+import { Shield, Lock, Eye, Fingerprint, Award, Users, CheckCircle, AlertTriangle, Key, Globe, Server, Smartphone, Bell, Activity, TrendingUp, Star, Building2, CreditCard, Clock, HardHat } from 'lucide-react';
 
 export default function SecurityTrustSection() {
   const [activeSecurityFeature, setActiveSecurityFeature] = useState(0);
@@ -47,9 +28,24 @@ export default function SecurityTrustSection() {
       description: "Data stored in encrypted, distributed servers across multiple locations",
       detail: "SOC 2 Type II certified data centers with 99.9% uptime",
       color: "from-purple-800 to-indigo-800"
+    },
+    // New Feature 1: Multi-Factor Authentication
+    {
+      icon: <Fingerprint className="w-8 h-8" />,
+      title: "Multi-Factor Authentication (MFA)",
+      description: "Adds an extra layer of security with verification codes or biometrics",
+      detail: "Supports TOTP, SMS, and Biometric verification methods for all accounts",
+      color: "from-pink-600 to-red-600"
+    },
+    // New Feature 2: Regular Security Audits
+    {
+      icon: <HardHat className="w-8 h-8" />,
+      title: "Regular Security Audits",
+      description: "Continuous external penetration testing and internal security reviews",
+      detail: "Annual audits conducted by leading security firms to ensure compliance",
+      color: "from-teal-600 to-cyan-600"
     }
   ];
-
 
   const certifications = [
     { name: "PCI DSS", level: "Level 1", color: "bg-green-500" },
@@ -65,13 +61,15 @@ export default function SecurityTrustSection() {
     { label: "Customer Satisfaction", value: 96, max: 100, unit: "%", color: "text-pink-400" }
   ];
 
+  // Logic to cycle through security features
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveSecurityFeature((prev) => (prev + 1) % securityFeatures.length);
-    }, 3000);
+    }, 4000); // Increased interval to account for more features
     return () => clearInterval(timer);
-  }, []);
+  }, [securityFeatures.length]); // Added securityFeatures.length to dependency array
 
+  // Logic for the animated security score
   useEffect(() => {
     const scoreTimer = setTimeout(() => {
       let count = 0;
@@ -80,6 +78,8 @@ export default function SecurityTrustSection() {
           count += 2;
           setSecurityScore(count);
           setTimeout(increment, 50);
+        } else {
+          setSecurityScore(98); // Ensure it stops exactly at 98
         }
       };
       increment();
@@ -87,6 +87,7 @@ export default function SecurityTrustSection() {
     return () => clearTimeout(scoreTimer);
   }, []);
 
+  // Logic for the encryption visualization
   useEffect(() => {
     const encryptionTimer = setInterval(() => {
       setShowEncryption(prev => !prev);
@@ -100,22 +101,24 @@ export default function SecurityTrustSection() {
       <div className="absolute top-0 right-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"></div>
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"></div>
 
+      {/* Tailwind CSS utility class for slower animation duration (60s) */}
+      <style jsx global>{`
+        .animation-duration-60000 {
+          animation-duration: 60s !important;
+        }
+      `}</style>
+
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-4 py-2 bg-purple-100 rounded-full text-purple-700 text-sm font-medium mb-4">
-            <Shield className="w-4 h-4 mr-2" />
-            Security & Trust
+            <Shield className="w-4 h-4 mr-2" /> Security & Trust
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Your Money is
-            <span className="bg-gradient-to-r from-purple-700 to-indigo-600 bg-clip-text text-transparent block">
-              Absolutely Secure
-            </span>
+            Your Money is <span className="bg-gradient-to-r from-purple-700 to-indigo-600 bg-clip-text text-transparent block"> Absolutely Secure </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Built with enterprise-grade security from the ground up. Every transaction, 
-            every byte of data, every user interaction is protected by multiple layers of security.
+            Built with enterprise-grade security from the ground up. Every transaction, every byte of data, every user interaction is protected by multiple layers of security.
           </p>
         </div>
 
@@ -126,14 +129,7 @@ export default function SecurityTrustSection() {
               <h3 className="text-2xl font-bold mb-4">Security Score</h3>
               <div className="relative">
                 <svg className="w-32 h-32" viewBox="0 0 100 100">
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    stroke="rgba(255,255,255,0.2)"
-                    strokeWidth="8"
-                    fill="none"
-                  />
+                  <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.2)" strokeWidth="8" fill="none" />
                   <circle
                     cx="50"
                     cy="50"
@@ -158,7 +154,7 @@ export default function SecurityTrustSection() {
                   <span className="text-purple-100">{metric.label}</span>
                   <div className="flex items-center">
                     <div className="w-24 h-2 bg-purple-600 rounded-full mr-3">
-                      <div 
+                      <div
                         className={`h-full bg-white rounded-full transition-all duration-1000`}
                         style={{ width: `${(metric.value / metric.max) * 100}%` }}
                       />
@@ -180,40 +176,31 @@ export default function SecurityTrustSection() {
             {securityFeatures.map((feature, index) => (
               <div
                 key={index}
-                className={`group cursor-pointer transition-all duration-500 ${
-                  activeSecurityFeature === index ? 'transform scale-105' : ''
-                }`}
+                className={`group cursor-pointer transition-all duration-500 ${activeSecurityFeature === index ? 'transform scale-105' : ''
+                  }`}
                 onClick={() => setActiveSecurityFeature(index)}
               >
-                <div className={`p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 ${
-                  activeSecurityFeature === index 
-                    ? `bg-gradient-to-r ${feature.color} text-white` 
-                    : 'bg-white hover:bg-purple-50'
-                }`}>
-                  <div className={`flex items-center mb-4 ${
-                    activeSecurityFeature === index ? 'text-white' : 'text-purple-700'
-                  }`}>
-                    <div className={`p-3 rounded-xl mr-4 transition-colors duration-300 ${
-                      activeSecurityFeature === index 
-                        ? 'bg-white bg-opacity-20' 
-                        : 'bg-purple-100'
-                    }`}>
+                <div
+                  className={`p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 ${activeSecurityFeature === index
+                      ? `bg-gradient-to-r ${feature.color} text-white`
+                      : 'bg-white hover:bg-purple-50'
+                    }`}
+                >
+                  <div className={`flex items-center mb-4 ${activeSecurityFeature === index ? 'text-white' : 'text-purple-700'}`}>
+                    <div
+                      className={`p-3 rounded-xl mr-4 transition-colors duration-300 ${activeSecurityFeature === index ? 'bg-white bg-opacity-20' : 'bg-purple-100'
+                        }`}
+                    >
                       {feature.icon}
                     </div>
                     <div>
                       <h3 className="text-xl font-bold">{feature.title}</h3>
                     </div>
                   </div>
-                  <p className={`text-lg leading-relaxed mb-3 ${
-                    activeSecurityFeature === index ? 'text-purple-100' : 'text-gray-600'
-                  }`}>
+                  <p className={`text-lg leading-relaxed mb-3 ${activeSecurityFeature === index ? 'text-purple-100' : 'text-gray-600'}`}>
                     {feature.description}
                   </p>
-                  <p className={`text-sm transition-all duration-300 ${
-                    activeSecurityFeature === index 
-                      ? 'text-purple-200 opacity-100' 
-                      : 'text-gray-500 opacity-0 group-hover:opacity-100'
-                  }`}>
+                  <p className={`text-sm transition-all duration-300 ${activeSecurityFeature === index ? 'text-purple-200 opacity-100' : 'text-gray-500 opacity-0 group-hover:opacity-100'}`}>
                     {feature.detail}
                   </p>
                 </div>
@@ -230,7 +217,7 @@ export default function SecurityTrustSection() {
                 <div className="absolute inset-4 border-2 border-purple-300 border-opacity-30 rounded-full animate-pulse"></div>
                 <div className="absolute inset-8 border-2 border-purple-200 border-opacity-40 rounded-full animate-pulse animation-delay-1000"></div>
                 <div className="absolute inset-12 border-2 border-purple-100 border-opacity-50 rounded-full animate-pulse animation-delay-2000"></div>
-                
+
                 {/* Center Shield Icon */}
                 <div className="relative z-10 text-white text-center">
                   <div className="mb-4 transform transition-all duration-500 hover:scale-110">
@@ -269,18 +256,14 @@ export default function SecurityTrustSection() {
                     <div
                       key={i}
                       className="absolute w-2 h-2 bg-purple-300 rounded-full animate-ping"
-                      style={{
-                        top: `${20 + i * 10}%`,
-                        left: `${15 + (i % 2) * 60}%`,
-                        animationDelay: `${i * 0.2}s`
-                      }}
+                      style={{ top: `${20 + i * 10}%`, left: `${15 + (i % 2) * 60}%`, animationDelay: `${i * 0.2}s` }}
                     />
                   ))}
                 </div>
               </div>
 
-              {/* Orbiting Trust Badges */}
-              <div className="absolute inset-0 animate-spin animation-duration-30000">
+              {/* Orbiting Trust Badges (Decreased Rotation Speed: using custom utility class 'animation-duration-60000') */}
+              <div className="absolute inset-0 animate-spin animation-duration-60000">
                 {certifications.map((cert, index) => (
                   <div
                     key={index}
@@ -288,7 +271,7 @@ export default function SecurityTrustSection() {
                     style={{
                       top: `${50 + 45 * Math.sin((index * 90) * Math.PI / 180)}%`,
                       left: `${50 + 45 * Math.cos((index * 90) * Math.PI / 180)}%`,
-                      transform: 'translate(-50%, -50%)'
+                      transform: 'translate(-50%, -50%)',
                     }}
                   >
                     {cert.name}
@@ -298,10 +281,6 @@ export default function SecurityTrustSection() {
             </div>
           </div>
         </div>
-
-       
-
-       
       </div>
     </section>
   );
