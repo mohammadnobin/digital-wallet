@@ -122,7 +122,7 @@ export default function HeroSection() {
             {/* Left Content */}
             <div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                Everything you need in one app
+               Your complete solution in one place
               </h2>
               <p className="text-xl text-gray-600 mb-8">
                 Simple interface, powerful features. Manage all your payments,
@@ -165,138 +165,16 @@ export default function HeroSection() {
                 </div>
               </div>
 
-              <button className="mt-8 cursor-pointer bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
-                Download App
-              </button>
+             <div className="mt-10">
+               <Link href="/registration" className=" cursor-pointer bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                 Register now !
+              </Link>
+             </div>
             </div>
 
             {/* Right Phone Mockup */}
-            <div className="flex justify-center cursor-pointer">
-              <div className="relative">
-                <div className="w-80 h-[600px] bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl">
-                  <div className="w-full h-full bg-white rounded-[2rem] overflow-hidden">
-                    {/* Phone Screen Content */}
-                    <div className="h-full bg-gradient-to-b from-gray-50 to-white">
-                      {/* Status Bar */}
-                      <div className="flex justify-between items-center px-6 py-4 bg-white">
-                        <span className="text-sm font-medium">9:41</span>
-                        <div className="flex items-center space-x-1">
-                          <div className="w-4 h-2 bg-gray-300 rounded"></div>
-                          <div className="w-6 h-3 bg-green-500 rounded border border-gray-300"></div>
-                        </div>
-                      </div>
-
-                      {/* App Header */}
-                      <div className="px-6 py-6 bg-white border-b border-gray-100">
-                        <div className="flex justify-between items-center">
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-900">
-                              Good morning!
-                            </h3>
-                            <p className="text-gray-600">Sarah Johnson</p>
-                          </div>
-                          <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                            <span className="text-white font-bold">SJ</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Balance Card */}
-                      <div className="px-6 py-6">
-                        <div className="bg-primary rounded-2xl p-6 text-white">
-                          <div className="flex justify-between items-start mb-4">
-                            <div>
-                              <p className="text-indigo-200 text-sm mb-1">
-                                Available Balance
-                              </p>
-                              <p className="text-3xl font-bold">$15,847.32</p>
-                            </div>
-                            <div className="w-12 h-8 bg-white bg-opacity-20 rounded"></div>
-                          </div>
-                          <p className="text-indigo-200 text-sm">
-                            **** **** **** 4829
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Quick Actions */}
-                      <div className="px-6 pb-6">
-                        <div className="grid grid-cols-3 gap-4">
-                          <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
-                            <div className="w-10 h-10 bg-orange-100 rounded-full mx-auto mb-2 flex items-center justify-center">
-                              <ArrowRight className="w-5 h-5 text-secondary" />
-                            </div>
-                            <p className="text-sm font-medium text-gray-700">
-                              Send
-                            </p>
-                          </div>
-                          <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
-                            <div className="w-10 h-10 bg-green-100 rounded-full mx-auto mb-2 flex items-center justify-center">
-                              <ArrowRight className="w-5 h-5 text-green-600 transform rotate-180" />
-                            </div>
-                            <p className="text-sm font-medium text-gray-700">
-                              Request
-                            </p>
-                          </div>
-                          <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
-                            <div className="w-10 h-10 bg-indigo-100 rounded-full mx-auto mb-2 flex items-center justify-center">
-                              <CheckCircle className="w-5 h-5 text-primary" />
-                            </div>
-                            <p className="text-sm font-medium text-gray-700">
-                              Pay Bills
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Recent Transactions */}
-                      <div className="px-6">
-                        <h4 className="font-semibold text-gray-900 mb-4">
-                          Recent Activity
-                        </h4>
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between bg-white p-4 rounded-xl border border-gray-100">
-                            <div className="flex items-center">
-                              <div className="w-10 h-10 bg-green-100 rounded-full mr-3 flex items-center justify-center">
-                                <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                              </div>
-                              <div>
-                                <p className="font-medium text-gray-900 text-sm">
-                                  Coffee Shop
-                                </p>
-                                <p className="text-gray-500 text-xs">
-                                  2 hours ago
-                                </p>
-                              </div>
-                            </div>
-                            <span className="text-red-500 font-semibold text-sm">
-                              -$4.80
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between bg-white p-4 rounded-xl border border-gray-100">
-                            <div className="flex items-center">
-                              <div className="w-10 h-10 bg-blue-100 rounded-full mr-3 flex items-center justify-center">
-                                <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-                              </div>
-                              <div>
-                                <p className="font-medium text-gray-900 text-sm">
-                                  Salary Deposit
-                                </p>
-                                <p className="text-gray-500 text-xs">
-                                  Yesterday
-                                </p>
-                              </div>
-                            </div>
-                            <span className="text-green-500 font-semibold text-sm">
-                              +$3,200
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div >
+              <img className="rounded-2xl" src="/laptop.png" alt="laptop" />
             </div>
           </div>
         </div>
