@@ -21,7 +21,7 @@ import {
   Star,
   TrendingUp,
 } from "lucide-react";
-
+// add
 const AddMoneyPage = () => {
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [amount, setAmount] = useState("");
