@@ -1,10 +1,10 @@
 import React from 'react';
+import DigitalWalletDashboard from './components/dashboardHome';
 
-export default function page(props) {
+export default function page() {
     return (
-        <div>
-            this is Dashboard
-            
+        <div> 
+            <DigitalWalletDashboard />
         </div>
     );
 }
