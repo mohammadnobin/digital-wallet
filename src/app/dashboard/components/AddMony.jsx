@@ -21,6 +21,7 @@ import {
   Star,
   TrendingUp,
 } from "lucide-react";
+import Link from "next/link";
 // add
 const AddMoneyPage = () => {
   const [selectedMethod, setSelectedMethod] = useState("card");
