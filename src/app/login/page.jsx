@@ -12,7 +12,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+// login page
+// add
 export default function LoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +33,7 @@ export default function LoginPage() {
       ...formData,
       [e.target.name]: value,
     });
-    
+
     // Clear error message when user starts typing
     if (loginError) {
       setLoginError("");
@@ -44,19 +45,19 @@ export default function LoginPage() {
       setLoginError("Please enter your email address");
       return false;
     }
-    
+
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setLoginError("Please enter a valid email address");
       return false;
     }
-    
+
     if (!formData.password) {
       setLoginError("Please enter your password");
       return false;
     }
-    
+
     if (formData.password.length < 6) {
       setLoginError("Password must be at least 6 characters long");
       return false;
@@ -81,7 +82,7 @@ export default function LoginPage() {
           // Simulate authentication logic
           // For demo purposes, we'll accept any valid email/password combination
           // In reality, you'd validate against your backend
-          
+
           // Example: Simulate failed login for specific email
           if (formData.email === "fail@example.com") {
             reject(new Error("Invalid credentials"));
@@ -90,24 +91,23 @@ export default function LoginPage() {
           }
         }, 2000);
       });
-      
+
       console.log("Login submitted:", formData);
-      
+
       // Store login state (in a real app, you might use JWT tokens, cookies, etc.)
       if (formData.rememberMe) {
         localStorage.setItem("rememberUser", "true");
         localStorage.setItem("userEmail", formData.email);
       }
-      
+
       // Show success message
       setShowSuccessMessage(true);
-      
+
       // Wait for a moment to show success message, then navigate
       setTimeout(() => {
         // Navigate to home page after successful login
         router.push("/dashboard");
       }, 1500);
-      
     } catch (error) {
       console.error("Login failed:", error);
       setLoginError("Invalid email or password. Please try again.");
@@ -148,7 +148,7 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center">
           <div className="flex justify-center mb-6">
-            <Link href='/'>
+            <Link href="/">
               <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-2xl shadow-lg">
                 <Wallet className="h-10 w-10 text-white" />
               </div>
@@ -170,8 +170,16 @@ export default function LoginPage() {
               <div className="bg-red-50 border border-red-200 rounded-xl p-4">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    <svg
+                      className="h-5 w-5 text-red-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </div>
                   <div className="ml-3">
@@ -201,8 +209,8 @@ export default function LoginPage() {
                   type="email"
                   required
                   className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition duration-200 text-gray-900 placeholder-gray-500 ${
-                    loginError && loginError.includes("email") 
-                      ? "border-red-300 focus:ring-red-500" 
+                    loginError && loginError.includes("email")
+                      ? "border-red-300 focus:ring-red-500"
                       : "border-gray-300 focus:ring-blue-500"
                   }`}
                   placeholder="Enter your email address"
@@ -230,8 +238,8 @@ export default function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   required
                   className={`w-full pl-12 pr-12 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition duration-200 text-gray-900 placeholder-gray-500 ${
-                    loginError && loginError.includes("password") 
-                      ? "border-red-300 focus:ring-red-500" 
+                    loginError && loginError.includes("password")
+                      ? "border-red-300 focus:ring-red-500"
                       : "border-gray-300 focus:ring-blue-500"
                   }`}
                   placeholder="Enter your password"
@@ -311,9 +319,7 @@ export default function LoginPage() {
 
             {/* Sign Up Link */}
             <Link href="/registration">
-              <button
-                className="w-full flex justify-center py-3 px-4 border-2 border-gray-200 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200 cursor-pointer"
-              >
+              <button className="w-full flex justify-center py-3 px-4 border-2 border-gray-200 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200 cursor-pointer">
                 Create New Account
               </button>
             </Link>
