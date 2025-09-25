@@ -105,7 +105,7 @@ export default function LoginPage() {
       // Wait for a moment to show success message, then navigate
       setTimeout(() => {
         // Navigate to home page after successful login
-        router.push("/");
+        router.push("/dashboard");
       }, 1500);
       
     } catch (error) {
@@ -312,7 +312,7 @@ export default function LoginPage() {
             {/* Sign Up Link */}
             <Link href="/registration">
               <button
-                className="w-full flex justify-center py-3 px-4 border-2 border-gray-200 rounded-xl text-white font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer focus:ring-purple-500 transition duration-200"
+                className="w-full flex justify-center py-3 px-4 border-2 border-gray-200 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200 cursor-pointer"
               >
                 Create New Account
               </button>
