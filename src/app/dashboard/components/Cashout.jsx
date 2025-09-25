@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ArrowLeft,
   CreditCard,
@@ -22,6 +22,9 @@ const CashoutPage = () => {
   const [selectedMethod, setSelectedMethod] = useState("bank");
   const [amount, setAmount] = useState("");
   const [showBalance, setShowBalance] = useState(true);
+  // Add this
+  const [availableBalance, setAvailableBalance] = useState(0); // instead of hardcoded 2847.65
+
   const [formData, setFormData] = useState({
     bankAccount: "",
     routingNumber: "",
@@ -36,8 +39,29 @@ const CashoutPage = () => {
   const [errors, setErrors] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const userId = "68d312cb50092968c7ae5433"; // example userId
 
-  const availableBalance = 2847.65;
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/wallets/current?userId=${userId}`
+        );
+        const data = await response.json();
+        if (response.ok && data.success) {
+          setAvailableBalance(data.data.balance);
+        } else {
+          console.error(data.message || "Failed to fetch balance");
+        }
+      } catch (err) {
+        console.error("Server error:", err);
+      }
+    };
+
+    fetchBalance();
+  }, [userId]);
+
+  // const availableBalance = 2847.65;
   const dailyLimit = 5000;
   const remainingLimit = 3200;
 
@@ -110,18 +134,21 @@ const CashoutPage = () => {
     setIsProcessing(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/wallets", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: "68d312cb50092968c7ae5433", // Replace with real logged-in user ID
-          amount: parseFloat(amount),
-          method: selectedMethod,
-          details: formData,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/wallets/cashout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: "68d312cb50092968c7ae5433",
+            amount: parseFloat(amount),
+            method: selectedMethod,
+            details: formData,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -155,7 +182,6 @@ const CashoutPage = () => {
     }
   };
 
-  
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
@@ -294,7 +320,7 @@ const CashoutPage = () => {
                   onClick={() => setAmount(availableBalance.toString())}
                   className="text-blue-600 text-sm font-medium hover:text-blue-700"
                 >
-                  Use all available balance (${availableBalance.toFixed(2)})
+                  Use all available balance (${availableBalance})
                 </button>
               </div>
 
