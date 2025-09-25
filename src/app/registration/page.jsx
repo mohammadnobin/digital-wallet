@@ -6,7 +6,6 @@ import {
   Eye,
   EyeOff,
   Wallet,
-  Shield,
   Lock,
   Mail,
   User,
