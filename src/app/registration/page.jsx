@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { registerUser } from "../actions/auth/registerUser";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -143,7 +144,7 @@ export default function RegisterPage() {
 
       const { firstName, lastName, email, phone, password } = formData;
 
-      console.log("Submitted Data:", { firstName, lastName, email, phone, password });
+      await registerUser("Submitted Data:", { firstName, lastName, email, phone, password });
       // Simulate API call for user registration
       // In a real application, you would make an actual API call here
       await new Promise((resolve) => setTimeout(resolve, 2000));
