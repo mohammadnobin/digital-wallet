@@ -69,31 +69,6 @@ export default function LoginPage() {
     return true;
   };
 
-//   const handleSubmit = async () => {
-//     const { email, password } = formData;
-//  try {
-//       // Sign in the user
-//       await signIn(email, password)
-//       .then((result) => {
-//         const user = result.user;
-//       // Success alert
-//       Swal.fire({
-//         title: "Good job!",
-//         text: "SignUp Successful",
-//         icon: "success",
-//       });
-
-//       // Redirect to the previous page or home
-//     } catch (error) {
-//       // Error alert
-//       Swal.fire({
-//         icon: "error",
-//         title: "Oops...",
-//         text: error?.message,
-//       });
-//     }
-//   };
-
 
 
 const handleSubmit = async () => {
@@ -111,6 +86,7 @@ const handleSubmit = async () => {
       text: "Login Successful",
       icon: "success",
     });
+    router.push("/dashboard");
 
     // ✅ Redirect করতে চাইলে এখানে router.push("/dashboard") দিতে পারো
 

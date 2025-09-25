@@ -17,7 +17,6 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Authcontext } from "@/context/AuthContext";
-import { registerUser } from "../actions/auth/registerUser";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -151,37 +150,12 @@ try {
 
     console.log("User saved:", data);
 
-<<<<<<< HEAD
     router.push("/dashboard");
   } catch (error) {
     console.error("Signup error:", error);
   } finally {
   setIsLoading(false);
 }
-=======
-      await registerUser("Submitted Data:", { firstName, lastName, email, phone, password });
-      // Simulate API call for user registration
-      // In a real application, you would make an actual API call here
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      console.log("Registration submitted:", formData);
-
-      // Show success message
-      setShowSuccessMessage(true);
-
-      // Wait for a moment to show success message, then navigate
-      setTimeout(() => {
-        // Navigate to home page after successful registration
-        router.push("/dashboard");
-      }, 1500);
-
-    } catch (error) {
-      console.error("Registration failed:", error);
-      alert("Registration failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
->>>>>>> bb5897061c80322d6712280d6d76e73e75fa72ea
   };
 
   // Success message component
