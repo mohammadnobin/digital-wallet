@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import {
   Eye,
   EyeOff,
@@ -12,10 +12,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Authcontext } from "@/context/AuthContext";
+import Swal from "sweetalert2";
 // login page
 // add
 export default function LoginPage() {
   const router = useRouter();
+  const {signIn} = use(Authcontext)
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -66,55 +69,38 @@ export default function LoginPage() {
     return true;
   };
 
-  const handleSubmit = async () => {
-    if (!validateForm()) {
-      return;
-    }
 
-    setIsLoading(true);
-    setLoginError("");
 
-    try {
-      // Simulate API call for user authentication
-      // In a real application, you would make an actual API call here
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          // Simulate authentication logic
-          // For demo purposes, we'll accept any valid email/password combination
-          // In reality, you'd validate against your backend
+const handleSubmit = async () => {
+  const { email, password } = formData;
 
-          // Example: Simulate failed login for specific email
-          if (formData.email === "fail@example.com") {
-            reject(new Error("Invalid credentials"));
-          } else {
-            resolve();
-          }
-        }, 2000);
-      });
+  try {
+    // ✅ Firebase sign in
+    const result = await signIn(email, password);
+    const user = result.user;
+    console.log("Logged in user:", user);
 
-      console.log("Login submitted:", formData);
+    // ✅ Success alert
+    Swal.fire({
+      title: "Good job!",
+      text: "Login Successful",
+      icon: "success",
+    });
+    router.push("/dashboard");
 
-      // Store login state (in a real app, you might use JWT tokens, cookies, etc.)
-      if (formData.rememberMe) {
-        localStorage.setItem("rememberUser", "true");
-        localStorage.setItem("userEmail", formData.email);
-      }
+    // ✅ Redirect করতে চাইলে এখানে router.push("/dashboard") দিতে পারো
 
-      // Show success message
-      setShowSuccessMessage(true);
+  } catch (error) {
+    console.error("Login error:", error);
 
-      // Wait for a moment to show success message, then navigate
-      setTimeout(() => {
-        // Navigate to home page after successful login
-        router.push("/dashboard");
-      }, 1500);
-    } catch (error) {
-      console.error("Login failed:", error);
-      setLoginError("Invalid email or password. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    // ❌ Error alert
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: error?.message || "Something went wrong!",
+    });
+  }
+};
 
   // Success message component
   if (showSuccessMessage) {
