@@ -432,7 +432,7 @@ try {
                     href="#"
                     className="text-purple-600 hover:text-purple-500 font-medium"
                   >
-                    Terms of Service
+                    Terms of Services
                   </a>{" "}
                   and{" "}
                   <a
