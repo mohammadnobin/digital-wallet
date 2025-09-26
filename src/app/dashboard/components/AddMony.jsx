@@ -26,7 +26,6 @@ import { Authcontext } from "@/context/AuthContext";
 // add
 const AddMoneyPage = () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  console.log(user?.email);
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [amount, setAmount] = useState("");
   const { user } = use(Authcontext);
