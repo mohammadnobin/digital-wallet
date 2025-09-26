@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, use } from "react";
 import {
   ArrowLeft,
   CreditCard,
@@ -18,11 +18,15 @@ import {
   Calculator,
 } from "lucide-react";
 import Link from "next/link";
+import { Authcontext } from "@/context/AuthContext";
 
 const CashoutPage = () => {
   const [selectedMethod, setSelectedMethod] = useState("bank");
   const [amount, setAmount] = useState("");
   const [showBalance, setShowBalance] = useState(true);
+  // Add this
+  const [availableBalance, setAvailableBalance] = useState(0); // instead of hardcoded 2847.65
+
   const [formData, setFormData] = useState({
     bankAccount: "",
     routingNumber: "",
@@ -37,8 +41,30 @@ const CashoutPage = () => {
   const [errors, setErrors] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const { user } = use(Authcontext);
+  useEffect(() => {
+      if (!user?.email) return; // user আসা পর্যন্ত wait করবে
 
-  const availableBalance = 2847.65;
+    const fetchBalance = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/wallets/current?email=${user?.email}`
+        );
+        const data = await response.json();
+        if (response.ok && data.success) {
+          setAvailableBalance(data.data.balance);
+        } else {
+          console.error(data.message || "Failed to fetch balance");
+        }
+      } catch (err) {
+        console.error("Server error:", err);
+      }
+    };
+
+    fetchBalance();
+  }, [user]);
+
+  // const availableBalance = 2847.65;
   const dailyLimit = 5000;
   const remainingLimit = 3200;
 
@@ -111,18 +137,21 @@ const CashoutPage = () => {
     setIsProcessing(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/wallets", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: "68d312cb50092968c7ae5433", // Replace with real logged-in user ID
-          amount: parseFloat(amount),
-          method: selectedMethod,
-          details: formData,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/wallets/cashout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user: user.email,
+            amount: parseFloat(amount),
+            method: selectedMethod,
+            details: formData,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -133,6 +162,9 @@ const CashoutPage = () => {
       // Success
       setIsProcessing(false);
       setShowSuccess(true);
+      // 🔥 Update balance from backend response
+      console.log(data.remainingBalance);
+      setAvailableBalance(data.remainingBalance);
 
       // Reset form after success
       setTimeout(() => {
@@ -156,7 +188,6 @@ const CashoutPage = () => {
     }
   };
 
-  
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
@@ -228,12 +259,12 @@ const CashoutPage = () => {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
-              <Link href='/dashboard'>
-            <button className="flex cursor-pointer items-center text-gray-600 hover:text-gray-900 mr-4">
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Back to Dashboard
-            </button>
-              </Link>
+            <Link href="/dashboard">
+              <button className="flex cursor-pointer items-center text-gray-600 hover:text-gray-900 mr-4">
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                Back to Dashboard
+              </button>
+            </Link>
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <DollarSign className="w-5 h-5 text-white" />
@@ -297,7 +328,7 @@ const CashoutPage = () => {
                   onClick={() => setAmount(availableBalance.toString())}
                   className="text-blue-600 text-sm font-medium hover:text-blue-700"
                 >
-                  Use all available balance (${availableBalance.toFixed(2)})
+                  Use all available balance (${availableBalance})
                 </button>
               </div>
 
