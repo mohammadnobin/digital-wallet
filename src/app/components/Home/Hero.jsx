@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import {
   ArrowRight,
   Shield,
@@ -9,8 +9,11 @@ import {
   Star,
 } from "lucide-react";
 import Link from "next/link";
+import { Authcontext } from "@/context/AuthContext";
 
 export default function HeroSection() {
+  const {user} = use(Authcontext)
+  const redirectUrl = user ? "/dashboard" : "/registration";
   return (
     <div className="relative min-h-screen bg-white">
       {/* Hero Section */}
@@ -39,7 +42,7 @@ export default function HeroSection() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Link href="/registration">
+              <Link  href={redirectUrl}>
                 <button className="bg-indigo-600 cursor-pointer text-white px-8 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center">
                   Open Free Account
                   <ArrowRight className="ml-2 w-5 h-5" />

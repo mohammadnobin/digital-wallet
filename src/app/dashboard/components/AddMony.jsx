@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import {
   ArrowLeft,
   CreditCard,
@@ -22,8 +22,12 @@ import {
   TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
+import { Authcontext } from "@/context/AuthContext";
 // add
 const AddMoneyPage = () => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const {user} = use(Authcontext)
+  console.log(user?.email);
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [amount, setAmount] = useState("");
   const [formData, setFormData] = useState({
@@ -45,6 +49,7 @@ const AddMoneyPage = () => {
   const [loadingBalance, setLoadingBalance] = useState(true);
   const [balanceError, setBalanceError] = useState("");
   const userId = "68d312cb50092968c7ae5433"; // example userId
+
 
   // const currentBalance = 2847.65;
   const dailyAddLimit = 10000;
@@ -93,7 +98,7 @@ const AddMoneyPage = () => {
       try {
         // userId query param hisebe pathano
         const response = await fetch(
-          `http://localhost:5000/api/wallets/current?userId=${userId}`
+          `${baseUrl}/api/wallets/current?userId=${userId}`
         );
         const data = await response.json();
         if (!response.ok)
@@ -175,7 +180,7 @@ const AddMoneyPage = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/wallets/addmoney",
+        `${baseUrl}/api/wallets/addmoney`,
         {
           method: "POST",
           headers: {
