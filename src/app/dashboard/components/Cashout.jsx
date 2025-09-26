@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import {
   ArrowLeft,
   CreditCard,
@@ -18,6 +18,7 @@ import {
   Calculator,
 } from "lucide-react";
 import Link from "next/link";
+import { Authcontext } from "@/context/AuthContext";
 
 const CashoutPage = () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -41,9 +42,10 @@ const CashoutPage = () => {
   const [errors, setErrors] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const userId = "68d312cb50092968c7ae5433"; // example userId
-
+  const { user } = use(Authcontext);
   useEffect(() => {
+      if (!user?.email) return; // user আসা পর্যন্ত wait করবে
+
     const fetchBalance = async () => {
       try {
         const response = await fetch(
@@ -61,7 +63,7 @@ const CashoutPage = () => {
     };
 
     fetchBalance();
-  }, [availableBalance]);
+  }, [user]);
 
   // const availableBalance = 2847.65;
   const dailyLimit = 5000;
@@ -144,7 +146,7 @@ const CashoutPage = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userId: "68d312cb50092968c7ae5433",
+            user: user.email,
             amount: parseFloat(amount),
             method: selectedMethod,
             details: formData,
@@ -161,6 +163,9 @@ const CashoutPage = () => {
       // Success
       setIsProcessing(false);
       setShowSuccess(true);
+      // 🔥 Update balance from backend response
+      console.log(data.remainingBalance);
+      setAvailableBalance(data.remainingBalance);
 
       // Reset form after success
       setTimeout(() => {

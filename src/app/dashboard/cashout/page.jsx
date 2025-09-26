@@ -1,12 +1,12 @@
-import React from 'react';
-import CashoutPage from '../components/Cashout';
+import React from "react";
+import CashoutPage from "../components/Cashout";
 
 function page() {
-    return (
-        <div>
-       <CashoutPage />
-        </div>
-    );
+  return (
+    <div>
+      <CashoutPage />
+    </div>
+  );
 }
 
 export default page;

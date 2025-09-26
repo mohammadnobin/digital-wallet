@@ -26,10 +26,11 @@ import { Authcontext } from "@/context/AuthContext";
 // add
 const AddMoneyPage = () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const {user} = use(Authcontext)
   console.log(user?.email);
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [amount, setAmount] = useState("");
+  const { user } = use(Authcontext);
+  console.log(user?.email);
   const [formData, setFormData] = useState({
     cardNumber: "",
     expiryDate: "",
@@ -48,7 +49,7 @@ const AddMoneyPage = () => {
   const [currentBalance, setCurrentBalance] = useState(0);
   const [loadingBalance, setLoadingBalance] = useState(true);
   const [balanceError, setBalanceError] = useState("");
-  const userId = "68d312cb50092968c7ae5433"; // example userId
+  // const userId = "68d312cb50092968c7ae5433"; // example userId
 
 
   // const currentBalance = 2847.65;
@@ -92,17 +93,18 @@ const AddMoneyPage = () => {
       description: "Transfer from PayPal account",
     },
   ];
-
   useEffect(() => {
+    if (!user?.email) return; // Wait until user is loaded
+
     const fetchCurrentBalance = async () => {
       try {
-        // userId query param hisebe pathano
         const response = await fetch(
           `${baseUrl}/api/wallets/current?userId=${userId}`
         );
         const data = await response.json();
         if (!response.ok)
           throw new Error(data.message || "Failed to fetch balance");
+
         setCurrentBalance(data.data.balance);
       } catch (error) {
         console.error("Error fetching current balance:", error.message);
@@ -110,8 +112,7 @@ const AddMoneyPage = () => {
     };
 
     fetchCurrentBalance();
-  }, [currentBalance]);
-  console.log(currentBalance);
+  }, [user]); // Only run when `user` changes
 
   const quickAmounts = [25, 50, 100, 250, 500, 1000];
 
@@ -187,7 +188,7 @@ const AddMoneyPage = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userId: "68d312cb50092968c7ae5433",
+            user: user.email,
             amount: parseFloat(amount),
             method: selectedMethod,
             details: formData,
@@ -204,6 +205,7 @@ const AddMoneyPage = () => {
       // success
       setIsProcessing(false);
       setShowSuccess(true);
+      setCurrentBalance(data.updatedBalance);
 
       // Reset form after success
       setTimeout(() => {
@@ -228,38 +230,6 @@ const AddMoneyPage = () => {
       setErrors({ general: error.message });
     }
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!validateForm()) return;
-
-  //   setIsProcessing(true);
-
-  //   // Simulate API call
-  //   setTimeout(() => {
-  //     setIsProcessing(false);
-  //     setShowSuccess(true);
-
-  //     // Reset form after success
-  //     setTimeout(() => {
-  //       setShowSuccess(false);
-  //       setAmount('');
-  //       setFormData({
-  //         cardNumber: '',
-  //         expiryDate: '',
-  //         cvv: '',
-  //         cardHolderName: '',
-  //         bankAccount: '',
-  //         routingNumber: '',
-  //         accountHolderName: '',
-  //         mobileNumber: '',
-  //         paypalEmail: '',
-  //         savePaymentMethod: false
-  //       });
-  //     }, 3000);
-  //   }, 2000);
-  // };
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
