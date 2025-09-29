@@ -43,13 +43,14 @@ const CashoutPage = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const { user } = use(Authcontext);
+
   useEffect(() => {
       if (!user?.email) return; // user আসা পর্যন্ত wait করবে
 
     const fetchBalance = async () => {
       try {
         const response = await fetch(
-          `${baseUrl}/api/wallets/current?userId=${userId}`
+          `${baseUrl}/api/wallets/current?email=${user?.email}`
         );
         const data = await response.json();
         if (response.ok && data.success) {
@@ -64,6 +65,29 @@ const CashoutPage = () => {
 
     fetchBalance();
   }, [user]);
+
+
+  // useEffect(() => {
+  //     if (!user?.email) return; // user আসা পর্যন্ত wait করবে
+
+  //   const fetchBalance = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${baseUrl}/api/wallets/current?userId=${userId}`
+  //       );
+  //       const data = await response.json();
+  //       if (response.ok && data.success) {
+  //         setAvailableBalance(data.data.balance);
+  //       } else {
+  //         console.error(data.message || "Failed to fetch balance");
+  //       }
+  //     } catch (err) {
+  //       console.error("Server error:", err);
+  //     }
+  //   };
+
+  //   fetchBalance();
+  // }, [user]);
 
   // const availableBalance = 2847.65;
   const dailyLimit = 5000;
