@@ -92,13 +92,14 @@ const AddMoneyPage = () => {
       description: "Transfer from PayPal account",
     },
   ];
-  useEffect(() => {
+
+    useEffect(() => {
     if (!user?.email) return; // Wait until user is loaded
 
     const fetchCurrentBalance = async () => {
       try {
         const response = await fetch(
-          `${baseUrl}/api/wallets/current?userId=${userId}`
+          `${baseUrl}/api/wallets/current?email=${user.email}`
         );
         const data = await response.json();
         if (!response.ok)
@@ -112,6 +113,28 @@ const AddMoneyPage = () => {
 
     fetchCurrentBalance();
   }, [user]); // Only run when `user` changes
+
+
+  // useEffect(() => {
+  //   if (!user?.email) return; // Wait until user is loaded
+
+  //   const fetchCurrentBalance = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${baseUrl}/api/wallets/current?userId=${userId}`
+  //       );
+  //       const data = await response.json();
+  //       if (!response.ok)
+  //         throw new Error(data.message || "Failed to fetch balance");
+
+  //       setCurrentBalance(data.data.balance);
+  //     } catch (error) {
+  //       console.error("Error fetching current balance:", error.message);
+  //     }
+  //   };
+
+  //   fetchCurrentBalance();
+  // }, [user]); // Only run when `user` changes
 
   const quickAmounts = [25, 50, 100, 250, 500, 1000];
 
