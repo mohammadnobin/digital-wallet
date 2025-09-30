@@ -1,10 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import { 
-  ArrowLeft, 
-  CreditCard, 
-  Building2, 
-  Smartphone, 
+import {
+  ArrowLeft,
+  CreditCard,
+  Building2,
+  Smartphone,
   DollarSign,
   Plus,
   CheckCircle,
@@ -21,6 +21,7 @@ import {
   Star,
   TrendingUp
 } from 'lucide-react';
+import Link from 'next/link';
 
 const AddMoneyPage = () => {
   const [selectedMethod, setSelectedMethod] = useState('card');
@@ -136,16 +137,16 @@ const AddMoneyPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setIsProcessing(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       setIsProcessing(false);
       setShowSuccess(true);
-      
+
       // Reset form after success
       setTimeout(() => {
         setShowSuccess(false);
@@ -215,7 +216,7 @@ const AddMoneyPage = () => {
               <span className="font-semibold">{fundingSources.find(m => m.id === selectedMethod)?.processingTime}</span>
             </div>
           </div>
-          <button 
+          <button
             onClick={() => setShowSuccess(false)}
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
           >
@@ -229,20 +230,23 @@ const AddMoneyPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
-            <button className="flex items-center text-gray-600 hover:text-gray-900 mr-4">
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Back to Dashboard
-            </button>
-            <div className="flex items-center space-x-2">
+            <Link href="/">
+              <button className="flex items-center text-gray-600 hover:text-gray-900 mr-4">
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                Back to Dashboard
+              </button>
+            </Link>
+            
+          </div>
+          <div className="flex items-center space-x-2 text-center">
               <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
                 <Plus className="w-5 h-5 text-white" />
               </div>
               <h1 className="text-xl font-bold text-gray-900">Add Money</h1>
             </div>
-          </div>
         </div>
       </header>
 
@@ -264,7 +268,7 @@ const AddMoneyPage = () => {
               {/* Amount Section */}
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Enter Amount</h2>
-                
+
                 <div className="mb-4">
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -273,9 +277,8 @@ const AddMoneyPage = () => {
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="0.00"
-                      className={`w-full pl-10 pr-4 py-4 text-2xl font-semibold border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                        errors.amount ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                      }`}
+                      className={`w-full pl-10 pr-4 py-4 text-2xl font-semibold border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.amount ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                        }`}
                     />
                   </div>
                   {errors.amount && (
@@ -343,16 +346,15 @@ const AddMoneyPage = () => {
               {/* Funding Method Selection */}
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Select Funding Source</h2>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   {fundingSources.map((method) => (
                     <div
                       key={method.id}
-                      className={`relative border rounded-lg p-4 cursor-pointer transition-all ${
-                        selectedMethod === method.id 
-                          ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200' 
+                      className={`relative border rounded-lg p-4 cursor-pointer transition-all ${selectedMethod === method.id
+                          ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
                           : 'border-gray-200 hover:border-gray-300'
-                      }`}
+                        }`}
                       onClick={() => setSelectedMethod(method.id)}
                     >
                       {method.popular && (
@@ -382,7 +384,7 @@ const AddMoneyPage = () => {
                       <CreditCard className="w-5 h-5 mr-2 text-blue-600" />
                       Card Information
                     </h3>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         Cardholder Name
@@ -393,9 +395,8 @@ const AddMoneyPage = () => {
                           type="text"
                           value={formData.cardHolderName}
                           onChange={(e) => handleInputChange('cardHolderName', e.target.value)}
-                          className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                            errors.cardHolderName ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                          }`}
+                          className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.cardHolderName ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                            }`}
                           placeholder="John Doe"
                         />
                       </div>
@@ -412,16 +413,15 @@ const AddMoneyPage = () => {
                         type="text"
                         value={formData.cardNumber}
                         onChange={(e) => handleInputChange('cardNumber', e.target.value)}
-                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                          errors.cardNumber ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                        }`}
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.cardNumber ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                          }`}
                         placeholder="1234 5678 9012 3456"
                       />
                       {errors.cardNumber && (
                         <p className="mt-1 text-sm text-red-600">{errors.cardNumber}</p>
                       )}
                     </div>
-                    
+
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -433,9 +433,8 @@ const AddMoneyPage = () => {
                             type="text"
                             value={formData.expiryDate}
                             onChange={(e) => handleInputChange('expiryDate', e.target.value)}
-                            className={`w-full pl-9 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                              errors.expiryDate ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                            }`}
+                            className={`w-full pl-9 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.expiryDate ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                              }`}
                             placeholder="MM/YY"
                           />
                         </div>
@@ -443,7 +442,7 @@ const AddMoneyPage = () => {
                           <p className="mt-1 text-sm text-red-600">{errors.expiryDate}</p>
                         )}
                       </div>
-                      
+
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           CVV
@@ -454,9 +453,8 @@ const AddMoneyPage = () => {
                             type="text"
                             value={formData.cvv}
                             onChange={(e) => handleInputChange('cvv', e.target.value)}
-                            className={`w-full pl-9 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                              errors.cvv ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                            }`}
+                            className={`w-full pl-9 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.cvv ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                              }`}
                             placeholder="123"
                             maxLength="4"
                           />
@@ -475,7 +473,7 @@ const AddMoneyPage = () => {
                       <Building2 className="w-5 h-5 mr-2 text-blue-600" />
                       Bank Account Details
                     </h3>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         Account Holder Name
@@ -486,9 +484,8 @@ const AddMoneyPage = () => {
                           type="text"
                           value={formData.accountHolderName}
                           onChange={(e) => handleInputChange('accountHolderName', e.target.value)}
-                          className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                            errors.accountHolderName ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                          }`}
+                          className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.accountHolderName ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                            }`}
                           placeholder="Account holder name"
                         />
                       </div>
@@ -496,7 +493,7 @@ const AddMoneyPage = () => {
                         <p className="mt-1 text-sm text-red-600">{errors.accountHolderName}</p>
                       )}
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -506,16 +503,15 @@ const AddMoneyPage = () => {
                           type="text"
                           value={formData.bankAccount}
                           onChange={(e) => handleInputChange('bankAccount', e.target.value)}
-                          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                            errors.bankAccount ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                          }`}
+                          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.bankAccount ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                            }`}
                           placeholder="Account number"
                         />
                         {errors.bankAccount && (
                           <p className="mt-1 text-sm text-red-600">{errors.bankAccount}</p>
                         )}
                       </div>
-                      
+
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           Routing Number
@@ -524,9 +520,8 @@ const AddMoneyPage = () => {
                           type="text"
                           value={formData.routingNumber}
                           onChange={(e) => handleInputChange('routingNumber', e.target.value)}
-                          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                            errors.routingNumber ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                          }`}
+                          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.routingNumber ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                            }`}
                           placeholder="Routing number"
                         />
                         {errors.routingNumber && (
@@ -543,7 +538,7 @@ const AddMoneyPage = () => {
                       <Smartphone className="w-5 h-5 mr-2 text-blue-600" />
                       Mobile Payment Details
                     </h3>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         Mobile Number
@@ -554,9 +549,8 @@ const AddMoneyPage = () => {
                           type="tel"
                           value={formData.mobileNumber}
                           onChange={(e) => handleInputChange('mobileNumber', e.target.value)}
-                          className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                            errors.mobileNumber ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                          }`}
+                          className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.mobileNumber ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                            }`}
                           placeholder="+1 (555) 123-4567"
                         />
                       </div>
@@ -573,7 +567,7 @@ const AddMoneyPage = () => {
                       <Receipt className="w-5 h-5 mr-2 text-blue-600" />
                       PayPal Details
                     </h3>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         PayPal Email
@@ -582,9 +576,8 @@ const AddMoneyPage = () => {
                         type="email"
                         value={formData.paypalEmail}
                         onChange={(e) => handleInputChange('paypalEmail', e.target.value)}
-                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                          errors.paypalEmail ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                        }`}
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.paypalEmail ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                          }`}
                         placeholder="your@email.com"
                       />
                       {errors.paypalEmail && (
@@ -614,11 +607,10 @@ const AddMoneyPage = () => {
               <button
                 onClick={handleSubmit}
                 disabled={isProcessing || !amount || parseFloat(amount) <= 0}
-                className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${
-                  isProcessing || !amount || parseFloat(amount) <= 0
+                className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${isProcessing || !amount || parseFloat(amount) <= 0
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-green-600 text-white hover:bg-green-700'
-                }`}
+                  }`}
               >
                 {isProcessing ? (
                   <span className="flex items-center justify-center">
@@ -684,20 +676,20 @@ const AddMoneyPage = () => {
                     <span className="font-medium">${remainingDaily.toFixed(2)} / ${dailyAddLimit.toFixed(2)}</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
+                    <div
                       className="bg-blue-500 h-2 rounded-full transition-all duration-300"
                       style={{ width: `${((dailyAddLimit - remainingDaily) / dailyAddLimit) * 100}%` }}
                     ></div>
                   </div>
                 </div>
-                
+
                 <div>
                   <div className="flex justify-between text-sm mb-2">
                     <span className="text-gray-600">Monthly Limit</span>
                     <span className="font-medium">${remainingMonthly.toFixed(2)} / ${monthlyAddLimit.toFixed(2)}</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
+                    <div
                       className="bg-green-500 h-2 rounded-full transition-all duration-300"
                       style={{ width: `${((monthlyAddLimit - remainingMonthly) / monthlyAddLimit) * 100}%` }}
                     ></div>
