@@ -6,7 +6,6 @@ import {
   CheckCircle,
   Play,
   Users,
-  Star,
 } from "lucide-react";
 import Link from "next/link";
 import { Authcontext } from "@/context/AuthContext";
@@ -17,7 +16,7 @@ export default function HeroSection() {
   return (
     <div className="relative min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="py-32 lg:py-40">
+      <section className="py-8 lg:py-16">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
@@ -93,95 +92,7 @@ export default function HeroSection() {
           </div>
         </div>
       </section>
-
-      {/* Stats Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">10M+</div>
-              <div className="text-gray-600 font-medium">Active Users</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">$2B+</div>
-              <div className="text-gray-600 font-medium">Monthly Volume</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">50+</div>
-              <div className="text-gray-600 font-medium">Countries</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">99.9%</div>
-              <div className="text-gray-600 font-medium">Uptime</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* App Preview Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
-               Your complete solution in one place
-              </h2>
-              <p className="text-xl text-gray-600 mb-8">
-                Simple interface, powerful features. Manage all your payments,
-                track expenses, and grow your savings from anywhere.
-              </p>
-
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">
-                      Quick Payments
-                    </h4>
-                    <p className="text-gray-600">
-                      Send money using just phone numbers or QR codes
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">
-                      Bill Management
-                    </h4>
-                    <p className="text-gray-600">
-                      Automate recurring payments and never miss a due date
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">
-                      Smart Analytics
-                    </h4>
-                    <p className="text-gray-600">
-                      Track spending patterns and optimize your budget
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-             <div className="mt-10">
-               <Link href="/registration" className=" cursor-pointer bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
-                 Register now !
-              </Link>
-             </div>
-            </div>
-
-            {/* Right Phone Mockup */}
-            <div >
-              <img className="rounded-2xl" src="/laptop.png" alt="laptop" />
-            </div>
-          </div>
-        </div>
-      </section>
+      
     </div>
   );
 }
