@@ -23,13 +23,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Authcontext } from "@/context/AuthContext";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 // add
 const AddMoneyPage = () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [amount, setAmount] = useState("");
   const { user } = use(Authcontext);
-  console.log(user?.email);
   const [formData, setFormData] = useState({
     cardNumber: "",
     expiryDate: "",
@@ -43,13 +43,13 @@ const AddMoneyPage = () => {
     savePaymentMethod: false,
   });
   const [errors, setErrors] = useState({});
+  const axiosSecure = useAxiosSecure();
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentBalance, setCurrentBalance] = useState(0);
   const [loadingBalance, setLoadingBalance] = useState(true);
   const [balanceError, setBalanceError] = useState("");
   // const userId = "68d312cb50092968c7ae5433"; // example userId
-
 
   // const currentBalance = 2847.65;
   const dailyAddLimit = 10000;
@@ -93,48 +93,27 @@ const AddMoneyPage = () => {
     },
   ];
 
-    useEffect(() => {
-    if (!user?.email) return; // Wait until user is loaded
+  useEffect(() => {
+  if (!user?.email) return; // Wait until user is loaded
 
-    const fetchCurrentBalance = async () => {
-      try {
-        const response = await fetch(
-          `${baseUrl}/api/wallets/current?email=${user.email}`
-        );
-        const data = await response.json();
-        if (!response.ok)
-          throw new Error(data.message || "Failed to fetch balance");
+  const fetchCurrentBalance = async () => {
+    try {
+      const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
+      const data = response.data;
 
-        setCurrentBalance(data.data.balance);
-      } catch (error) {
-        console.error("Error fetching current balance:", error.message);
+      // এখানে response.ok লাগবে না, axios সরাসরি error throw করে
+      if (!data?.success) {
+        throw new Error(data.message || "Failed to fetch balance");
       }
-    };
 
-    fetchCurrentBalance();
-  }, [user]); // Only run when `user` changes
+      setCurrentBalance(data.data.balance);
+    } catch (error) {
+      console.error("Error fetching current balance:", error.message);
+    }
+  };
 
-
-  // useEffect(() => {
-  //   if (!user?.email) return; // Wait until user is loaded
-
-  //   const fetchCurrentBalance = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `${baseUrl}/api/wallets/current?userId=${userId}`
-  //       );
-  //       const data = await response.json();
-  //       if (!response.ok)
-  //         throw new Error(data.message || "Failed to fetch balance");
-
-  //       setCurrentBalance(data.data.balance);
-  //     } catch (error) {
-  //       console.error("Error fetching current balance:", error.message);
-  //     }
-  //   };
-
-  //   fetchCurrentBalance();
-  // }, [user]); // Only run when `user` changes
+  fetchCurrentBalance();
+}, [user,currentBalance]); 
 
   const quickAmounts = [25, 50, 100, 250, 500, 1000];
 
@@ -195,63 +174,46 @@ const AddMoneyPage = () => {
     return Object.keys(newErrors).length === 0;
   };
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!validateForm()) return;
+  if (!validateForm()) return;
 
-    setIsProcessing(true);
+  setIsProcessing(true);
 
-    try {
-      const response = await fetch(
-        `${baseUrl}/api/wallets/addmoney`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user: user.email,
-            amount: parseFloat(amount),
-            method: selectedMethod,
-            details: formData,
-          }),
-        }
-      );
+  try {
+    const { data } = await axiosSecure.post("/api/wallets/addmoney", {
+      user: user.email,
+      amount: parseFloat(amount),
+      method: selectedMethod,
+      details: formData,
+    });
 
-      const data = await response.json();
+    // success হলে সরাসরি update
+    setCurrentBalance(data.updatedBalance);
+    setShowSuccess(true);
 
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to add money");
-      }
+    // Reset form
+    setAmount("");
+    setFormData({
+      cardNumber: "",
+      expiryDate: "",
+      cvv: "",
+      cardHolderName: "",
+      bankAccount: "",
+      routingNumber: "",
+      accountHolderName: "",
+      mobileNumber: "",
+      paypalEmail: "",
+      savePaymentMethod: false,
+    });
+  } catch (error) {
+    console.error("Error adding money:", error.message);
+    setErrors({ general: error.message });
+  } finally {
+    setIsProcessing(false);
+  }
+};
 
-      // success
-      setIsProcessing(false);
-      setShowSuccess(true);
-      setCurrentBalance(data.updatedBalance);
-
-      // Reset form after success
-      setTimeout(() => {
-        setShowSuccess(false);
-        setAmount("");
-        setFormData({
-          cardNumber: "",
-          expiryDate: "",
-          cvv: "",
-          cardHolderName: "",
-          bankAccount: "",
-          routingNumber: "",
-          accountHolderName: "",
-          mobileNumber: "",
-          paypalEmail: "",
-          savePaymentMethod: false,
-        });
-      }, 3000);
-    } catch (error) {
-      console.error("Error adding money:", error.message);
-      setIsProcessing(false);
-      setErrors({ general: error.message });
-    }
-  };
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -346,7 +308,7 @@ const AddMoneyPage = () => {
               </div>
               <h1 className="text-xl font-bold text-gray-900">Add Money</h1>
             </div>
-        </div>
+          </div>
         </div>
       </header>
 
