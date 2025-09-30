@@ -3,3 +3,7 @@
  --color-primary: #4F46E5;
   --color-secondary: #F97316;
 }
+
+body {
+  font-family: 'openSans', sans-serif;
+}

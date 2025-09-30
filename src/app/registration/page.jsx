@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
+import axios from "axios";
 import {
   Eye,
   EyeOff,
   Wallet,
-  Shield,
   Lock,
   Mail,
   User,
@@ -15,9 +15,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Authcontext } from "@/context/AuthContext";
 
 export default function RegisterPage() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  console.log(baseUrl);
   const router = useRouter();
+  const {createUser,updateUserProfile} = use(Authcontext)
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -124,13 +128,6 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // const form = e.target
-    // const firstName = form.firstName.value
-    // const lastName = form.lastName.value
-    // const email = form.email.value
-    // const phone = form.phone.value
-    // const password = form.password.value
-    // console.log({ email, phone, lastName, firstName, password })
     if (!validateForm()) {
       return;
     }
@@ -138,33 +135,28 @@ export default function RegisterPage() {
 
 
     setIsLoading(true);
+try {
+  const { firstName, lastName, email,password } = formData;
+  const name = firstName + " " + lastName;
+   const result = await createUser(email, password);
+    const loggedUser = result.user;
+     // Update Firebase user profile with name and photo
+      await updateUserProfile(name);
 
-    try {
+    // Backend এ ইউজার save করা
+    const { data } = await axios.post(`${baseUrl}/api/users`, {
+      name,
+      email,
+    });
 
-      const { firstName, lastName, email, phone, password } = formData;
+    console.log("User saved:", data);
 
-      console.log("Submitted Data:", { firstName, lastName, email, phone, password });
-      // Simulate API call for user registration
-      // In a real application, you would make an actual API call here
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      console.log("Registration submitted:", formData);
-
-      // Show success message
-      setShowSuccessMessage(true);
-
-      // Wait for a moment to show success message, then navigate
-      setTimeout(() => {
-        // Navigate to home page after successful registration
-        router.push("/dashboard");
-      }, 1500);
-
-    } catch (error) {
-      console.error("Registration failed:", error);
-      alert("Registration failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    router.push("/dashboard");
+  } catch (error) {
+    console.error("Signup error:", error);
+  } finally {
+  setIsLoading(false);
+}
   };
 
   // Success message component
@@ -441,7 +433,7 @@ export default function RegisterPage() {
                     href="#"
                     className="text-purple-600 hover:text-purple-500 font-medium"
                   >
-                    Terms of Service
+                    Terms of Services
                   </a>{" "}
                   and{" "}
                   <a
