@@ -1,14 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import AuthProviders from "@/context/AuthProviders";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const openSans = Open_Sans ({
+  variable:'--font-openSans',
+  weight: ["300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
 });
 
@@ -24,7 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${openSans.variable} antialiased`}
       >
         <AuthProviders>{children}</AuthProviders>
       </body>

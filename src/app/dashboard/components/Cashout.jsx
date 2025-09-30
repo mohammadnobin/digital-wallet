@@ -21,6 +21,7 @@ import Link from "next/link";
 import { Authcontext } from "@/context/AuthContext";
 
 const CashoutPage = () => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [selectedMethod, setSelectedMethod] = useState("bank");
   const [amount, setAmount] = useState("");
   const [showBalance, setShowBalance] = useState(true);
@@ -42,13 +43,14 @@ const CashoutPage = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const { user } = use(Authcontext);
+
   useEffect(() => {
       if (!user?.email) return; // user আসা পর্যন্ত wait করবে
 
     const fetchBalance = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/wallets/current?email=${user?.email}`
+          `${baseUrl}/api/wallets/current?email=${user?.email}`
         );
         const data = await response.json();
         if (response.ok && data.success) {
@@ -63,6 +65,29 @@ const CashoutPage = () => {
 
     fetchBalance();
   }, [user]);
+
+
+  // useEffect(() => {
+  //     if (!user?.email) return; // user আসা পর্যন্ত wait করবে
+
+  //   const fetchBalance = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${baseUrl}/api/wallets/current?userId=${userId}`
+  //       );
+  //       const data = await response.json();
+  //       if (response.ok && data.success) {
+  //         setAvailableBalance(data.data.balance);
+  //       } else {
+  //         console.error(data.message || "Failed to fetch balance");
+  //       }
+  //     } catch (err) {
+  //       console.error("Server error:", err);
+  //     }
+  //   };
+
+  //   fetchBalance();
+  // }, [user]);
 
   // const availableBalance = 2847.65;
   const dailyLimit = 5000;
@@ -138,7 +163,7 @@ const CashoutPage = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/wallets/cashout",
+        `${baseUrl}/api/wallets/cashout`,
         {
           method: "POST",
           headers: {

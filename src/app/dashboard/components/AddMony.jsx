@@ -1,8 +1,5 @@
 "use client";
 import React, { use, useEffect, useState } from "react";
-import { Authcontext } from "@/context/AuthContext";
-import Link from "next/link";
-
 import {
   ArrowLeft,
   CreditCard,
@@ -24,8 +21,11 @@ import {
   Star,
   TrendingUp,
 } from "lucide-react";
-
+import Link from "next/link";
+import { Authcontext } from "@/context/AuthContext";
+// add
 const AddMoneyPage = () => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [amount, setAmount] = useState("");
   const { user } = use(Authcontext);
@@ -49,6 +49,7 @@ const AddMoneyPage = () => {
   const [loadingBalance, setLoadingBalance] = useState(true);
   const [balanceError, setBalanceError] = useState("");
   // const userId = "68d312cb50092968c7ae5433"; // example userId
+
 
   // const currentBalance = 2847.65;
   const dailyAddLimit = 10000;
@@ -91,13 +92,14 @@ const AddMoneyPage = () => {
       description: "Transfer from PayPal account",
     },
   ];
-  useEffect(() => {
+
+    useEffect(() => {
     if (!user?.email) return; // Wait until user is loaded
 
     const fetchCurrentBalance = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/wallets/current?email=${user.email}`
+          `${baseUrl}/api/wallets/current?email=${user.email}`
         );
         const data = await response.json();
         if (!response.ok)
@@ -111,6 +113,28 @@ const AddMoneyPage = () => {
 
     fetchCurrentBalance();
   }, [user]); // Only run when `user` changes
+
+
+  // useEffect(() => {
+  //   if (!user?.email) return; // Wait until user is loaded
+
+  //   const fetchCurrentBalance = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${baseUrl}/api/wallets/current?userId=${userId}`
+  //       );
+  //       const data = await response.json();
+  //       if (!response.ok)
+  //         throw new Error(data.message || "Failed to fetch balance");
+
+  //       setCurrentBalance(data.data.balance);
+  //     } catch (error) {
+  //       console.error("Error fetching current balance:", error.message);
+  //     }
+  //   };
+
+  //   fetchCurrentBalance();
+  // }, [user]); // Only run when `user` changes
 
   const quickAmounts = [25, 50, 100, 250, 500, 1000];
 
@@ -179,7 +203,7 @@ const AddMoneyPage = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/wallets/addmoney",
+        `${baseUrl}/api/wallets/addmoney`,
         {
           method: "POST",
           headers: {
@@ -307,7 +331,7 @@ const AddMoneyPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
             <Link href="/dashboard">
@@ -322,7 +346,7 @@ const AddMoneyPage = () => {
               </div>
               <h1 className="text-xl font-bold text-gray-900">Add Money</h1>
             </div>
-          </div>
+        </div>
         </div>
       </header>
 
