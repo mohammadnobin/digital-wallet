@@ -1,9 +1,10 @@
 import React from 'react';
+import TransactionHistory from '../components/History';
 
 const page = () => {
     return (
         <div>
-          this is history page  
+          <TransactionHistory />
         </div>
     );
 };
