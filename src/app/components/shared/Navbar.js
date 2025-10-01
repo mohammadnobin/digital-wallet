@@ -75,8 +75,7 @@ const Navbar = () => {
               </Link>
             </div>
             <nav className="hidden md:flex space-x-8">
-              {navigationItems.map((item) => (
-              
+              {navigationItems.map((item) => (         
                 <Link
                   key={item.label}
                   href={item.href}
