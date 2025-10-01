@@ -9,10 +9,13 @@ import {
   Receipt,
   Clock,
 } from "lucide-react";
+
 import { Authcontext } from "@/context/AuthContext";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+   const pathname = usePathname();
   const [activeTab, setActiveTab] = useState("Dashboard");
   const { user, logOut } = use(Authcontext);
   const [open, setOpen] = useState(false);
@@ -73,16 +76,9 @@ const Navbar = () => {
             </div>
             <nav className="hidden md:flex space-x-8">
               {navigationItems.map((item) => (
-                <Link key={item.label} href={item.href}>
-                  <button
-                    onClick={() => setActiveTab(item.label)}
-                    className={`px-3 py-2 cursor-pointer text-sm font-medium transition-colors ${
-                      activeTab === item.label
-                        ? "text-blue-600 border-b-2 border-blue-600"
-                        : "text-gray-500 hover:text-gray-700"
-                    }`}
-                  >
-                    {/* optional icon */}
+                <Link  className={`px-3 py-2 cursor-pointer text-sm font-medium transition-colors ${pathname === item.href ? "text-blue-600 border-b-2  border-blue-600" : "text-gray-500 hover:text-gray-700"}`} key={item.label} href={item.href}>
+                  <button className="cursor-pointer">
+                    
                     <item.icon className="inline-block w-4 h-4 mr-1" />
                     {item.label}
                   </button>
