@@ -379,8 +379,11 @@ export default function AppPreview() {
               </div>
 
              <div className="mt-10">
-               <Link href="/registration" className=" cursor-pointer bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
-                 Register now !
+               <Link href="/registration" >
+               <button className=" cursor-pointer bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                Register now !
+               </button>
+                 
               </Link>
              </div>
             </div>
