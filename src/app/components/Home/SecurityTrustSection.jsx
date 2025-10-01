@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Shield, Lock, Eye, Fingerprint, Award, Users, CheckCircle, AlertTriangle, Key, Globe, Server, Smartphone, Bell, Activity, TrendingUp, Star, Building2, CreditCard, Zap, Database, Clock, UserCheck } from 'lucide-react';
+import { Shield, Lock, Eye, Fingerprint, Award, Users, Key, Globe, Server, Bell, Activity,  Building2, CreditCard, Zap, Database, UserCheck } from 'lucide-react';
 
 export default function SecurityTrustSection() {
   const [activeSecurityFeature, setActiveSecurityFeature] = useState(0);
