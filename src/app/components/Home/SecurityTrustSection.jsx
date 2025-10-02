@@ -47,6 +47,15 @@ export default function SecurityTrustSection() {
     }
   ];
 
+  const certifications = [
+    { name: "PCI DSS", level: "Level 1", color: "bg-green-500", icon: <CreditCard className="w-4 h-4" /> },
+    { name: "ISO 27001", level: "Certified", color: "bg-blue-500", icon: <Award className="w-4 h-4" /> },
+    { name: "SOC 2", level: "Type II", color: "bg-purple-500", icon: <Building2 className="w-4 h-4" /> },
+    { name: "GDPR", level: "Compliant", color: "bg-indigo-500", icon: <Globe className="w-4 h-4" /> },
+    { name: "HIPAA", level: "Compliant", color: "bg-pink-500", icon: <UserCheck className="w-4 h-4" /> },
+    { name: "FedRAMP", level: "Moderate", color: "bg-red-500", icon: <Shield className="w-4 h-4" /> }
+  ];
+
   const securityMetrics = [
     { label: "Uptime", value: 99.97, max: 100, color: "text-green-400" },
     { label: "Response Time", value: 0.3, max: 1, unit: "s", color: "text-blue-400" },
