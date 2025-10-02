@@ -1,6 +1,7 @@
 import AppPreview from "./components/Home/AppPreview";
 import HeroSection from "./components/Home/Hero";
-import SecurityTrustSection from "./components/Home/SecurityTrustSection";
+// import HowItWorksSection from "./components/Home/HowItWorks";
+// import SecurityTrustSection from "./components/Home/SecurityTrustSection";
 import State from "./components/Home/State";
 
 import TestimonialsSection from "./components/Home/Testimonials";
@@ -13,7 +14,8 @@ export default function Home() {
       <HeroSection />
       <State />
       <AppPreview />
-      <SecurityTrustSection />
+      {/* <HowItWorksSection />
+      <SecurityTrustSection /> */}
       <TestimonialsSection />
       <FooterSection></FooterSection>
     </>
