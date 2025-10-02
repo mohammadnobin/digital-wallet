@@ -47,15 +47,6 @@ export default function SecurityTrustSection() {
     }
   ];
 
-  const certifications = [
-    { name: "PCI DSS", level: "Level 1", color: "bg-green-500", icon: <CreditCard className="w-4 h-4" /> },
-    { name: "ISO 27001", level: "Certified", color: "bg-blue-500", icon: <Award className="w-4 h-4" /> },
-    { name: "SOC 2", level: "Type II", color: "bg-purple-500", icon: <Building2 className="w-4 h-4" /> },
-    { name: "GDPR", level: "Compliant", color: "bg-indigo-500", icon: <Globe className="w-4 h-4" /> },
-    { name: "HIPAA", level: "Compliant", color: "bg-pink-500", icon: <UserCheck className="w-4 h-4" /> },
-    { name: "FedRAMP", level: "Moderate", color: "bg-red-500", icon: <Shield className="w-4 h-4" /> }
-  ];
-
   const securityMetrics = [
     { label: "Uptime", value: 99.97, max: 100, color: "text-green-400" },
     { label: "Response Time", value: 0.3, max: 1, unit: "s", color: "text-blue-400" },
@@ -434,23 +425,7 @@ export default function SecurityTrustSection() {
           </div>
         )}
 
-        {/* Trust Indicators */}
-        <div className="text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8">Trusted by Industry Leaders</h3>
-          <div className="flex flex-wrap justify-center items-center gap-8">
-            {certifications.map((cert, index) => (
-              <div key={index} className="flex items-center space-x-2 bg-white px-6 py-4 rounded-xl shadow-lg">
-                <div className={`w-8 h-8 ${cert.color} rounded-lg flex items-center justify-center text-white`}>
-                  {cert.icon}
-                </div>
-                <div className="text-left">
-                  <div className="font-bold text-gray-900">{cert.name}</div>
-                  <div className="text-sm text-gray-600">{cert.level}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        
       </div>
 
       <style jsx>{`
