@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   QrCode,
   CreditCard,
@@ -18,9 +18,32 @@ import {
   SquareArrowOutUpRight
 } from 'lucide-react';
 import Link from 'next/link';
+import useAuth from '@/hooks/useAuth';
+import useAxiosSecure from '@/hooks/useAxiosSecure';
 
 const DigitalWalletDashboard = () => {
+  const {user} = useAuth();
+  const axiosSecure = useAxiosSecure()
   const [showBalance, setShowBalance] = useState(true);
+  const [totalBalance, setTotalBalance] = useState(0);
+  console.log(totalBalance)
+  // useEffect(async() => {
+  //     // const res = await axiosSecure.get(`/api/wallets/current?email=${user.email}`) 
+  //     console.log(res.data)
+  // }, [user]);
+
+  useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const res = await axiosSecure.get(`/api/wallets/current?email=${user?.email}`);
+      setTotalBalance(res?.data?.data.balance);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchData();
+}, [user]);
 
   const quickActions = [
     { icon: Plus, label: "Add Money", color: "bg-blue-500", href: "/dashboard/addMoney" },
