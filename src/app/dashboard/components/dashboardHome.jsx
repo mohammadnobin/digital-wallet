@@ -25,25 +25,25 @@ const DigitalWalletDashboard = () => {
   const {user} = useAuth();
   const axiosSecure = useAxiosSecure()
   const [showBalance, setShowBalance] = useState(true);
-  const [totalBalance, setTotalBalance] = useState(0);
-  console.log(totalBalance)
-  // useEffect(async() => {
-  //     // const res = await axiosSecure.get(`/api/wallets/current?email=${user.email}`) 
-  //     console.log(res.data)
-  // }, [user]);
+  const [totalbalance, setTotalBalance] = useState(0);
+  console.log(totalbalance);
 
-  useEffect(() => {
+useEffect(() => {
   const fetchData = async () => {
     try {
+      if (!user?.email) return; // ✅ user না থাকলে কিছু করবে না
       const res = await axiosSecure.get(`/api/wallets/current?email=${user?.email}`);
-      setTotalBalance(res?.data?.data.balance);
+      setTotalBalance(res?.data?.data?.balance || 0);
     } catch (err) {
       console.error(err);
     }
   };
 
   fetchData();
-}, [user]);
+}, [user, axiosSecure]); // dependency তে axiosSecure ও রাখো
+
+
+
 
   const quickActions = [
     { icon: Plus, label: "Add Money", color: "bg-blue-500", href: "/dashboard/addMoney" },
@@ -148,7 +148,7 @@ const DigitalWalletDashboard = () => {
                   </div>
                   <p className="text-sm text-gray-600 mb-1">Total Balance</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {showBalance ? '$2,847.65' : '••••••'}
+                    {showBalance ? `${totalbalance}` : '••••••'}
                   </p>
                 </div>
 
