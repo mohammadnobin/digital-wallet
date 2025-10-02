@@ -53,6 +53,10 @@ const AuthProviders = ({ children }) => {
     return signOut(auth);
   };
 
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -74,6 +78,7 @@ const AuthProviders = ({ children }) => {
     logOut,
     user,
     loading,
+    resetPassword
   };
 
   return <Authcontext value={authInfo}>{children}</Authcontext>;

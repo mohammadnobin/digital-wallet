@@ -28,20 +28,42 @@ const DigitalWalletDashboard = () => {
   const [totalbalance, setTotalBalance] = useState(0);
   console.log(totalbalance);
 
-useEffect(() => {
-  const fetchData = async () => {
+// useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       if (!user?.email) return; // ✅ user না থাকলে কিছু করবে না
+//       const res = await axiosSecure.get(`/api/wallets/current?email=${user?.email}`);
+//       setTotalBalance(res?.data?.data?.balance || 0);
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   };
+
+//   fetchData();
+// }, [user, axiosSecure]); // dependency তে axiosSecure ও রাখো
+
+
+  useEffect(() => {
+  if (!user?.email) return; // Wait until user is loaded
+
+  const fetchCurrentBalance = async () => {
     try {
-      if (!user?.email) return; // ✅ user না থাকলে কিছু করবে না
-      const res = await axiosSecure.get(`/api/wallets/current?email=${user?.email}`);
-      setTotalBalance(res?.data?.data?.balance || 0);
-    } catch (err) {
-      console.error(err);
+      const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
+      const data = response.data;
+
+      // এখানে response.ok লাগবে না, axios সরাসরি error throw করে
+      if (!data?.success) {
+        throw new Error(data.message || "Failed to fetch balance");
+      }
+
+      setTotalBalance(data.data.balance);
+    } catch (error) {
+      console.error("Error fetching current balance:", error.message);
     }
   };
 
-  fetchData();
-}, [user, axiosSecure]); // dependency তে axiosSecure ও রাখো
-
+  fetchCurrentBalance();
+}, [user,totalbalance]); 
 
 
 
