@@ -19,7 +19,6 @@ const Navbar = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const { user, logOut } = use(Authcontext);
   const [open, setOpen] = useState(false);
-  console.log(user);
   const handleLogout = () => {
     logOut();
   };
