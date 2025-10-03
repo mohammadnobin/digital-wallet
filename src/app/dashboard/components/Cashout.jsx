@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Authcontext } from "@/context/AuthContext";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 
 const CashoutPage = () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -42,6 +43,8 @@ const CashoutPage = () => {
   const [errors, setErrors] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [currentBalance, setCurrentBalance] = useState(0);
+  const axiosSecure = useAxiosSecure();
   const { user } = use(Authcontext);
 
   useEffect(() => {
@@ -65,6 +68,28 @@ const CashoutPage = () => {
 
     fetchBalance();
   }, [user]);
+
+    useEffect(() => {
+    if (!user?.email) return; // Wait until user is loaded
+  
+    const fetchCurrentBalance = async () => {
+      try {
+        const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
+        const data = response.data;
+  
+        // এখানে response.ok লাগবে না, axios সরাসরি error throw করে
+        if (!data?.success) {
+          throw new Error(data.message || "Failed to fetch balance");
+        }
+  
+        setCurrentBalance(data.data.balance);
+      } catch (error) {
+        console.error("Error fetching current balance:", error.message);
+      }
+    };
+  
+    fetchCurrentBalance();
+  }, [user,currentBalance]); 
 
 
   const dailyLimit = 5000;
