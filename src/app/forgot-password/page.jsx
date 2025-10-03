@@ -30,6 +30,7 @@ export default function ForgotPasswordPage() {
       });
       setEmail("");
     } catch (error) {
+      console.log(error);
       Swal.fire({
         icon: "error",
         title: "Error",
