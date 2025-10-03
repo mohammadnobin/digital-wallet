@@ -5,7 +5,6 @@
 // import { useNavigate } from "react-router";
 // import useAuth from "./useAuth";
 
-
 // const axiosSecure = axios.create({
 //   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 // });
@@ -50,13 +49,6 @@
 // };
 
 // export default useAxiosSecure;
-
-
-
-
-
-
-
 
 "use client";
 import { useEffect } from "react";
@@ -108,20 +100,3 @@ const useAxiosSecure = () => {
 };
 
 export default useAxiosSecure;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
