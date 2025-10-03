@@ -728,7 +728,7 @@ const CashoutPage = () => {
             )}
 
             {/* Security Notice */}
-            <div className="bg-blue-50 rounded-xl p-6">
+            {/* <div className="bg-blue-50 rounded-xl p-6">
               <div className="flex items-start space-x-3">
                 <Shield className="w-6 h-6 text-blue-600 mt-1" />
                 <div>
@@ -741,10 +741,10 @@ const CashoutPage = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Processing Times */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            {/* <div className="bg-white rounded-xl shadow-sm p-6">
               <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
                 <Clock className="w-5 h-5 mr-2 text-blue-600" />
                 Processing Times
@@ -763,7 +763,7 @@ const CashoutPage = () => {
                   <span className="font-medium">Instant</span>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
