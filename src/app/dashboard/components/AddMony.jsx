@@ -764,7 +764,7 @@ const AddMoneyPage = () => {
               <button
                 onClick={handleSubmit}
                 disabled={isProcessing || !amount || parseFloat(amount) <= 0}
-                className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${
+                className={`w-full py-4 px-6 cursor-pointer rounded-lg font-semibold text-lg transition-colors ${
                   isProcessing || !amount || parseFloat(amount) <= 0
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                     : "bg-green-600 text-white hover:bg-green-700"
