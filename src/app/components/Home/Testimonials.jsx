@@ -101,7 +101,7 @@ export default function TestimonialsSection() {
               className="bg-white rounded-2xl p-8 shadow-lg"
             >
               <div className="flex justify-center mb-2">
-                <Quote className="w-10 h-10 text-purple-200" />
+                <Quote className="w-10 h-10 text-white" />
               </div>
 
               <StarRating rating={testimonials[activeTestimonial].rating} />
@@ -111,7 +111,7 @@ export default function TestimonialsSection() {
               </blockquote>
 
               <div className="text-center mb-6">
-                <span className="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium">
+                <span className="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
                   {testimonials[activeTestimonial].highlight}
                 </span>
               </div>
@@ -159,7 +159,7 @@ export default function TestimonialsSection() {
               onClick={() => setActiveTestimonial(index)}
               className={`relative transition-all duration-200 ${
                 index === activeTestimonial
-                  ? 'scale-110 ring-4 ring-purple-400 ring-opacity-50 rounded-full'
+                  ? 'scale-110 ring-4 ring-blue-400 ring-opacity-50 rounded-full'
                   : 'opacity-60 hover:opacity-90'
               }`}
             >
@@ -194,7 +194,7 @@ export default function TestimonialsSection() {
             Ready to join thousands of satisfied users?
           </p>
           <Link href="/login">
-            <button className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
               Start Free Today
             </button>
           </Link>

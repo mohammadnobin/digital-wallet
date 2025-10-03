@@ -313,12 +313,12 @@ const AddMoneyPage = () => {
       </header>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className=" ">
           {/* Main Form */}
           <div className="lg:col-span-2">
             <div className="space-y-6">
               {/* Current Balance */}
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-sm p-6 text-white">
+              <div className="bg-blue-600  rounded-xl shadow-sm p-6 text-white">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold">Current Balance</h2>
                   <TrendingUp className="w-6 h-6" />
@@ -764,7 +764,7 @@ const AddMoneyPage = () => {
               <button
                 onClick={handleSubmit}
                 disabled={isProcessing || !amount || parseFloat(amount) <= 0}
-                className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${
+                className={`w-full py-4 px-6 cursor-pointer rounded-lg font-semibold text-lg transition-colors ${
                   isProcessing || !amount || parseFloat(amount) <= 0
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                     : "bg-green-600 text-white hover:bg-green-700"
@@ -833,7 +833,7 @@ const AddMoneyPage = () => {
             )}
 
             {/* Add Limits */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            {/* <div className="bg-white rounded-xl shadow-sm p-6">
               <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
                 <Shield className="w-5 h-5 mr-2 text-blue-600" />
                 Add Money Limits
@@ -881,10 +881,10 @@ const AddMoneyPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Security Notice */}
-            <div className="bg-blue-50 rounded-xl p-6">
+            {/* <div className="bg-blue-50 rounded-xl p-6">
               <div className="flex items-start space-x-3">
                 <Shield className="w-6 h-6 text-blue-600 mt-1" />
                 <div>
@@ -911,10 +911,10 @@ const AddMoneyPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Processing Times */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            {/* <div className="bg-white rounded-xl shadow-sm p-6">
               <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
                 <Clock className="w-5 h-5 mr-2 text-blue-600" />
                 Processing Times & Fees
@@ -940,10 +940,10 @@ const AddMoneyPage = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* Quick Tips */}
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6">
+            {/* <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6">
               <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
                 <Zap className="w-5 h-5 mr-2 text-green-600" />
                 Quick Tips
@@ -968,7 +968,7 @@ const AddMoneyPage = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
