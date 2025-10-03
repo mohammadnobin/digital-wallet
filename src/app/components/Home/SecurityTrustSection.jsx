@@ -434,23 +434,7 @@ export default function SecurityTrustSection() {
           </div>
         )}
 
-        {/* Trust Indicators */}
-        <div className="text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8">Trusted by Industry Leaders</h3>
-          <div className="flex flex-wrap justify-center items-center gap-8">
-            {certifications.map((cert, index) => (
-              <div key={index} className="flex items-center space-x-2 bg-white px-6 py-4 rounded-xl shadow-lg">
-                <div className={`w-8 h-8 ${cert.color} rounded-lg flex items-center justify-center text-white`}>
-                  {cert.icon}
-                </div>
-                <div className="text-left">
-                  <div className="font-bold text-gray-900">{cert.name}</div>
-                  <div className="text-sm text-gray-600">{cert.level}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        
       </div>
 
       <style jsx>{`
