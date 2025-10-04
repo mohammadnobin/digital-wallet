@@ -94,14 +94,13 @@ const AddMoneyPage = () => {
   ];
 
   useEffect(() => {
-  if (!user?.email) return; // Wait until user is loaded
+  if (!user?.email) return;
 
   const fetchCurrentBalance = async () => {
     try {
       const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
       const data = response.data;
 
-      // এখানে response.ok লাগবে না, axios সরাসরি error throw করে
       if (!data?.success) {
         throw new Error(data.message || "Failed to fetch balance");
       }
