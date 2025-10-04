@@ -47,49 +47,25 @@ const CashoutPage = () => {
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-      if (!user?.email) return; // user আসা পর্যন্ত wait করবে
+  if (!user?.email) return;
 
-    const fetchBalance = async () => {
-      try {
-       const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
+  const fetchBalance = async () => {
+    try {
+      const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
       const data = response.data;
-        if (response.ok && data.success) {
-          setAvailableBalance(data.data.balance);
-        } else {
-          console.error(data.message || "Failed to fetch balance");
-        }
-      } catch (err) {
-        console.error("Server error:", err);
+      if (!data?.success) {
+        throw new Error(data.message || "Failed to fetch balance");
       }
-    };
+       setAvailableBalance(data.data.balance);
+    } catch (err) {
+      console.error("Server error:", err);
+    }
+  };
 
-    fetchBalance();
-  }, [user]);
-
-
-  // useEffect(() => {
-  //     if (!user?.email) return; // user আসা পর্যন্ত wait করবে
-
-  //   const fetchBalance = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `${baseUrl}/api/wallets/current?userId=${userId}`
-  //       );
-  //       const data = await response.json();
-  //       if (response.ok && data.success) {
-  //         setAvailableBalance(data.data.balance);
-  //       } else {
-  //         console.error(data.message || "Failed to fetch balance");
-  //       }
-  //     } catch (err) {
-  //       console.error("Server error:", err);
-  //     }
-  //   };
-
-  //   fetchBalance();
-  // }, [user]);
-
-  // const availableBalance = 2847.65;
+  fetchBalance();
+}, [user]);
+  
+  
   const dailyLimit = 5000;
   const remainingLimit = 3200;
 
@@ -341,7 +317,7 @@ const CashoutPage = () => {
                       key={quickAmount}
                       type="button"
                       onClick={() => setAmount(quickAmount.toString())}
-                      className="py-2 px-3 text-sm font-medium border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="py-2 px-3 cursor-pointer text-sm font-medium border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       ${quickAmount}
                     </button>
