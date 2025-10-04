@@ -43,19 +43,16 @@ const CashoutPage = () => {
   const [errors, setErrors] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [currentBalance, setCurrentBalance] = useState(0);
-  const axiosSecure = useAxiosSecure();
   const { user } = use(Authcontext);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
       if (!user?.email) return; // user আসা পর্যন্ত wait করবে
 
     const fetchBalance = async () => {
       try {
-        const response = await fetch(
-          `${baseUrl}/api/wallets/current?email=${user?.email}`
-        );
-        const data = await response.json();
+       const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
+      const data = response.data;
         if (response.ok && data.success) {
           setAvailableBalance(data.data.balance);
         } else {
@@ -69,29 +66,30 @@ const CashoutPage = () => {
     fetchBalance();
   }, [user]);
 
-    useEffect(() => {
-    if (!user?.email) return; // Wait until user is loaded
-  
-    const fetchCurrentBalance = async () => {
-      try {
-        const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
-        const data = response.data;
-  
-        // এখানে response.ok লাগবে না, axios সরাসরি error throw করে
-        if (!data?.success) {
-          throw new Error(data.message || "Failed to fetch balance");
-        }
-  
-        setCurrentBalance(data.data.balance);
-      } catch (error) {
-        console.error("Error fetching current balance:", error.message);
-      }
-    };
-  
-    fetchCurrentBalance();
-  }, [user,currentBalance]); 
 
+  // useEffect(() => {
+  //     if (!user?.email) return; // user আসা পর্যন্ত wait করবে
 
+  //   const fetchBalance = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${baseUrl}/api/wallets/current?userId=${userId}`
+  //       );
+  //       const data = await response.json();
+  //       if (response.ok && data.success) {
+  //         setAvailableBalance(data.data.balance);
+  //       } else {
+  //         console.error(data.message || "Failed to fetch balance");
+  //       }
+  //     } catch (err) {
+  //       console.error("Server error:", err);
+  //     }
+  //   };
+
+  //   fetchBalance();
+  // }, [user]);
+
+  // const availableBalance = 2847.65;
   const dailyLimit = 5000;
   const remainingLimit = 3200;
 
@@ -343,7 +341,7 @@ const CashoutPage = () => {
                       key={quickAmount}
                       type="button"
                       onClick={() => setAmount(quickAmount.toString())}
-                      className="py-2 px-3 text-sm font-medium border cursor-pointer border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="py-2 px-3 text-sm font-medium border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       ${quickAmount}
                     </button>
@@ -638,10 +636,10 @@ const CashoutPage = () => {
                 disabled={
                   isProcessing || !amount || getTotalAmount() > availableBalance
                 }
-                className={`w-full  py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${
+                className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${
                   isProcessing || !amount || getTotalAmount() > availableBalance
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-blue-600 cursor-pointer text-white hover:bg-blue-700"
+                    : "bg-blue-600 text-white hover:bg-blue-700"
                 }`}
               >
                 {isProcessing ? (
@@ -728,6 +726,44 @@ const CashoutPage = () => {
                 </div>
               </div>
             )}
+
+            {/* Security Notice */}
+            {/* <div className="bg-blue-50 rounded-xl p-6">
+              <div className="flex items-start space-x-3">
+                <Shield className="w-6 h-6 text-blue-600 mt-1" />
+                <div>
+                  <h3 className="font-semibold text-blue-900 mb-2">
+                    Security Notice
+                  </h3>
+                  <p className="text-sm text-blue-800">
+                    Your transaction is protected by bank-level encryption. We
+                    never store your sensitive financial information.
+                  </p>
+                </div>
+              </div>
+            </div> */}
+
+            {/* Processing Times */}
+            {/* <div className="bg-white rounded-xl shadow-sm p-6">
+              <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
+                <Clock className="w-5 h-5 mr-2 text-blue-600" />
+                Processing Times
+              </h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Bank Transfer:</span>
+                  <span className="font-medium">1-3 business days</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Debit Card:</span>
+                  <span className="font-medium">Instant</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Mobile Money:</span>
+                  <span className="font-medium">Instant</span>
+                </div>
+              </div>
+            </div> */}
           </div>
         </div>
       </div>
