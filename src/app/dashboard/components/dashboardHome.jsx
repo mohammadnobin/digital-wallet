@@ -26,7 +26,6 @@ const DigitalWalletDashboard = () => {
   const axiosSecure = useAxiosSecure()
   const [showBalance, setShowBalance] = useState(true);
   const [totalbalance, setTotalBalance] = useState(0);
-  console.log(totalbalance);
 
 // useEffect(() => {
 //   const fetchData = async () => {

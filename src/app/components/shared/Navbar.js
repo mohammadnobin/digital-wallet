@@ -13,14 +13,18 @@ import {
 import { Authcontext } from "@/context/AuthContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("Dashboard");
   const { user, logOut } = use(Authcontext);
   const [open, setOpen] = useState(false);
   const handleLogout = () => {
     logOut();
+    router.push("/");
+    document.cookie = `accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; samesite=strict`;
   };
 
   const navigationItems = [

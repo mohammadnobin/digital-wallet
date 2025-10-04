@@ -19,6 +19,19 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const gitHubProvider = new GithubAuthProvider()
 
+const saveTokenInCookie = async (user) => {
+  if (user) {
+    const token = await user.getIdToken();
+    console.log("Firebase Token:", token);
+document.cookie = `accessToken=${token}; path=/; samesite=strict; secure`;
+
+  } else {
+    document.cookie = `accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; samesite=strict`;
+    console.log("Token removed from cookie");
+  }
+};
+
+
 const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -57,17 +70,23 @@ const AuthProviders = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
-  // onAuthStateChange
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    setUser(currentUser);
+    setLoading(false);
+
+    if (currentUser) {
+      await saveTokenInCookie(currentUser);
+    } else {
+      document.cookie = `accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; samesite=strict`;
+    }
+  });
+
+  return () => unsubscribe();
+}, [saveTokenInCookie]);
+
+
 
   const authInfo = {
     createUser,
