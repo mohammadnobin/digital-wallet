@@ -19,7 +19,6 @@ import { Authcontext } from "@/context/AuthContext";
 
 export default function RegisterPage() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  console.log(baseUrl);
   const router = useRouter();
   const {createUser,updateUserProfile} = use(Authcontext)
   const [showPassword, setShowPassword] = useState(false);
@@ -148,8 +147,6 @@ try {
       name,
       email,
     });
-
-    console.log("User saved:", data);
 
     router.push("/dashboard");
   } catch (error) {

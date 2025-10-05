@@ -40,7 +40,6 @@ export default function RequestMoney() {
   };
 
   const handleSubmit = () => {
-    console.log('Request submitted:', { amount, selectedCategory, message, dueDate });
   };
 
   return (
