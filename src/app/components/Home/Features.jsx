@@ -741,12 +741,10 @@ import {
   BarChart3,
   Globe,
   Bell,
-  Users,
   Wallet,
   PieChart,
   SplitSquareHorizontal,
 } from "lucide-react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Features() {
@@ -759,40 +757,17 @@ export default function Features() {
     { icon: <BarChart3 className="w-6 h-6 text-blue-600" />, title: "Transaction History", desc: "Filter and view all your past transactions easily." },
     { icon: <PieChart className="w-6 h-6 text-blue-600" />, title: "Expense Tracker", desc: "Visualize your spending with smart charts." },
     { icon: <Bell className="w-6 h-6 text-blue-600" />, title: "Notifications & Alerts", desc: "Get notified about every important wallet activity." },
-    { icon: <SplitSquareHorizontal className="w-6 h-6 text-blue-600" />, title: "Split Payments", desc: "Split bills with friends or groups easily." },
-    { icon: <Globe className="w-6 h-6 text-blue-600" />, title: "International Remittance", desc: "Send money securely across borders." },
+    { icon: <SplitSquareHorizontal className="w-6 h-6 text-blue-600" />, title: "Split Payments", desc: "Split bills with friends or groups easily." }
   ];
 
   return (
     <div className="min-h-screen flex flex-col">
-
-      {/* Hero Section
-      <section className="bg-gradient-to-r from-blue-50 to-blue-100 text-center py-20">
-        <motion.h2
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-bold text-blue-800 mb-4"
-        >
-          A Secure and Smart Way to Manage Your Money
-        </motion.h2>
-        <p className="text-gray-600 mb-6 max-w-xl mx-auto">
-          Send, receive, and manage your money effortlessly — with trust, speed, and security.
-        </p>
-        <div className="space-x-4">
-          <Link href="/register" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
-            Create Account
-          </Link>
-          <Link href="#features" className="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-600 hover:text-white transition">
-            Explore Features
-          </Link>
-        </div>
-      </section> */}
-
-      {/* Features Section */}
       <section className="py-16 bg-white">
         <div className="text-center mb-12">
           <h3 className="text-3xl font-bold text-blue-700">Key Features</h3>
-          <p className="text-gray-500 mt-2">Smart, secure, and designed for everyone.</p>
+          <p className="text-gray-500 mt-2">
+            Smart, secure, and designed for everyone.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-8 md:px-20">
@@ -802,10 +777,12 @@ export default function Features() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="border rounded-2xl p-6 shadow-sm hover:shadow-lg transition text-center flex flex-col items-center"
+              className="rounded-2xl p-6 shadow-sm hover:shadow-lg transition text-center flex flex-col items-center bg-white"
             >
               <div className="mb-4 flex justify-center">{f.icon}</div>
-              <h4 className="font-semibold text-lg mb-2 text-gray-800">{f.title}</h4>
+              <h4 className="font-semibold text-lg mb-2 text-gray-800">
+                {f.title}
+              </h4>
               <p className="text-gray-500 text-sm">{f.desc}</p>
             </motion.div>
           ))}
