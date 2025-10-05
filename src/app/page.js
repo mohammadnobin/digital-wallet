@@ -1,3 +1,4 @@
+import AddUserForm from "./components/Home/AddUserForm";
 import AppPreview from "./components/Home/AppPreview";
 import Features from "./components/Home/Features";
 import HeroSection from "./components/Home/Hero";
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <AddUserForm />
       <State />
       <AppPreview />
       <Features/>

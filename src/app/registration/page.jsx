@@ -320,28 +320,50 @@ const page = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   setMessage("");
 
-    try {
-        console.log(formData);
-      const res = await axios.post("http://localhost:5000/api/users", formData);
-      const response = await signIn('credentials', {
-          email: formData.email,
-          password: formData.password,
-          redirect: false,
-        });
-        console.log(email, password)
-      setMessage("User created successfully!");
-      setFormData({ name: "", email: "", password: "" });
-    } catch (error) {
-      setMessage(error.response?.data?.message || "Something went wrong!");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   try {
+  //       console.log(formData);
+  //     const res = await axios.post("http://localhost:5000/api/users", formData);
+  //     const response = await signIn('credentials', {
+  //         email: formData.email,
+  //         password: formData.password,
+  //         redirect: false,
+  //       });
+  //       console.log(email, password)
+  //     setMessage("User created successfully!");
+  //     setFormData({ name: "", email: "", password: "" });
+  //   } catch (error) {
+  //     setMessage(error.response?.data?.message || "Something went wrong!");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setMessage("");
+
+  try {
+    console.log("Form data:", formData);
+
+    // 1️⃣ Signup: create user in DB
+    await axios.post("http://localhost:5000/api/users", formData);
+    // Clear form
+    setFormData({ name: "", email: "", password: "" });
+
+  } catch (error) {
+    console.error(error);
+    setMessage(error.response?.data?.message || "Something went wrong!");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="max-w-md mx-auto p-6 bg-gray-100 rounded shadow">

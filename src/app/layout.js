@@ -1,6 +1,7 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
-import NextAuthProvider from "./providers/NextAuthProvider";
+import NextAuthProvider from "@/providers/NextAuthProvider";
+
 
 
 const openSans = Open_Sans ({
