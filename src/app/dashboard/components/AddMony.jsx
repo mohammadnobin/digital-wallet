@@ -187,29 +187,17 @@ const AddMoneyPage = () => {
       details: formData,
     });
 
-    // success হলে সরাসরি update
     setCurrentBalance(data.updatedBalance);
     setShowSuccess(true);
 
-    // Reset form
     setAmount("");
-    setFormData({
-      cardNumber: "",
-      expiryDate: "",
-      cvv: "",
-      cardHolderName: "",
-      bankAccount: "",
-      routingNumber: "",
-      accountHolderName: "",
-      mobileNumber: "",
-      paypalEmail: "",
-      savePaymentMethod: false,
-    });
+    setFormData(Object.fromEntries(Object.keys(formData).map(k => [k, ""])));
   } catch (error) {
     console.error("Error adding money:", error.message);
     setErrors({ general: error.message });
   } finally {
     setIsProcessing(false);
+    setTimeout(() => setShowSuccess(false), 1000);
   }
 };
 
@@ -280,7 +268,7 @@ const AddMoneyPage = () => {
           </div>
           <button
             onClick={() => setShowSuccess(false)}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 cursor-pointer transition-colors"
           >
             Add More Money
           </button>
