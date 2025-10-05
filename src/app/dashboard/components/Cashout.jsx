@@ -10,11 +10,8 @@ import {
   EyeOff,
   AlertCircle,
   CheckCircle,
-  Clock,
-  Shield,
   User,
   Phone,
-  Mail,
   Calculator,
 } from "lucide-react";
 import Link from "next/link";
@@ -26,8 +23,7 @@ const CashoutPage = () => {
   const [selectedMethod, setSelectedMethod] = useState("bank");
   const [amount, setAmount] = useState("");
   const [showBalance, setShowBalance] = useState(true);
-  // Add this
-  const [availableBalance, setAvailableBalance] = useState(0); // instead of hardcoded 2847.65
+  const [availableBalance, setAvailableBalance] = useState(0);
 
   const [formData, setFormData] = useState({
     bankAccount: "",
@@ -58,7 +54,6 @@ const CashoutPage = () => {
       }
        setAvailableBalance(data.data.balance);
     } catch (err) {
-      console.error("Server error:", err);
     }
   };
 
@@ -130,64 +125,33 @@ const CashoutPage = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!validateForm()) return;
+  if (!validateForm()) return;
 
-    setIsProcessing(true);
+  setIsProcessing(true);
 
-    try {
-      const response = await fetch(
-        `${baseUrl}/api/wallets/cashout`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user: user.email,
-            amount: parseFloat(amount),
-            method: selectedMethod,
-            details: formData,
-          }),
-        }
-      );
+  try {
+    const { data } = await axiosSecure.post("/api/wallets/cashout", {
+      user: user.email,
+      amount: parseFloat(amount),
+      method: selectedMethod,
+      details: formData,
+    });
 
-      const data = await response.json();
+    setAvailableBalance(data.remainingBalance);
+    setShowSuccess(true);
+  } catch (error) {
+    const message =
+      error.response?.data?.message || "Something went wrong. Please try again.";
+    alert(message);
+  } finally {
+    setIsProcessing(false);
+  }
+};
 
-      if (!response.ok) {
-        throw new Error(data.message || "Something went wrong");
-      }
-
-      // Success
-      setIsProcessing(false);
-      setShowSuccess(true);
-      // 🔥 Update balance from backend response
-      console.log(data.remainingBalance);
-      setAvailableBalance(data.remainingBalance);
-
-      // Reset form after success
-      setTimeout(() => {
-        setShowSuccess(false);
-        setAmount("");
-        setFormData({
-          bankAccount: "",
-          routingNumber: "",
-          accountHolderName: "",
-          mobileNumber: "",
-          email: "",
-          cardNumber: "",
-          expiryDate: "",
-          cvv: "",
-          note: "",
-        });
-      }, 3000);
-    } catch (error) {
-      setIsProcessing(false);
-      alert(error.message); // You can also show a nicer UI error
-    }
-  };
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -615,7 +579,7 @@ const CashoutPage = () => {
                 className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${
                   isProcessing || !amount || getTotalAmount() > availableBalance
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-blue-600 text-white cursor-pointer hover:bg-blue-700"
                 }`}
               >
                 {isProcessing ? (

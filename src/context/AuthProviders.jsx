@@ -22,7 +22,6 @@ const gitHubProvider = new GithubAuthProvider()
 const saveTokenInCookie = async (user) => {
   if (user) {
     const token = await user.getIdToken();
-    console.log("Firebase Token:", token);
 document.cookie = `accessToken=${token}; path=/; samesite=strict; secure`;
 
   } else {
