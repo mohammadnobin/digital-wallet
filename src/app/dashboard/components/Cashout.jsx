@@ -149,6 +149,9 @@ const CashoutPage = () => {
     alert(message);
   } finally {
     setIsProcessing(false);
+    setAmount("");
+    setFormData(Object.fromEntries(Object.keys(formData).map(k => [k, ""])));
+    setTimeout(() => setShowSuccess(false), 1000);
   }
 };
 
@@ -209,7 +212,7 @@ const CashoutPage = () => {
           </div>
           <button
             onClick={() => setShowSuccess(false)}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className="w-full bg-blue-600 cursor-pointer text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
           >
             Make Another Withdrawal
           </button>
@@ -666,44 +669,6 @@ const CashoutPage = () => {
                 </div>
               </div>
             )}
-
-            {/* Security Notice */}
-            {/* <div className="bg-blue-50 rounded-xl p-6">
-              <div className="flex items-start space-x-3">
-                <Shield className="w-6 h-6 text-blue-600 mt-1" />
-                <div>
-                  <h3 className="font-semibold text-blue-900 mb-2">
-                    Security Notice
-                  </h3>
-                  <p className="text-sm text-blue-800">
-                    Your transaction is protected by bank-level encryption. We
-                    never store your sensitive financial information.
-                  </p>
-                </div>
-              </div>
-            </div> */}
-
-            {/* Processing Times */}
-            {/* <div className="bg-white rounded-xl shadow-sm p-6">
-              <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <Clock className="w-5 h-5 mr-2 text-blue-600" />
-                Processing Times
-              </h3>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Bank Transfer:</span>
-                  <span className="font-medium">1-3 business days</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Debit Card:</span>
-                  <span className="font-medium">Instant</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Mobile Money:</span>
-                  <span className="font-medium">Instant</span>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
