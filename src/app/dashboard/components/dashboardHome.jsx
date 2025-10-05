@@ -18,37 +18,34 @@ import {
   SquareArrowOutUpRight
 } from 'lucide-react';
 import Link from 'next/link';
-import useAuth from '@/hooks/useAuth';
-import useAxiosSecure from '@/hooks/useAxiosSecure';
 
 const DigitalWalletDashboard = () => {
-  const {user} = useAuth();
-  const axiosSecure = useAxiosSecure()
+
   const [showBalance, setShowBalance] = useState(true);
   const [totalbalance, setTotalBalance] = useState(0);
 
 
-  useEffect(() => {
-  if (!user?.email) return; // Wait until user is loaded
+//   useEffect(() => {
+//   if (!user?.email) return; // Wait until user is loaded
 
-  const fetchCurrentBalance = async () => {
-    try {
-      const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
-      const data = response.data;
+//   const fetchCurrentBalance = async () => {
+//     try {
+//       const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
+//       const data = response.data;
 
-      // এখানে response.ok লাগবে না, axios সরাসরি error throw করে
-      if (!data?.success) {
-        throw new Error(data.message || "Failed to fetch balance");
-      }
+//       // এখানে response.ok লাগবে না, axios সরাসরি error throw করে
+//       if (!data?.success) {
+//         throw new Error(data.message || "Failed to fetch balance");
+//       }
 
-      setTotalBalance(data.data.balance);
-    } catch (error) {
-      console.error("Error fetching current balance:", error.message);
-    }
-  };
+//       setTotalBalance(data.data.balance);
+//     } catch (error) {
+//       console.error("Error fetching current balance:", error.message);
+//     }
+//   };
 
-  fetchCurrentBalance();
-}, [user,totalbalance]); 
+//   fetchCurrentBalance();
+// }, [,totalbalance]); 
 
 
 
