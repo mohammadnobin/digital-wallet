@@ -1,4 +1,5 @@
 import AppPreview from "./components/Home/AppPreview";
+import Features from "./components/Home/Features";
 import HeroSection from "./components/Home/Hero";
 // import HowItWorksSection from "./components/Home/HowItWorks";
 // import SecurityTrustSection from "./components/Home/SecurityTrustSection";
@@ -14,6 +15,7 @@ export default function Home() {
       <HeroSection />
       <State />
       <AppPreview />
+      <Features/>
       {/* <HowItWorksSection />
       <SecurityTrustSection /> */}
       <TestimonialsSection />
