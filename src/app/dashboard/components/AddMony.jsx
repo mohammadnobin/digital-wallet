@@ -29,7 +29,7 @@ const AddMoneyPage = () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [amount, setAmount] = useState("");
-  const { user } = use(Authcontext);
+  // const { user } = use(Authcontext);
   const [formData, setFormData] = useState({
     cardNumber: "",
     expiryDate: "",

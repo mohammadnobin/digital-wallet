@@ -39,8 +39,8 @@ const CashoutPage = () => {
   const [errors, setErrors] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const { user } = use(Authcontext);
-  const axiosSecure = useAxiosSecure();
+  // const { user } = use(Authcontext);
+  // const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
   if (!user?.email) return;

@@ -170,7 +170,7 @@ export default function HowItWorksSection() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 relative overflow-hidden">
       {/* Background Orbs */}
       <div className="absolute inset-0">
         <div className="absolute top-10 left-10 w-64 h-64 bg-fuchsia-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
