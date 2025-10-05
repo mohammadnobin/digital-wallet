@@ -27,20 +27,6 @@ const DigitalWalletDashboard = () => {
   const [showBalance, setShowBalance] = useState(true);
   const [totalbalance, setTotalBalance] = useState(0);
 
-// useEffect(() => {
-//   const fetchData = async () => {
-//     try {
-//       if (!user?.email) return; // ✅ user না থাকলে কিছু করবে না
-//       const res = await axiosSecure.get(`/api/wallets/current?email=${user?.email}`);
-//       setTotalBalance(res?.data?.data?.balance || 0);
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
-
-//   fetchData();
-// }, [user, axiosSecure]); // dependency তে axiosSecure ও রাখো
-
 
   useEffect(() => {
   if (!user?.email) return; // Wait until user is loaded
@@ -162,7 +148,7 @@ const DigitalWalletDashboard = () => {
                     <CreditCard className="w-8 h-8 text-blue-600" />
                     <button
                       onClick={() => setShowBalance(!showBalance)}
-                      className="text-blue-600 hover:text-blue-700"
+                      className="text-blue-600 cursor-pointer hover:text-blue-700"
                     >
                       {showBalance ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                     </button>
