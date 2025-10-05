@@ -83,7 +83,6 @@ export default function CardsManagement() {
   };
 
   const handleAction = (action, cardId) => {
-    console.log(`${action} for card ${cardId}`);
     setOpenDropdown(null);
   };
 

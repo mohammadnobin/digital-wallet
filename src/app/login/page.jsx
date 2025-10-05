@@ -78,7 +78,6 @@ const handleSubmit = async () => {
     // ✅ Firebase sign in
     const result = await signIn(email, password);
     const user = result.user;
-    console.log("Logged in user:", user);
 
     // ✅ Success alert
     Swal.fire({
