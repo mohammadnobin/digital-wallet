@@ -22,14 +22,13 @@ import {
   TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
-import { Authcontext } from "@/context/AuthContext";
-import useAxiosSecure from "@/hooks/useAxiosSecure";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 // add
-const AddMoneyPage = () => {
+const AddMoneyPage = ({user}) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [amount, setAmount] = useState("");
-  // const { user } = use(Authcontext);
   const [formData, setFormData] = useState({
     cardNumber: "",
     expiryDate: "",
@@ -43,13 +42,11 @@ const AddMoneyPage = () => {
     savePaymentMethod: false,
   });
   const [errors, setErrors] = useState({});
-  const axiosSecure = useAxiosSecure();
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [currentBalance, setCurrentBalance] = useState(0);
+  const [currentBalance, setCurrentBalance] = useState(user?.balance || 0);
   const [loadingBalance, setLoadingBalance] = useState(true);
   const [balanceError, setBalanceError] = useState("");
-  // const userId = "68d312cb50092968c7ae5433"; // example userId
 
   // const currentBalance = 2847.65;
   const dailyAddLimit = 10000;
@@ -93,26 +90,8 @@ const AddMoneyPage = () => {
     },
   ];
 
-  useEffect(() => {
-  if (!user?.email) return;
 
-  const fetchCurrentBalance = async () => {
-    try {
-      const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
-      const data = response.data;
 
-      if (!data?.success) {
-        throw new Error(data.message || "Failed to fetch balance");
-      }
-
-      setCurrentBalance(data.data.balance);
-    } catch (error) {
-      console.error("Error fetching current balance:", error.message);
-    }
-  };
-
-  fetchCurrentBalance();
-}, [user,currentBalance]); 
 
   const quickAmounts = [25, 50, 100, 250, 500, 1000];
 
@@ -180,13 +159,15 @@ const AddMoneyPage = () => {
   setIsProcessing(true);
 
   try {
-    const { data } = await axiosSecure.post("/api/wallets/addmoney", {
+    const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wallets/addmoney`,{
       user: user.email,
       amount: parseFloat(amount),
       method: selectedMethod,
       details: formData,
-    });
+    }
 
+     )
+     console.log(data);
     setCurrentBalance(data.updatedBalance);
     setShowSuccess(true);
 

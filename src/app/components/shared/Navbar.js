@@ -160,24 +160,44 @@ import {
   CreditCard,
   Receipt,
   Clock,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("Dashboard");
   const [open, setOpen] = useState(false);
 
   const { data: session } = useSession();
   const user = session?.user;
+const handleLogout = async () => {
+  // SweetAlert2 confirm dialog
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to logout?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, logout",
+    cancelButtonText: "Cancel",
+  });
 
-  const handleLogout = async () => {
+  if (result.isConfirmed) {
+    // If user confirms
     await signOut({ redirect: false });
+    Swal.fire({
+      title: "Logged out!",
+      text: "You have been logged out successfully.",
+      icon: "success",
+      timer: 1500,
+      showConfirmButton: false,
+    });
     router.push("/");
-  };
+  }
+};
 
   const navigationItems = [
     { icon: LayoutDashboard, label: "Dashboard", color: "bg-blue-500", href: "/dashboard" },
@@ -245,18 +265,20 @@ const Navbar = () => {
 
               {/* Dropdown Menu */}
               {open && (
-                <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-lg z-50">
+                <div className="absolute right-0 mt-2 w-40  z-50">
                   {user ? (
                     <button
                       onClick={handleLogout}
-                      className="block w-full cursor-pointer text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                      className="bg-indigo-600 cursor-pointer text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-transform transform hover:scale-105 flex items-center justify-center shadow-md"
                     >
                       Logout
+                              <ArrowRight className="ml-2 w-5 h-5" />
                     </button>
                   ) : (
                     <Link href="/login">
-                      <button className="block w-full cursor-pointer text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                      <button className="bg-indigo-600 cursor-pointer text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-transform transform hover:scale-105 flex items-center justify-center shadow-md">
                         Log In
+                          <ArrowRight className="ml-2 w-5 h-5" />
                       </button>
                     </Link>
                   )}
