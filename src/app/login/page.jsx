@@ -1,165 +1,28 @@
-"use client";
-
-import React, { useState } from "react";
-import { Eye, EyeOff, Wallet, Shield, Lock, Mail, ArrowRight } from "lucide-react";
+import { Wallet, Shield } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
-import Swal from "sweetalert2";
-import toast from "react-hot-toast";
+import LoginFrom from "./components/LoginFrom";
 
-export default function LoginPage() {
-  const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({ email: "", password: "", rememberMe: false });
-  const [isLoading, setIsLoading] = useState(false);
-  const [loginError, setLoginError] = useState("");
-
-  const handleChange = (e) => {
-    const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    setFormData({ ...formData, [e.target.name]: value });
-    if (loginError) setLoginError("");
-  };
-
-  const validateForm = () => {
-    if (!formData.email.trim()) return setLoginError("Please enter your email address");
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) return setLoginError("Please enter a valid email address");
-    if (!formData.password) return setLoginError("Please enter your password");
-    if (formData.password.length < 6) return setLoginError("Password must be at least 6 characters long");
-    return true;
-  };
-
-  // const handleSubmit = async () => {
-  //   if (!validateForm()) return;
-
-  //   setIsLoading(true);
-  //   const { email, password } = formData;
-
-  //   const result = await signIn("credentials", { redirect: false, email, password });
-  //   setIsLoading(false);
-
-  //   if (result?.error) {
-  //     Swal.fire({ icon: "error", title: "Oops...", text: result.error });
-  //   } else {
-  //     Swal.fire({ title: "Success!", text: "Login Successful", icon: "success" }).then(() => {
-  //       router.push("/dashboard");
-  //     });
-  //   }
-  // };
-
-
-  const handleSubmit = async () => {
-  if (!validateForm()) return;
-
-  setIsLoading(true);
-  const {email, password} = formData;
-try {
-      const response = await signIn('credentials', {
-        email: email,
-        password: password,
-        redirect: false,
-      });
-
-      if (response.ok) {
-        toast.success('Logged in successfully!');
-          router.push('/dashboard'); 
-      } else {
-        toast.error('Failed to log in. Please check your credentials.');
-      }
-    } catch (error) {
-      toast.error('An error occurred while signing in.');
-    } finally {
-      setIsLoading(false);
-    }
-};
-
-
+const page = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
-          <Link href="/">
-            <div className="flex justify-center mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-2xl shadow-lg">
-              <Wallet className="h-10 w-10 text-white" />
-            </div>
-          </Link>
+          <div className="flex justify-center mb-6">
+            <Link href="/">
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-2xl shadow-lg">
+                <Wallet className="h-10 w-10 text-white" />
+              </div>
+            </Link>
+          </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome Back</h1>
           <p className="text-gray-600 text-lg">Sign in to access your digital wallet</p>
         </div>
 
         {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100 space-y-6">
-          {loginError && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-800 font-medium">
-              {loginError}
-            </div>
-          )}
 
-          {/* Email */}
-          <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-            <div className="relative">
-              <Mail className="absolute inset-y-0 left-0 pl-4 h-5 w-5 text-gray-400 flex items-center pointer-events-none" />
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Enter your email address"
-                value={formData.email}
-                onChange={handleChange}
-                className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:border-transparent text-gray-900 placeholder-gray-500 ${
-                  loginError.includes("email") ? "border-red-300 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
-                }`}
-              />
-            </div>
-          </div>
-
-          {/* Password */}
-          <div>
-            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-            <div className="relative">
-              <Lock className="absolute inset-y-0 left-0 pl-4 h-5 w-5 text-gray-400 flex items-center pointer-events-none" />
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleChange}
-                className={`w-full pl-12 pr-12 py-3 border rounded-xl focus:ring-2 focus:border-transparent text-gray-900 placeholder-gray-500 ${
-                  loginError.includes("password") ? "border-red-300 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
-                }`}
-              />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 pr-4 flex items-center"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" /> : <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Remember Me & Forgot */}
-          <div className="flex items-center justify-between">
-            <label className="flex items-center space-x-2">
-              <input type="checkbox" name="rememberMe" checked={formData.rememberMe} onChange={handleChange} className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
-              <span className="text-sm text-gray-700">Remember me</span>
-            </label>
-            <Link href="/forgot-password" className="text-sm font-medium text-blue-600 hover:text-blue-500">Forgot password?</Link>
-          </div>
-
-          {/* Login Button */}
-          <button
-            onClick={handleSubmit}
-            disabled={isLoading}
-            className="w-full flex justify-center items-center py-3 px-4 rounded-xl text-white font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : <>Sign In <ArrowRight className="ml-2 h-4 w-4" /></>}
-          </button>
-
+          <LoginFrom />
           {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-300" /></div>
@@ -168,7 +31,7 @@ try {
 
           {/* Sign Up */}
           <Link href="/registration">
-            <button className="w-full flex justify-center py-3 px-4 border-2 border-gray-200 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-300 transition duration-200">Create New Account</button>
+            <button className="w-full cursor-pointer flex justify-center py-3 px-4 border-2 border-gray-200 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-300 transition duration-200">Create New Account</button>
           </Link>
         </div>
 
@@ -183,4 +46,6 @@ try {
       </div>
     </div>
   );
-}
+};
+
+export default page;

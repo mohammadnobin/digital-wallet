@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useState } from "react";
 import {
   ArrowLeft,
   CreditCard,
@@ -15,15 +15,14 @@ import {
   Calculator,
 } from "lucide-react";
 import Link from "next/link";
-import { Authcontext } from "@/context/AuthContext";
-import useAxiosSecure from "@/hooks/useAxiosSecure";
+import axios from "axios";
 
-const CashoutPage = () => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+const CashoutPage = ({user}) => {
   const [selectedMethod, setSelectedMethod] = useState("bank");
   const [amount, setAmount] = useState("");
   const [showBalance, setShowBalance] = useState(true);
-  const [availableBalance, setAvailableBalance] = useState(0);
+  const [availableBalance, setAvailableBalance] = useState(user?.balance || 0 );
 
   const [formData, setFormData] = useState({
     bankAccount: "",
@@ -39,26 +38,7 @@ const CashoutPage = () => {
   const [errors, setErrors] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  // const { user } = use(Authcontext);
-  // const axiosSecure = useAxiosSecure();
 
-  useEffect(() => {
-  if (!user?.email) return;
-
-  const fetchBalance = async () => {
-    try {
-      const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
-      const data = response.data;
-      if (!data?.success) {
-        throw new Error(data.message || "Failed to fetch balance");
-      }
-       setAvailableBalance(data.data.balance);
-    } catch (err) {
-    }
-  };
-
-  fetchBalance();
-}, [user]);
   
   
   const dailyLimit = 5000;
@@ -134,8 +114,8 @@ const CashoutPage = () => {
   setIsProcessing(true);
 
   try {
-    const { data } = await axiosSecure.post("/api/wallets/cashout", {
-      user: user.email,
+    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wallets/cashout`, {
+      user: user?.email,
       amount: parseFloat(amount),
       method: selectedMethod,
       details: formData,
@@ -607,7 +587,7 @@ const CashoutPage = () => {
                 </h3>
                 <button
                   onClick={() => setShowBalance(!showBalance)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 cursor-pointer hover:text-gray-600"
                 >
                   {showBalance ? (
                     <Eye className="w-5 h-5" />

@@ -1,52 +1,26 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   QrCode,
   CreditCard,
   DollarSign,
   Users,
-  Bell,
-  ChevronDown,
   ArrowUpRight,
   ArrowDownLeft,
   Zap,
   Eye,
   EyeOff,
-  ArrowDownToLine,
+
 
   Plus,
   SquareArrowOutUpRight
 } from 'lucide-react';
 import Link from 'next/link';
 
-const DigitalWalletDashboard = () => {
+const DigitalWalletDashboard = ({user}) => {
 
   const [showBalance, setShowBalance] = useState(true);
-  const [totalbalance, setTotalBalance] = useState(0);
-
-
-//   useEffect(() => {
-//   if (!user?.email) return; // Wait until user is loaded
-
-//   const fetchCurrentBalance = async () => {
-//     try {
-//       const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
-//       const data = response.data;
-
-//       // এখানে response.ok লাগবে না, axios সরাসরি error throw করে
-//       if (!data?.success) {
-//         throw new Error(data.message || "Failed to fetch balance");
-//       }
-
-//       setTotalBalance(data.data.balance);
-//     } catch (error) {
-//       console.error("Error fetching current balance:", error.message);
-//     }
-//   };
-
-//   fetchCurrentBalance();
-// }, [,totalbalance]); 
-
+  const [totalbalance, setTotalBalance] = useState(user?.balance || 0);
 
 
   const quickActions = [
