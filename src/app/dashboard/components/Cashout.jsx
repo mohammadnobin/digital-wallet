@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useState } from "react";
 import {
   ArrowLeft,
   CreditCard,
@@ -10,23 +10,19 @@ import {
   EyeOff,
   AlertCircle,
   CheckCircle,
-  Clock,
-  Shield,
   User,
   Phone,
-  Mail,
   Calculator,
 } from "lucide-react";
 import Link from "next/link";
-import { Authcontext } from "@/context/AuthContext";
+import axios from "axios";
 
-const CashoutPage = () => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+const CashoutPage = ({user}) => {
   const [selectedMethod, setSelectedMethod] = useState("bank");
   const [amount, setAmount] = useState("");
   const [showBalance, setShowBalance] = useState(true);
-  // Add this
-  const [availableBalance, setAvailableBalance] = useState(0); // instead of hardcoded 2847.65
+  const [availableBalance, setAvailableBalance] = useState(user?.balance || 0 );
 
   const [formData, setFormData] = useState({
     bankAccount: "",
@@ -42,54 +38,9 @@ const CashoutPage = () => {
   const [errors, setErrors] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const { user } = use(Authcontext);
 
-  useEffect(() => {
-      if (!user?.email) return; // user আসা পর্যন্ত wait করবে
-
-    const fetchBalance = async () => {
-      try {
-        const response = await fetch(
-          `${baseUrl}/api/wallets/current?email=${user?.email}`
-        );
-        const data = await response.json();
-        if (response.ok && data.success) {
-          setAvailableBalance(data.data.balance);
-        } else {
-          console.error(data.message || "Failed to fetch balance");
-        }
-      } catch (err) {
-        console.error("Server error:", err);
-      }
-    };
-
-    fetchBalance();
-  }, [user]);
-
-
-  // useEffect(() => {
-  //     if (!user?.email) return; // user আসা পর্যন্ত wait করবে
-
-  //   const fetchBalance = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `${baseUrl}/api/wallets/current?userId=${userId}`
-  //       );
-  //       const data = await response.json();
-  //       if (response.ok && data.success) {
-  //         setAvailableBalance(data.data.balance);
-  //       } else {
-  //         console.error(data.message || "Failed to fetch balance");
-  //       }
-  //     } catch (err) {
-  //       console.error("Server error:", err);
-  //     }
-  //   };
-
-  //   fetchBalance();
-  // }, [user]);
-
-  // const availableBalance = 2847.65;
+  
+  
   const dailyLimit = 5000;
   const remainingLimit = 3200;
 
@@ -154,64 +105,36 @@ const CashoutPage = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!validateForm()) return;
+  if (!validateForm()) return;
 
-    setIsProcessing(true);
+  setIsProcessing(true);
 
-    try {
-      const response = await fetch(
-        `${baseUrl}/api/wallets/cashout`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user: user.email,
-            amount: parseFloat(amount),
-            method: selectedMethod,
-            details: formData,
-          }),
-        }
-      );
+  try {
+    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wallets/cashout`, {
+      user: user?.email,
+      amount: parseFloat(amount),
+      method: selectedMethod,
+      details: formData,
+    });
 
-      const data = await response.json();
+    setAvailableBalance(data.remainingBalance);
+    setShowSuccess(true);
+  } catch (error) {
+    const message =
+      error.response?.data?.message || "Something went wrong. Please try again.";
+    alert(message);
+  } finally {
+    setIsProcessing(false);
+    setAmount("");
+    setFormData(Object.fromEntries(Object.keys(formData).map(k => [k, ""])));
+    setTimeout(() => setShowSuccess(false), 1000);
+  }
+};
 
-      if (!response.ok) {
-        throw new Error(data.message || "Something went wrong");
-      }
-
-      // Success
-      setIsProcessing(false);
-      setShowSuccess(true);
-      // 🔥 Update balance from backend response
-      console.log(data.remainingBalance);
-      setAvailableBalance(data.remainingBalance);
-
-      // Reset form after success
-      setTimeout(() => {
-        setShowSuccess(false);
-        setAmount("");
-        setFormData({
-          bankAccount: "",
-          routingNumber: "",
-          accountHolderName: "",
-          mobileNumber: "",
-          email: "",
-          cardNumber: "",
-          expiryDate: "",
-          cvv: "",
-          note: "",
-        });
-      }, 3000);
-    } catch (error) {
-      setIsProcessing(false);
-      alert(error.message); // You can also show a nicer UI error
-    }
-  };
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -269,7 +192,7 @@ const CashoutPage = () => {
           </div>
           <button
             onClick={() => setShowSuccess(false)}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className="w-full bg-blue-600 cursor-pointer text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
           >
             Make Another Withdrawal
           </button>
@@ -341,7 +264,7 @@ const CashoutPage = () => {
                       key={quickAmount}
                       type="button"
                       onClick={() => setAmount(quickAmount.toString())}
-                      className="py-2 px-3 text-sm font-medium border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="py-2 px-3 cursor-pointer text-sm font-medium border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       ${quickAmount}
                     </button>
@@ -639,7 +562,7 @@ const CashoutPage = () => {
                 className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${
                   isProcessing || !amount || getTotalAmount() > availableBalance
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-blue-600 text-white cursor-pointer hover:bg-blue-700"
                 }`}
               >
                 {isProcessing ? (
@@ -664,7 +587,7 @@ const CashoutPage = () => {
                 </h3>
                 <button
                   onClick={() => setShowBalance(!showBalance)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 cursor-pointer hover:text-gray-600"
                 >
                   {showBalance ? (
                     <Eye className="w-5 h-5" />
@@ -726,44 +649,6 @@ const CashoutPage = () => {
                 </div>
               </div>
             )}
-
-            {/* Security Notice */}
-            {/* <div className="bg-blue-50 rounded-xl p-6">
-              <div className="flex items-start space-x-3">
-                <Shield className="w-6 h-6 text-blue-600 mt-1" />
-                <div>
-                  <h3 className="font-semibold text-blue-900 mb-2">
-                    Security Notice
-                  </h3>
-                  <p className="text-sm text-blue-800">
-                    Your transaction is protected by bank-level encryption. We
-                    never store your sensitive financial information.
-                  </p>
-                </div>
-              </div>
-            </div> */}
-
-            {/* Processing Times */}
-            {/* <div className="bg-white rounded-xl shadow-sm p-6">
-              <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <Clock className="w-5 h-5 mr-2 text-blue-600" />
-                Processing Times
-              </h3>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Bank Transfer:</span>
-                  <span className="font-medium">1-3 business days</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Debit Card:</span>
-                  <span className="font-medium">Instant</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Mobile Money:</span>
-                  <span className="font-medium">Instant</span>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

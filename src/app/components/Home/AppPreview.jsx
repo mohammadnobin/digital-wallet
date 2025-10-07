@@ -7,10 +7,9 @@ import React from 'react';
 export default function AppPreview() {
   return (
     <div>
-      {/* App Preview Section */}
-      <section className="py-20">
+      <section className="py-10">
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center px-8 md:px-20">
             {/* Left Content */}
             <div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">

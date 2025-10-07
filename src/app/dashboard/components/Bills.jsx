@@ -101,7 +101,6 @@ export default function BillsPayment() {
   };
 
   const handleAction = (action, billId) => {
-    console.log(`${action} for bill ${billId}`);
     setOpenDropdown(null);
   };
 

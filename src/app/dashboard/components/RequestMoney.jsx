@@ -40,7 +40,6 @@ export default function RequestMoney() {
   };
 
   const handleSubmit = () => {
-    console.log('Request submitted:', { amount, selectedCategory, message, dueDate });
   };
 
   return (
@@ -58,7 +57,7 @@ export default function RequestMoney() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`pb-3 px-1 font-medium transition-colors ${activeTab === tab
+              className={`pb-3 px-1 cursor-pointer font-medium transition-colors ${activeTab === tab
                   ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-500 hover:text-gray-700'
                 }`}
@@ -118,7 +117,7 @@ export default function RequestMoney() {
                       <button
                         key={value}
                         onClick={() => handleQuickAmount(value)}
-                        className="px-4 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+                        className="px-4 py-1.5 text-sm font-medium cursor-pointer text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
                       >
                         ${value}
                       </button>
@@ -182,7 +181,7 @@ export default function RequestMoney() {
                 {/* Submit Button */}
                 <button
                   onClick={handleSubmit}
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                  className="w-full py-3 bg-blue-600 cursor-pointer hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
                 >
                   Send Request
                 </button>
