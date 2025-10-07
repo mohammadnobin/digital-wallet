@@ -290,6 +290,7 @@ const handleLogout = async () => {
       </div>
     </header>
   );
+  
 };
 
 export default Navbar;

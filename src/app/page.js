@@ -1,9 +1,14 @@
 import AppPreview from "./components/Home/AppPreview";
+<<<<<<< HEAD
+import BankHero from "./components/Home/BankHero";
+=======
+>>>>>>> 7187d9470b64bb1372ef41ecc480b0c34db515da
 import Features from "./components/Home/Features";
 import HeroSection from "./components/Home/Hero";
 import State from "./components/Home/State";
 
 import TestimonialsSection from "./components/Home/Testimonials";
+import WalletSlider from "./components/Home/WalletSlider";
 
 import FooterSection from "./components/shared/Footer";
 
@@ -13,7 +18,9 @@ export default async function  Home() {
   return (
     <>
       <HeroSection />
-      <State />
+      <WalletSlider />
+      <BankHero />
+      {/* <State /> */}
       <AppPreview />
       <Features/>
       <TestimonialsSection />
