@@ -1,70 +1,26 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   QrCode,
   CreditCard,
   DollarSign,
   Users,
-  Bell,
-  ChevronDown,
   ArrowUpRight,
   ArrowDownLeft,
   Zap,
   Eye,
   EyeOff,
-  ArrowDownToLine,
+
 
   Plus,
   SquareArrowOutUpRight
 } from 'lucide-react';
 import Link from 'next/link';
-import useAuth from '@/hooks/useAuth';
-import useAxiosSecure from '@/hooks/useAxiosSecure';
 
-const DigitalWalletDashboard = () => {
-  const {user} = useAuth();
-  const axiosSecure = useAxiosSecure()
+const DigitalWalletDashboard = ({user}) => {
+
   const [showBalance, setShowBalance] = useState(true);
-  const [totalbalance, setTotalBalance] = useState(0);
-  console.log(totalbalance);
-
-// useEffect(() => {
-//   const fetchData = async () => {
-//     try {
-//       if (!user?.email) return; // ✅ user না থাকলে কিছু করবে না
-//       const res = await axiosSecure.get(`/api/wallets/current?email=${user?.email}`);
-//       setTotalBalance(res?.data?.data?.balance || 0);
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
-
-//   fetchData();
-// }, [user, axiosSecure]); // dependency তে axiosSecure ও রাখো
-
-
-  useEffect(() => {
-  if (!user?.email) return; // Wait until user is loaded
-
-  const fetchCurrentBalance = async () => {
-    try {
-      const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
-      const data = response.data;
-
-      // এখানে response.ok লাগবে না, axios সরাসরি error throw করে
-      if (!data?.success) {
-        throw new Error(data.message || "Failed to fetch balance");
-      }
-
-      setTotalBalance(data.data.balance);
-    } catch (error) {
-      console.error("Error fetching current balance:", error.message);
-    }
-  };
-
-  fetchCurrentBalance();
-}, [user,totalbalance]); 
-
+  const [totalbalance, setTotalBalance] = useState(user?.balance || 0);
 
 
   const quickActions = [
@@ -147,7 +103,7 @@ const DigitalWalletDashboard = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome back, Alex Johnson</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome back, {user?.name}</h1>
           <p className="text-gray-600">Manage your finances with ease</p>
         </div>
 
@@ -163,7 +119,7 @@ const DigitalWalletDashboard = () => {
                     <CreditCard className="w-8 h-8 text-blue-600" />
                     <button
                       onClick={() => setShowBalance(!showBalance)}
-                      className="text-blue-600 hover:text-blue-700"
+                      className="text-blue-600 cursor-pointer hover:text-blue-700"
                     >
                       {showBalance ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                     </button>

@@ -1,6 +1,8 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
-import AuthProviders from "@/context/AuthProviders";
+import NextAuthProvider from "@/providers/NextAuthProvider";
+
+
 
 const openSans = Open_Sans ({
   variable:'--font-openSans',
@@ -22,7 +24,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${openSans.variable} antialiased`}
       >
-        <AuthProviders>{children}</AuthProviders>
+        
+         <NextAuthProvider>
+           {children}
+         </NextAuthProvider>
+        
       </body>
     </html>
   );

@@ -22,14 +22,13 @@ import {
   TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
-import { Authcontext } from "@/context/AuthContext";
-import useAxiosSecure from "@/hooks/useAxiosSecure";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 // add
-const AddMoneyPage = () => {
+const AddMoneyPage = ({user}) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [amount, setAmount] = useState("");
-  const { user } = use(Authcontext);
   const [formData, setFormData] = useState({
     cardNumber: "",
     expiryDate: "",
@@ -43,13 +42,11 @@ const AddMoneyPage = () => {
     savePaymentMethod: false,
   });
   const [errors, setErrors] = useState({});
-  const axiosSecure = useAxiosSecure();
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [currentBalance, setCurrentBalance] = useState(0);
+  const [currentBalance, setCurrentBalance] = useState(user?.balance || 0);
   const [loadingBalance, setLoadingBalance] = useState(true);
   const [balanceError, setBalanceError] = useState("");
-  // const userId = "68d312cb50092968c7ae5433"; // example userId
 
   // const currentBalance = 2847.65;
   const dailyAddLimit = 10000;
@@ -93,27 +90,8 @@ const AddMoneyPage = () => {
     },
   ];
 
-  useEffect(() => {
-  if (!user?.email) return; // Wait until user is loaded
 
-  const fetchCurrentBalance = async () => {
-    try {
-      const response = await axiosSecure.get(`/api/wallets/current?email=${user.email}`);
-      const data = response.data;
 
-      // এখানে response.ok লাগবে না, axios সরাসরি error throw করে
-      if (!data?.success) {
-        throw new Error(data.message || "Failed to fetch balance");
-      }
-
-      setCurrentBalance(data.data.balance);
-    } catch (error) {
-      console.error("Error fetching current balance:", error.message);
-    }
-  };
-
-  fetchCurrentBalance();
-}, [user,currentBalance]); 
 
   const quickAmounts = [25, 50, 100, 250, 500, 1000];
 
@@ -181,36 +159,26 @@ const AddMoneyPage = () => {
   setIsProcessing(true);
 
   try {
-    const { data } = await axiosSecure.post("/api/wallets/addmoney", {
+    const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wallets/addmoney`,{
       user: user.email,
       amount: parseFloat(amount),
       method: selectedMethod,
       details: formData,
-    });
+    }
 
-    // success হলে সরাসরি update
+     )
+     console.log(data);
     setCurrentBalance(data.updatedBalance);
     setShowSuccess(true);
 
-    // Reset form
     setAmount("");
-    setFormData({
-      cardNumber: "",
-      expiryDate: "",
-      cvv: "",
-      cardHolderName: "",
-      bankAccount: "",
-      routingNumber: "",
-      accountHolderName: "",
-      mobileNumber: "",
-      paypalEmail: "",
-      savePaymentMethod: false,
-    });
+    setFormData(Object.fromEntries(Object.keys(formData).map(k => [k, ""])));
   } catch (error) {
     console.error("Error adding money:", error.message);
     setErrors({ general: error.message });
   } finally {
     setIsProcessing(false);
+    setTimeout(() => setShowSuccess(false), 1000);
   }
 };
 
@@ -281,7 +249,7 @@ const AddMoneyPage = () => {
           </div>
           <button
             onClick={() => setShowSuccess(false)}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 cursor-pointer transition-colors"
           >
             Add More Money
           </button>
@@ -764,7 +732,7 @@ const AddMoneyPage = () => {
               <button
                 onClick={handleSubmit}
                 disabled={isProcessing || !amount || parseFloat(amount) <= 0}
-                className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${
+                className={`w-full py-4 px-6 cursor-pointer rounded-lg font-semibold text-lg transition-colors ${
                   isProcessing || !amount || parseFloat(amount) <= 0
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                     : "bg-green-600 text-white hover:bg-green-700"
