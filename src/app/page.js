@@ -14,8 +14,8 @@ export default async function  Home() {
   const user = await res.json()
   return (
     <>
-      <HeroSection />
       <WalletSlider />
+      <HeroSection />
       <BankHero />
       {/* <State /> */}
       <AppPreview />
