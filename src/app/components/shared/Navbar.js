@@ -205,6 +205,7 @@ const handleLogout = async () => {
     { icon: CreditCard, label: "Cards", color: "bg-purple-500", href: "/dashboard/cards" },
     { icon: Receipt, label: "Bills", color: "bg-orange-500", href: "/dashboard/bills" },
     { icon: Clock, label: "History", color: "bg-pink-500", href: "/dashboard/history" },
+    { icon: Clock, label: " ", color: "", href: "/dashboard/adminDashboard" },
   ];
 
   return (
