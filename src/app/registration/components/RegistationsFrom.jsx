@@ -41,7 +41,7 @@ const RegistationsFrom = () => {
       email,
       password,
     });
-
+    console.log(res);
     if (res.data.message === "User created successfully") {
 
       const response = await signIn("credentials", {
