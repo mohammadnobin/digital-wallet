@@ -2,6 +2,7 @@ import AppPreview from "./components/Home/AppPreview";
 import BankHero from "./components/Home/BankHero";
 import Features from "./components/Home/Features";
 import HeroSection from "./components/Home/Hero";
+import Navbar from "./components/Home/Navbar";
 import State from "./components/Home/State";
 
 import TestimonialsSection from "./components/Home/Testimonials";
@@ -14,7 +15,7 @@ export default async function  Home() {
   const user = await res.json()
   return (
     <>
-      <WalletSlider />
+    <Navbar />
       <HeroSection />
       <BankHero />
       {/* <State /> */}
