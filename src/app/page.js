@@ -10,6 +10,7 @@ import WalletSlider from "./components/Home/AboutUs";
 
 import FooterSection from "./components/shared/Footer";
 import AboutUs from "./components/Home/AboutUs";
+import FaqSection from "./components/Home/FaqSection";
 
 export default async function  Home() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`)
@@ -23,7 +24,8 @@ export default async function  Home() {
       {/* <State /> */}
       <AppPreview />
       <Features/>
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
+      <FaqSection></FaqSection>
       <FooterSection></FooterSection>
     </>
   );
