@@ -889,7 +889,7 @@ export default function FeaturesSection() {
         >
           <div className="flex-1">
            
-            <h1 className="text-5xl lg:text-6xl font-bold text-black leading-tight">
+            <h1 className="text-5xl lg:text-6xl italic font-bold text-black leading-tight">
               Everything You Need<br />in One Wallet
             </h1>
           </div>
