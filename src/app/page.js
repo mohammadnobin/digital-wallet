@@ -6,9 +6,10 @@ import Navbar from "./components/Home/Navbar";
 import State from "./components/Home/State";
 
 import TestimonialsSection from "./components/Home/Testimonials";
-import WalletSlider from "./components/Home/WalletSlider";
+import WalletSlider from "./components/Home/AboutUs";
 
 import FooterSection from "./components/shared/Footer";
+import AboutUs from "./components/Home/AboutUs";
 
 export default async function  Home() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`)
@@ -17,6 +18,7 @@ export default async function  Home() {
     <>
     <Navbar />
       <HeroSection />
+      <AboutUs />
       <BankHero />
       {/* <State /> */}
       <AppPreview />
