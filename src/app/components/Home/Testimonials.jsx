@@ -250,9 +250,8 @@ export default function TestimonialsSection() {
               What Our Users Say
             </h2>
           </div>
-          <p className="text-gray-500 max-w-xl mt-4 md:mt-0">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <p className="text-primary max-w-xl text-3xl mt-4 md:mt-0">
+             Join thousands of satisfied customers who've made the switch to DigitalWallet
           </p>
         </div>
 
