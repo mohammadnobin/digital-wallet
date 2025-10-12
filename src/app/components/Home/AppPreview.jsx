@@ -7,7 +7,7 @@ import React from 'react';
 export default function AppPreview() {
   return (
     <div>
-      <section className="py-10">
+      <section className="py-10 mt-20 bg-gradient-to-br from-purple-50 to-pink-50">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center px-8 md:px-20">
             {/* Left Content */}
@@ -57,7 +57,7 @@ export default function AppPreview() {
               </div>
 
              <div className="mt-10">
-               <Link href="/registration" className=" cursor-pointer bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+               <Link href="/registration" className=" cursor-pointer bg-secondary text-black px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-2xl transition-shadow duration-300">
                <button >
                 Register now !
                 </button> 

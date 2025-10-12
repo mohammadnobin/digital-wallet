@@ -19,7 +19,7 @@ export default async function  Home() {
     <Navbar />
       <HeroSection />
       <AboutUs />
-      <BankHero />
+      {/* <BankHero /> */}
       {/* <State /> */}
       <AppPreview />
       <Features/>
