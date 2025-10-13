@@ -27,10 +27,8 @@ export default async function  Home() {
     <Navbar />
       <HeroSection />
       <AboutUs />
-      <AppPreview />
       <Features/>
       <FaqSection></FaqSection>
-      <Features/>
       <WhyTrustUs />
       <StatsSection />
       <TestimonialsSection />
