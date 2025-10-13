@@ -55,9 +55,10 @@ export default function HeroSection() {
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
                 Pay, Transfer & Manage Money Effortlessly & Securely
               </h2>
-              <p className="text-gray-600 text-sm sm:text-base mb-6 sm:mb-8 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              <p className="text-gray-600 text-sm mb-8">
+                Experience the perfect digital wallet — fast transfers, 
+                secure payments, and complete control of your money. 
+                Your smarter way to handle finances starts here.
               </p>
 
               {/* CTA Button */}
@@ -76,8 +77,8 @@ export default function HeroSection() {
                     />
                   ))}
                 </div>
-                <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                <p className="text-gray-600 text-sm mb-4">
+                  Trusted by thousands of users worldwide — seamless, secure, and reliable.
                 </p>
 
                 {/* User Avatars */}
@@ -111,3 +112,4 @@ export default function HeroSection() {
     </div>
   );
 }
+
