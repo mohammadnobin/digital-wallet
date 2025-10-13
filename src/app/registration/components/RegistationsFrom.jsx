@@ -41,8 +41,15 @@ const RegistationsFrom = () => {
       email,
       password,
     });
-    console.log(res);
     if (res.data.message === "User created successfully") {
+
+          const loginRes = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`,
+      { email, password },
+      {withCredentials: 'true'}
+    );
+    console.log(loginRes);
+
 
       const response = await signIn("credentials", {
         email,
