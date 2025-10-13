@@ -36,15 +36,12 @@ export default function Navbar() {
             
             {/* Features Dropdown */}
             <div className="relative group">
+             <Link href="/features">
               <button className="text-gray-700 hover:text-primary font-medium text-sm flex items-center gap-1 transition">
                 Features
-                <ChevronDown size={16} className="group-hover:rotate-180 transition" />
               </button>
-              <div className="absolute left-0 mt-0 w-48 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <Link href="/features/payments" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm first:rounded-t-lg transition">Payment Solutions</Link>
-                <Link href="/features/security" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm transition">Security</Link>
-                <Link href="/features/analytics" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm last:rounded-b-lg transition">Analytics</Link>
-              </div>
+              
+             </Link>
             </div>
 
             {/* Page Dropdown */}
@@ -54,23 +51,18 @@ export default function Navbar() {
                 <ChevronDown size={16} className="group-hover:rotate-180 transition" />
               </button>
               <div className="absolute left-0 mt-0 w-48 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <Link href="/pages/pricing" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm first:rounded-t-lg transition">Pricing</Link>
-                <Link href="/pages/faq" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm transition">FAQ</Link>
-                <Link href="/pages/terms" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm last:rounded-b-lg transition">Terms & Conditions</Link>
+                <Link href="/product" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm first:rounded-t-lg transition">Product</Link>
+                <Link href="/faq" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm transition">FAQ</Link>
+                <Link href="/testimonials" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm last:rounded-b-lg transition">Testimonials</Link>
               </div>
             </div>
 
             {/* Blog Dropdown */}
             <div className="relative group">
+             <Link href="/blog">
               <button className="text-gray-700 hover:text-primary font-medium text-sm flex items-center gap-1 transition">
                 Blog
-                <ChevronDown size={16} className="group-hover:rotate-180 transition" />
-              </button>
-              <div className="absolute left-0 mt-0 w-48 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <Link href="/blog" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm first:rounded-t-lg transition">Latest Articles</Link>
-                <Link href="/blog/tutorials" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm transition">Tutorials</Link>
-                <Link href="/blog/tips" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-primary text-sm last:rounded-b-lg transition">Tips & Tricks</Link>
-              </div>
+              </button></Link>     
             </div>
 
             <Link href="/contact" className="text-gray-700 hover:text-primary font-medium text-sm transition">Contact</Link>

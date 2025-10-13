@@ -1,14 +1,14 @@
 import React from 'react';
 import Navbar from '../components/Home/Navbar';
-import FaqSection from '../components/Home/FaqSection';
+import TestimonialsSection from '../components/Home/Testimonials';
 import Footer from '../components/shared/Footer';
 
 export default function page(props) {
     return (
         <div>
-           <Navbar />
-           <FaqSection /> 
-           <Footer />
+          <Navbar />
+          <TestimonialsSection />
+          <Footer />  
         </div>
     );
 }
