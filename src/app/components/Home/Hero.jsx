@@ -11,7 +11,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <div className="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen items-center">
+    <div className="bg-gradient-to-br from-purple-50 to-pink-50 flex flex-col justify-center h-screen items-center">
       <div className="text-center py-4 w-full">
         <p className="text-sm font-bold text-[#5f4a94]">
           E-WALLET & PAYMENT GATEWAY
@@ -59,7 +59,7 @@ export default function HeroSection() {
               </p>
 
               {/* Button — no hover */}
-              <button className="bg-secondary text-gray-800 font-bold px-8 py-3 rounded-full transition mb-8">
+              <button className="bg-secondary cursor-pointer text-gray-800 font-bold px-8 py-3 rounded-full transition mb-8">
                 Get Started
               </button>
 

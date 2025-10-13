@@ -166,6 +166,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import Swal from "sweetalert2";
+import axiosSecure from "@/hooks/useAxiosSecure";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -174,6 +175,7 @@ const Navbar = () => {
 
   const { data: session } = useSession();
   const user = session?.user;
+  console.log(session);
 const handleLogout = async () => {
   // SweetAlert2 confirm dialog
   const result = await Swal.fire({
@@ -195,6 +197,7 @@ const handleLogout = async () => {
       timer: 1500,
       showConfirmButton: false,
     });
+    await axiosSecure.post('/api/users/logout')
     router.push("/");
   }
 };
