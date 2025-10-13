@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Star } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroSection() {
   const [animate, setAnimate] = useState(false);
@@ -18,7 +19,7 @@ export default function HeroSection() {
           E-WALLET & PAYMENT GATEWAY
         </p>
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight px-4">
-          The Future of Digital <br className="hidden sm:block" /> 
+          The Future of Digital <br className="hidden sm:block" />
           <span className="sm:hidden"> </span>Payments!
         </h1>
       </div>
@@ -41,11 +42,10 @@ export default function HeroSection() {
             <img
               src="Mockup-1.png"
               alt="Mockup"
-              className={`w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] transition-all duration-1000 ease-in-out transform ${
-                animate
+              className={`w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] transition-all duration-1000 ease-in-out transform ${animate
                   ? "translate-y-0 opacity-100"
                   : "translate-y-24 opacity-0"
-              } hover:scale-105`}
+                } hover:scale-105`}
             />
           </div>
 
@@ -56,15 +56,17 @@ export default function HeroSection() {
                 Pay, Transfer & Manage Money Effortlessly & Securely
               </h2>
               <p className="text-gray-600 text-sm mb-8">
-                Experience the perfect digital wallet — fast transfers, 
-                secure payments, and complete control of your money. 
+                Experience the perfect digital wallet — fast transfers,
+                secure payments, and complete control of your money.
                 Your smarter way to handle finances starts here.
               </p>
 
               {/* CTA Button */}
-              <button className="bg-secondary cursor-pointer text-gray-800 font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full transition hover:shadow-lg active:scale-95 mb-6 sm:mb-8 w-full sm:w-auto">
-                Get Started
-              </button>
+              <Link href="login">
+                <button className="bg-secondary cursor-pointer text-gray-800 font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full transition hover:shadow-lg active:scale-95 mb-6 sm:mb-8 w-full sm:w-auto">
+                  Get Started
+                </button>
+              </Link>
 
               {/* Rating Section */}
               <div>
@@ -108,7 +110,7 @@ export default function HeroSection() {
             </div>
           </div>
         </div>
-      </div> 
+      </div>
     </div>
   );
 }

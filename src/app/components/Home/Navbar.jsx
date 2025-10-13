@@ -138,12 +138,12 @@ export default function Navbar() {
 
             <div className="flex gap-3 pt-4 px-2">
               <Link href="/signup" className="flex-1">
-                <button className="w-full bg-yellow-200 text-gray-800 font-semibold px-4 py-2 rounded-full hover:bg-yellow-300 transition">
+                <button className="w-full bg-yellow-200 text-gray-800 font-semibold cursor-pointer px-4 py-2 rounded-full hover:bg-yellow-300 transition">
                   Sign Up
                 </button>
               </Link>
               <Link href="/signin" className="flex-1">
-                <button className="w-full bg-primary text-white font-semibold px-4 py-2 rounded-full hover:bg-indigo-800 transition">
+                <button className="w-full bg-primary text-white font-semibold px-4 cursor-pointer py-2 rounded-full hover:bg-indigo-800 transition">
                   Sign In
                 </button>
               </Link>
