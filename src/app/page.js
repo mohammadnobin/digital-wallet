@@ -11,6 +11,7 @@ import StatsSection from "./components/Home/State";
 import authOptions from "@/lib/authOptions";
 import { getServerSession } from 'next-auth/next';
 import AddUserForm from "./components/Home/AddUserForm";
+import BlogSection from "./components/Home/Blogs";
 
 export default async function  Home() {
     const session = await getServerSession(authOptions);
@@ -32,6 +33,7 @@ export default async function  Home() {
       <WhyTrustUs />
       <StatsSection />
       <TestimonialsSection />
+      <BlogSection />
       <FooterSection></FooterSection>
       <AddUserForm />
     </>

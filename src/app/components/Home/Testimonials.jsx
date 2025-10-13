@@ -209,28 +209,28 @@ export default function TestimonialsSection() {
   const testimonials = [
     {
       title: "Payments made easy",
-      text: "The security features give me peace of mind. Bank-level protection with modern convenience.",
+      text: "This app has simplified every part of my financial routine. Sending and receiving money is effortless, and everything happens in seconds.",
       name: "Sarah Vadelah",
       location: "New York",
-      img: "/ginger-lady.jpg", 
+      img: "/ginger-lady.jpg",
     },
     {
       title: "Super secure and reliable",
-      text: "Perfect for splitting bills with friends. Super easy to use and completely free transfers!",
+      text: "I love how safe my transactions feel. The security and encryption features give me total confidence every time I use it.",
       name: "John Doe",
       location: "London",
       img: "/cheerful-handsome-man.jpg",
     },
     {
       title: "Fast and hassle-free",
-      text: "As a freelancer working globally, this app saves me hundreds in fees every month. Simply amazing! “",
+      text: "As a freelancer working with clients abroad, this app saves me time and huge transfer fees. Payments arrive instantly and without stress.",
       name: "Emma Jueis",
       location: "Sydney",
       img: "/business-male.jpg",
     },
     {
       title: "Love the analytics feature",
-      text: "DigitalWallet has transformed how I handle my business payments. No more waiting for bank transfers!",
+      text: "DigitalWallet helps me track every transaction easily. The spending insights are super useful for managing my business finances.",
       name: "Michael Luixz",
       location: "Toronto",
       img: "/optimistic-young-woman.jpg",
@@ -251,7 +251,7 @@ export default function TestimonialsSection() {
             </h2>
           </div>
           <p className="text-primary max-w-xl text-3xl mt-4 md:mt-0">
-             Join thousands of satisfied customers who've made the switch to DigitalWallet
+            Join thousands of satisfied customers who trust DigitalWallet for secure, seamless payments every day.
           </p>
         </div>
 
