@@ -1,13 +1,13 @@
 import React from 'react';
 import Navbar from '../components/Home/Navbar';
-import FaqSection from '../components/Home/FaqSection';
+import BlogSection from '../components/Home/Blogs';
 import Footer from '../components/shared/Footer';
 
 export default function page(props) {
     return (
         <div>
-           <Navbar />
-           <FaqSection /> 
+           <Navbar /> 
+           <BlogSection />
            <Footer />
         </div>
     );

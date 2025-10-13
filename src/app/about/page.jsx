@@ -1,13 +1,13 @@
 import React from 'react';
+import AboutUs from '../components/Home/AboutUs';
 import Navbar from '../components/Home/Navbar';
-import FaqSection from '../components/Home/FaqSection';
 import Footer from '../components/shared/Footer';
 
 export default function page(props) {
     return (
         <div>
-           <Navbar />
-           <FaqSection /> 
+            <Navbar />
+           <AboutUs /> 
            <Footer />
         </div>
     );
