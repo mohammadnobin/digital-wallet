@@ -6,6 +6,7 @@ import { getServerSession } from 'next-auth/next';
 import axios from 'axios';
 export default async function page() {
     const session=await getServerSession(authOptions);
+    console.log(session);
       if (!session) {
     return <div>Please login to access this page</div>;
   }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const LoginFrom = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,6 +32,11 @@ const LoginFrom = () => {
     setIsLoading(true);
 
     try {
+    // const loginRes = await axios.post(
+    //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`,
+    //   { email, password },
+    //   {withCredentials: 'true'}
+    // );
       const response = await signIn("credentials", {
         email: email,
         password: password,
