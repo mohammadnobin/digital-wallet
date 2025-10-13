@@ -29,7 +29,7 @@ export default function HeroSection() {
               <img
                 src="Activities.png"
                 alt="Activities"
-                className="w-full h-auto transition-transform duration-500 ease-in-out hover:scale-105 "
+                className="w-full h-auto transition-transform duration-500 ease-in-out hover:scale-105"
               />
             </div>
           </div>
@@ -43,7 +43,7 @@ export default function HeroSection() {
                 animate
                   ? "translate-y-0 opacity-100"
                   : "translate-y-24 opacity-0"
-              } hover:scale-105 `}
+              } hover:scale-105`}
             />
           </div>
 
@@ -54,11 +54,12 @@ export default function HeroSection() {
                 Pay, Transfer & Manage Money Effortlessly & Securely
               </h2>
               <p className="text-gray-600 text-sm mb-8">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Experience the perfect digital wallet — fast transfers, 
+                secure payments, and complete control of your money. 
+                Your smarter way to handle finances starts here.
               </p>
 
-              {/* Button — no hover */}
+              {/* Button */}
               <button className="bg-secondary text-gray-800 font-bold px-8 py-3 rounded-full transition mb-8">
                 Get Started
               </button>
@@ -75,7 +76,7 @@ export default function HeroSection() {
                   ))}
                 </div>
                 <p className="text-gray-600 text-sm mb-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                  Trusted by thousands of users worldwide — seamless, secure, and reliable.
                 </p>
 
                 {/* User Avatars */}
@@ -109,5 +110,4 @@ export default function HeroSection() {
     </div>
   );
 }
-
 
