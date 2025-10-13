@@ -159,25 +159,25 @@
 //   );
 // }
 
-export const revalidate = 1;
+// export const revalidate = 1;
 
-export default async function AddUserForm() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`);
-  const users = await res.json();
+// export default async function AddUserForm() {
+//   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`);
+//   const users = await res.json();
 
-  return (
-    <div>
-      <h1>All Users</h1>
-      <ul>
-        {users?.map((user) => (
-          <li key={user._id}>
-            {user.name} — {user.email}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <h1>All Users</h1>
+//       <ul>
+//         {users?.map((user) => (
+//           <li key={user._id}>
+//             {user.name} — {user.email}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
 
 
 // "use client";
@@ -384,3 +384,18 @@ export default async function AddUserForm() {
 // };
 
 // export default AddUserForm;
+
+import authOptions from "@/lib/authOptions";
+import { getServerSession } from 'next-auth/next';
+const AddUserForm = async () => {
+      const session = await getServerSession(authOptions);
+      console.log(session);
+
+  return (
+    <div>
+      hello
+    </div>
+  );
+};
+
+export default AddUserForm;
