@@ -1,6 +1,8 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import NextAuthProvider from "@/providers/NextAuthProvider";
+import Navbar from "./components/Home/Navbar";
+import Footer from "./components/shared/Footer";
 
 
 
@@ -26,7 +28,9 @@ export default function RootLayout({ children }) {
       >
         
          <NextAuthProvider>
+          <Navbar />
            {children}
+           <Footer />
          </NextAuthProvider>
         
       </body>
