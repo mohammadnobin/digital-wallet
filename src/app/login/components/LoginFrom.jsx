@@ -4,13 +4,15 @@ import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const LoginFrom = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+   const searchParams = useSearchParams();
+  // const redirectPath = searchParams.get("redirect") || "/dashboard";
+   const callbackUrl = searchParams.get('callbackUrl') || '/';
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -49,7 +51,7 @@ const LoginFrom = () => {
           title: "Login Successful",
           text: "Welcome back!",
         });
-        router.push("/dashboard");
+     router.push(callbackUrl); 
       } else {
         Swal.fire({
           icon: "error",

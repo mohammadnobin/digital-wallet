@@ -63,7 +63,6 @@ const RegistationsFrom = () => {
         });
 
         setAgreedToTerms(false);
-        router.push("/dashboard");
       } else {
         await Swal.fire({
           icon: "error",
