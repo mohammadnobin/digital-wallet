@@ -14,19 +14,13 @@
 
 // export default page;
 
-"use client";
  
 import ContactPage from "../components/Home/ContactPage";
-import Navbar from "../components/Home/Navbar";
-import Footer from "../components/shared/Footer";
-
  
  export default function page(props) {
      return (
          <div>
-             <Navbar />
            <ContactPage />
-            <Footer />
          </div>
      );
  }
