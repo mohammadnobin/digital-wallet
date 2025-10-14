@@ -22,7 +22,6 @@ export default async function  Home() {
   //     },
   // })
   // const user = await res.json()
-  // console.log(user);
   return (
     <>
     <Navbar />

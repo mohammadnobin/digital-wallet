@@ -7,7 +7,6 @@
 //   const user = session?.user;
 //       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/email?email=${encodeURIComponent(email)}`)
 //   const users = await res.json()
-//   console.log(users);
 //     return (
 //         <div>
 //             <AddMoneyPage />
@@ -24,7 +23,6 @@ import { authOptions } from '@/lib/authOptions';
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
-  console.log(session);
 
   if (!session) {
     return <div>Please login to access this page</div>;

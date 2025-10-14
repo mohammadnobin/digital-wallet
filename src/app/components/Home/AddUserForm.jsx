@@ -24,7 +24,6 @@
 //     setMessage("");
 
 //     try {
-//         console.log(formData);
 //       const res = await axios.post("http://localhost:5000/api/users", formData);
 //       setMessage("User created successfully!");
 //       setFormData({ name: "", email: "", password: "" });
@@ -124,7 +123,6 @@
 // }
 
 // export default function AddUserForm({ users }) {
-//   console.log(users);
 //   return (
 //     <div>
 //       <h1>All Users</h1>
@@ -389,7 +387,6 @@ import authOptions from "@/lib/authOptions";
 import { getServerSession } from 'next-auth/next';
 const AddUserForm = async () => {
       const session = await getServerSession(authOptions);
-      console.log(session);
 
   return (
     <div>

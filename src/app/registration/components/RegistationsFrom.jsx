@@ -48,8 +48,6 @@ const RegistationsFrom = () => {
       { email, password },
       {withCredentials: 'true'}
     );
-    console.log(loginRes);
-
 
       const response = await signIn("credentials", {
         email,
