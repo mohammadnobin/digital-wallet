@@ -175,7 +175,6 @@ const Navbar = () => {
 
   const { data: session } = useSession();
   const user = session?.user;
-  console.log(session);
 const handleLogout = async () => {
   // SweetAlert2 confirm dialog
   const result = await Swal.fire({

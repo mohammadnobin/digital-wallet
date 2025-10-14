@@ -167,7 +167,6 @@ const AddMoneyPage = ({user}) => {
     }
 
      )
-     console.log(data);
     setCurrentBalance(data.updatedBalance);
     setShowSuccess(true);
 

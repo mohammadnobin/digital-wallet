@@ -60,11 +60,10 @@ axiosSecure.interceptors.response.use(
     const status = error.response?.status;
 
     if (status === 403) {
-      console.log("Access Forbidden (403)");
+
     } else if (status === 401) {
-      console.log("Unauthorized (401)");
+
     } else {
-      console.log("Server Error:", error.message);
     }
 
     return Promise.reject(error);
