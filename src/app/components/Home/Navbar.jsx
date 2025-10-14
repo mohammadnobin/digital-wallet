@@ -13,9 +13,9 @@ export default function Navbar() {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
 
-  if (pathNmae.startsWith("/dashboard")) {
-    return null
-  }
+if (pathNmae.startsWith("/dashboard") || pathNmae.startsWith("/adminDashboard")) {
+  return null;
+}
 
   return (
     <nav className="bg-gradient-to-br from-purple-50 to-pink-50 shadow-sm sticky top-0 z-50">
