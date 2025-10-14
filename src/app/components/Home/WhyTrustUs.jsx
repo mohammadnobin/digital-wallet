@@ -106,12 +106,12 @@ export default function WhyTrustUs() {
     {
       icon: <Wallet className="w-6 h-6 text-white" />,
       title: "Digital Wallet",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      desc: "A fast, secure, and convenient way to manage your money — anytime, anywhere.",
     },
     {
       icon: <Lock className="w-6 h-6 text-white" />,
       title: "Data Protection",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      desc: "Your privacy matters. We use bank-level encryption and security to protect your data.",
     },
   ];
 
@@ -119,12 +119,12 @@ export default function WhyTrustUs() {
     {
       icon: <Globe className="w-6 h-6 text-white" />,
       title: "Global Support",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      desc: "Send and receive payments seamlessly across borders with 24/7 global assistance.",
     },
     {
       icon: <Smartphone className="w-6 h-6 text-white" />,
       title: "Secure & Reliable",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      desc: "Built with advanced security and trusted by millions for safe and smooth transactions.",
     },
   ];
 
@@ -195,7 +195,6 @@ export default function WhyTrustUs() {
           </div>
         </div>
       </div>
-      
     </section>
   );
 }
