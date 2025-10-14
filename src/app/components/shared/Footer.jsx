@@ -1,4 +1,3 @@
-import React from 'react';
 import { 
   Wallet,
   Mail,
@@ -12,20 +11,16 @@ import {
   Download,
   Shield,
   Award,
-  Users,
-  ArrowRight,
   Heart,
   Globe,
   Clock,
-  HelpCircle,
-  FileText,
   Lock,
-  Star,
-  CreditCard,
-  Smartphone
+
 } from 'lucide-react';
 
 export default function FooterSection() {
+
+
   const footerLinks = {
     product: [
       { name: 'Features', href: '#features' },

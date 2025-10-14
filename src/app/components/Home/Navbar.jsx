@@ -1,16 +1,21 @@
 'use client';
-
 import React, { useState } from 'react';
 import { ChevronDown, CreditCard, Menu, X } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
+  const pathNmae = usePathname()
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const toggleDropdown = (menu) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
+
+  if (pathNmae.startsWith("/dashboard")) {
+    return null
+  }
 
   return (
     <nav className="bg-gradient-to-br from-purple-50 to-pink-50 shadow-sm sticky top-0 z-50">
@@ -37,7 +42,7 @@ export default function Navbar() {
             {/* Features Dropdown */}
             <div className="relative group">
              <Link href="/features">
-              <button className="text-gray-700 hover:text-primary font-medium text-sm flex items-center gap-1 transition">
+              <button className="text-gray-700 coupo cursor-pointer hover:text-primary font-medium text-sm flex items-center gap-1 transition">
                 Features
               </button>
               
@@ -46,7 +51,7 @@ export default function Navbar() {
 
             {/* Page Dropdown */}
             <div className="relative group">
-              <button className="text-gray-700 hover:text-primary font-medium text-sm flex items-center gap-1 transition">
+              <button className="text-gray-700 cursor-pointer hover:text-primary font-medium text-sm flex items-center gap-1 transition">
                 Page
                 <ChevronDown size={16} className="group-hover:rotate-180 transition" />
               </button>
@@ -60,7 +65,7 @@ export default function Navbar() {
             {/* Blog Dropdown */}
             <div className="relative group">
              <Link href="/blog">
-              <button className="text-gray-700 hover:text-primary font-medium text-sm flex items-center gap-1 transition">
+              <button className="text-gray-700 cursor-pointer hover:text-primary font-medium text-sm flex items-center gap-1 transition">
                 Blog
               </button></Link>     
             </div>
@@ -71,12 +76,12 @@ export default function Navbar() {
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-4">
             <Link href="/registration">
-              <button className="bg-secondary hover:bg-secondary text-gray-800 font-semibold px-6 py-2 rounded-full transition">
+              <button className="bg-secondary cursor-pointer hover:bg-secondary text-gray-800 font-semibold px-6 py-2 rounded-full transition">
                 Sign Up
               </button>
             </Link>
             <Link href="/login">
-              <button className="bg-primary hover:bg-primary text-white font-semibold px-6 py-2 rounded-full transition">
+              <button className="bg-primary cursor-pointer hover:bg-primary text-white font-semibold px-6 py-2 rounded-full transition">
                 Sign In
               </button>
             </Link>
@@ -137,12 +142,12 @@ export default function Navbar() {
             <Link href="/contact" className="block text-gray-700 hover:bg-gray-50 font-medium text-sm py-2 px-2 rounded transition">Contact</Link>
 
             <div className="flex gap-3 pt-4 px-2">
-              <Link href="/signup" className="flex-1">
+              <Link href="/signup" className="flex-1 cursor-pointer ">
                 <button className="w-full bg-yellow-200 text-gray-800 font-semibold cursor-pointer px-4 py-2 rounded-full hover:bg-yellow-300 transition">
                   Sign Up
                 </button>
               </Link>
-              <Link href="/signin" className="flex-1">
+              <Link href="/signin" className="flex-1 cursor-pointer">
                 <button className="w-full bg-primary text-white font-semibold px-4 cursor-pointer py-2 rounded-full hover:bg-indigo-800 transition">
                   Sign In
                 </button>
