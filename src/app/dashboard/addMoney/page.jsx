@@ -24,9 +24,7 @@ import { authOptions } from '@/lib/authOptions';
 export default async function Page() {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
-    return <div>Please login to access this page</div>;
-  }
+
 
   const email = session.user.email;
 

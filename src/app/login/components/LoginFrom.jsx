@@ -4,24 +4,70 @@ import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const LoginFrom = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-   const searchParams = useSearchParams();
-  // const redirectPath = searchParams.get("redirect") || "/dashboard";
-   const callbackUrl = searchParams.get('callbackUrl') || '/';
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const form = e.target;
+  //   const formData = new FormData(form);
+  //   const formObj = Object.fromEntries(formData.entries());
+  //   const { email, password } = formObj;
+
+  //   // Simple validation
+  //   if (!email || !password) {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Error",
+  //       text: "Please fill all required fields",
+  //     });
+  //     return;
+  //   }
+
+  //   setIsLoading(true);
+
+  //   try {
+  //     const response = await signIn("credentials", {
+  //       email,
+  //       password,
+  //       redirect: true,
+  //       callbackUrl: redirect ? redirect : "/",
+  //     });
+
+  //     if (response.ok) {
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Login Successful",
+  //         text: "Welcome back!",
+  //       });
+  //     } else {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Login Failed",
+  //         text: response.error || "Please check your credentials",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Oops...",
+  //       text: "An error occurred while signing in.",
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target);
+    const { email, password } = Object.fromEntries(formData.entries());
 
-    const form = e.target;
-    const formData = new FormData(form);
-    const formObj = Object.fromEntries(formData.entries());
-    const { email, password } = formObj;
-
-    // Simple validation
     if (!email || !password) {
       Swal.fire({
         icon: "error",
@@ -34,41 +80,25 @@ const LoginFrom = () => {
     setIsLoading(true);
 
     try {
-    // const loginRes = await axios.post(
-    //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`,
-    //   { email, password },
-    //   {withCredentials: 'true'}
-    // );
       const response = await signIn("credentials", {
-        email: email,
-        password: password,
-        redirect: false,
+        email,
+        password,
+        redirect: true, // এখানে true থাকলে NextAuth নিজে redirect করবে
+        callbackUrl: redirect ? redirect : "/", // redirect query থাকলে সেখানে নেবে
       });
-
-      if (response.ok) {
-        Swal.fire({
-          icon: "success",
-          title: "Login Successful",
-          text: "Welcome back!",
-        });
-     router.push(callbackUrl); 
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Login Failed",
-          text: response.error || "Please check your credentials",
-        });
-      }
+      console.log(response);
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "An error occurred while signing in.",
+        text: "Something went wrong!",
       });
     } finally {
       setIsLoading(false);
     }
   };
+  
+  
   return (
     <form
       onSubmit={handleSubmit}

@@ -19,9 +19,7 @@ export default async function Page() {
   // ✅ Server-side session
   const session = await getServerSession(authOptions);
 
-  if (!session) {
-    return <div>Please login to access this page</div>;
-  }
+
 
   const email = session.user.email;
 
