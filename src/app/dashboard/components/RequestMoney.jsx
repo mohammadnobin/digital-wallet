@@ -6,8 +6,12 @@ import {
   Calendar, Info, Users, RefreshCw, Share2, Clock, CheckCircle, XCircle
 } from 'lucide-react';
 import RequestFrom from './RequestFrom';
+import PendingRequests from '../requestMoney/components/PendingRequests';
+import { useSession } from 'next-auth/react';
 
 export default function RequestMoney() {
+      const { data: session } = useSession();
+      const currentUserEmail = session?.user?.email
   const [activeTab, setActiveTab] = useState('new');
   const [amount, setAmount] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('general');
@@ -73,24 +77,11 @@ export default function RequestMoney() {
           <div className="lg:col-span-2 bg-white rounded-lg shadow-sm p-6">
 
             {activeTab === 'new' && (
-              <RequestFrom />
+              <RequestFrom currentUserEmail={currentUserEmail} />
             )}
 
             {activeTab === 'pending' && (
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Pending Requests</h2>
-                <div className="space-y-4">
-                  {pendingRequests.map(req => (
-                    <div key={req.id} className="flex items-center justify-between p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                      <div>
-                        <p className="font-medium text-gray-900">{req.from}</p>
-                        <p className="text-sm text-gray-600">{req.category} • Due {req.dueDate}</p>
-                      </div>
-                      <span className="font-semibold text-yellow-700">${req.amount}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+             <PendingRequests currentUserEmail={currentUserEmail} />
             )}
 
             {activeTab === 'history' && (
