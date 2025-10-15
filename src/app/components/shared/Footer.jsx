@@ -1,3 +1,4 @@
+'use client'
 import { 
   Wallet,
   Mail,
@@ -17,10 +18,11 @@ import {
   Lock,
 
 } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function FooterSection() {
 
-
+  const pathName = usePathname();
   const footerLinks = {
     product: [
       { name: 'Features', href: '#features' },
@@ -64,19 +66,9 @@ export default function FooterSection() {
     { icon: <Youtube className="w-5 h-5" />, href: '#youtube', name: 'YouTube' }
   ];
 
-  const trustBadges = [
-    { icon: <Shield className="w-8 h-8" />, title: 'SOC 2 Certified', desc: 'Security Audited' },
-    { icon: <Award className="w-8 h-8" />, title: 'ISO 27001', desc: 'Internationally Recognized' },
-    { icon: <Lock className="w-8 h-8" />, title: 'PCI DSS', desc: 'Payment Secure' },
-    { icon: <Globe className="w-8 h-8" />, title: 'GDPR Compliant', desc: 'Privacy Protected' }
-  ];
-
-  const quickStats = [
-    { value: '5M+', label: 'Active Users' },
-    { value: '180+', label: 'Countries' },
-    { value: '$2B+', label: 'Processed' },
-    { value: '99.9%', label: 'Uptime' }
-  ];
+    if (pathName.startsWith("/dashboard") || pathName.startsWith("/adminDashboard")) {
+    return null;
+  }
 
   return (
     <footer className="bg-primary text-white relative overflow-hidden">
@@ -88,46 +80,6 @@ export default function FooterSection() {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Newsletter Section */}
-        {/* <div className="py-16 border-b border-purple-800 border-opacity-30">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-3xl font-bold mb-4">
-                Stay Updated with 
-                <span className="text-white"> DigitalWallet</span>
-              </h3>
-              <p className="text-white text-lg mb-6">
-                Get the latest updates, tips, and exclusive offers delivered to your inbox. 
-                Join 50,000+ subscribers who stay ahead of the curve.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex-1">
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="w-full px-6 py-4 bg-white bg-opacity-10 backdrop-blur-sm border border-purple-400 border-opacity-30 rounded-xl text-black placeholder-purple-600 focus:outline-none focus:border-white focus:bg-opacity-20 transition-all duration-300"
-                  />
-                </div>
-                <button className="bg-purple-600 hover:bg-purple-700 px-8 py-4 rounded-xl font-semibold transition-colors duration-300 flex items-center">
-                  Subscribe
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </button>
-              </div>
-              <p className="text-white text-sm mt-3">
-                No spam, unsubscribe at any time. We respect your privacy.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-8">
-              {quickStats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-                  <div className="text-white">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div> */}
 
         {/* Main Footer Content */}
         <div className="py-16">
