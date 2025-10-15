@@ -44,7 +44,7 @@ const handleLogout = async () => {
       timer: 1500,
       showConfirmButton: false,
     });
-    await axios.post('/api/users/logout')
+await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`)
     router.push("/");
   }
 };
