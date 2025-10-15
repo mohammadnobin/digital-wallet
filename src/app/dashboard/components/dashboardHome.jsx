@@ -30,6 +30,7 @@ const DigitalWalletDashboard = ({user}) => {
     { icon: QrCode, label: "Scan QR", color: "bg-purple-500", href: "/scan-qr" },
     { icon: CreditCard, label: "Add Card", color: "bg-orange-500", href: "/dashboard/cards" },
     { icon: Users, label: "Split Bill", color: "bg-indigo-500", href: "/dashboard/splitBill" },
+    { icon: Users, label: "Remittance", color: "bg-indigo-500", href: "/dashboard/remittance" },
   ];
 
   const recentTransactions = [
