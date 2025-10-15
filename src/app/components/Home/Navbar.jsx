@@ -46,12 +46,7 @@ export default function Navbar() {
             >
               Home
             </Link>
-            <Link
-              href="/about"
-              className="text-gray-700 hover:text-primary font-medium text-sm transition"
-            >
-              About Us
-            </Link>
+
             <Link
               href="/features"
               className="text-gray-700 hover:text-primary font-medium text-sm transition"
@@ -95,6 +90,12 @@ export default function Navbar() {
               className="text-gray-700 hover:text-primary font-medium text-sm transition"
             >
               Blog
+            </Link>
+            <Link
+              href="/about"
+              className="text-gray-700 hover:text-primary font-medium text-sm transition"
+            >
+              About Us
             </Link>
             <Link
               href="/contact"
@@ -178,22 +179,22 @@ export default function Navbar() {
               {session ? (
                 // ✅ Mobile Dashboard Button
                 <Link href="/dashboard" className="flex-1 bg-primary text-center text-white font-semibold px-4 py-2 rounded-full hover:bg-indigo-800 transition">
-              
-                    Dashboard
-    
+
+                  Dashboard
+
                 </Link>
               ) : (
                 // ✅ Mobile Sign Up / Sign In
                 <>
                   <Link href="/registration" className="flex-1 text-center bg-yellow-200 text-gray-800 font-semibold px-4 py-2 rounded-full hover:bg-yellow-300 transition">
-                
-                      Sign Up
-        
+
+                    Sign Up
+
                   </Link>
                   <Link href="/login" className="flex-1 bg-primary text-center text-white font-semibold px-4 py-2 rounded-full hover:bg-indigo-800 transition">
-                  
-                      Sign In
-          
+
+                    Sign In
+
                   </Link>
                 </>
               )}
