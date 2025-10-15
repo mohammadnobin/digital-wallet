@@ -96,7 +96,7 @@ const DigitalWalletDashboard = ({user}) => {
   const maxSpending = Math.max(...weeklySpendingData.map(d => d.amount));
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
 
 
       {/* Main Content */}
