@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { LogOut,LogIn } from "lucide-react";
 import {
   Bell,
   ChevronDown,
@@ -79,8 +80,8 @@ const Navbar = () => {
                 key={item.label}
                 href={item.href}
                 className={`px-3 py-2 flex items-center gap-1 text-sm font-medium transition-colors ${pathname === item.href
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-500 hover:text-gray-700"
+                  ? "text-blue-600 border-b-2 border-blue-600"
+                  : "text-gray-500 hover:text-gray-700"
                   }`}
               >
                 <item.icon className="inline-block w-4 h-4" />
@@ -98,7 +99,7 @@ const Navbar = () => {
             <div className="relative">
               {/* User Info Button */}
               <div
-                className="flex items-center space-x-3 cursor-pointer"
+                className="flex items-center space-x-5 cursor-pointer"
                 onClick={() => setOpen(!open)}
               >
                 <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
@@ -115,20 +116,22 @@ const Navbar = () => {
 
               {/* Dropdown Menu */}
               {open && (
-                <div className="absolute right-0 mt-2 w-40  z-50">
+                <div className="absolute right-12 mt-4 w-30  z-50">
                   {user ? (
                     <button
                       onClick={handleLogout}
-                      className="bg-indigo-600 cursor-pointer text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-transform transform hover:scale-105 flex items-center justify-center shadow-md"
+                      className="bg-red-400 cursor-pointer text-white px-4 py-2 rounded-xl font-semibold hover:bg-red-400 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg w-full"
                     >
                       Logout
-                      <ArrowRight className="ml-2 w-5 h-5" />
+                      <LogOut className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
                     </button>
                   ) : (
                     <Link href="/login">
-                      <button className="bg-indigo-600 cursor-pointer text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-transform transform hover:scale-105 flex items-center justify-center shadow-md">
+                      <button
+                        className="bg-green-400 cursor-pointer text-white px-6 py-2 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:bg-green-400 transition-all duration-300 transform hover:scale-105"
+                      >
                         Log In
-                        <ArrowRight className="ml-2 w-5 h-5" />
+                        <LogIn className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                       </button>
                     </Link>
                   )}
