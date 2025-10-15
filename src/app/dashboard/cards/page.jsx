@@ -1,4 +1,5 @@
 import React from 'react';
+import AddCard from './add-card/page';
 import CardsManagement from '../components/AllCards';
 
 const page = () => {
