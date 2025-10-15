@@ -173,6 +173,56 @@
 
 
 
+// import { getToken } from "next-auth/jwt";
+// import { NextResponse } from "next/server";
+// import jwt from "jsonwebtoken";
+
+// export const middleware = async (req) => {
+//   const { pathname } = req.nextUrl;
+
+//   const token = await getToken({
+//     req,
+//     secret: process.env.NEXTAUTH_SECRET,
+//     secureCookie: process.env.NODE_ENV === "production",
+//   });
+
+//   const publicRoutes = ["/login", "/register"];
+
+//   if (!token) {
+//     if (publicRoutes.includes(pathname)) {
+//       return NextResponse.next();
+//     }
+
+//     // ✅ ঠিক করা রিডাইরেক্ট URL
+//     return NextResponse.redirect(
+//       new URL(`/login?redirect=${pathname}`, req.nextUrl.origin)
+//     );
+//   }
+
+//   const decoded = jwt.decode(token.accessToken);
+//   const role = decoded?.role;
+
+//   if (pathname.startsWith("/adminDashboard") && role !== "admin") {
+//     return NextResponse.redirect(new URL("/", req.nextUrl.origin));
+//   }
+
+//   if (pathname.startsWith("/dashboard") && role !== "user") {
+//     return NextResponse.redirect(new URL("/", req.nextUrl.origin));
+//   }
+
+//   return NextResponse.next();
+// };
+
+// export const config = {
+//   matcher: [
+//     "/login",
+//     "/register",
+//     "/dashboard/:path*",
+//     "/adminDashboard/:path*",
+//   ],
+// };
+
+
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
@@ -188,29 +238,36 @@ export const middleware = async (req) => {
 
   const publicRoutes = ["/login", "/register"];
 
+  // Public routes
   if (!token) {
     if (publicRoutes.includes(pathname)) {
       return NextResponse.next();
     }
-
-    // ✅ ঠিক করা রিডাইরেক্ট URL
     return NextResponse.redirect(
       new URL(`/login?redirect=${pathname}`, req.nextUrl.origin)
     );
   }
 
+  // Decode token to get user role
   const decoded = jwt.decode(token.accessToken);
   const role = decoded?.role;
 
-  if (pathname.startsWith("/adminDashboard") && role !== "admin") {
+  // Admin can access everything
+  if (role === "admin") {
+    return NextResponse.next();
+  }
+
+  // User restrictions
+  if (role === "user") {
+    if (pathname.startsWith("/dashboard")) {
+      return NextResponse.next();
+    }
+    // User trying to access admin routes or other protected routes
     return NextResponse.redirect(new URL("/", req.nextUrl.origin));
   }
 
-  if (pathname.startsWith("/dashboard") && role !== "user") {
-    return NextResponse.redirect(new URL("/", req.nextUrl.origin));
-  }
-
-  return NextResponse.next();
+  // Default fallback: redirect to login
+  return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
 };
 
 export const config = {
@@ -218,6 +275,6 @@ export const config = {
     "/login",
     "/register",
     "/dashboard/:path*",
-    "/adminDashboard/:path*",
+    "/adminDashboard/:path*",// match all protected routes
   ],
 };
