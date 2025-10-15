@@ -1,15 +1,6 @@
 "use client";
-
 import { useState } from "react";
 import {
-  User,
-  Car,
-  Film,
-  UtensilsCrossed,
-  Lightbulb,
-  ShoppingBag,
-  Calendar,
-  Info,
   Users,
   RefreshCw,
   Share2,
@@ -26,68 +17,7 @@ export default function RequestMoney() {
   const { data: session } = useSession();
   const currentUserEmail = session?.user?.email;
   const [activeTab, setActiveTab] = useState("new");
-  const [amount, setAmount] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("general");
-  const [message, setMessage] = useState("");
-  const [dueDate, setDueDate] = useState("");
 
-  const categories = [
-    { id: "general", label: "General", icon: User },
-    { id: "food", label: "Food & Dining", icon: UtensilsCrossed },
-    { id: "transportation", label: "Transportation", icon: Car },
-    { id: "utilities", label: "Utilities", icon: Lightbulb },
-    { id: "entertainment", label: "Entertainment", icon: Film },
-    { id: "shopping", label: "Shopping", icon: ShoppingBag },
-  ];
-
-  const quickAmounts = [20, 50, 100, 200];
-
-  const pendingRequests = [
-    {
-      id: 1,
-      from: "alice@example.com",
-      amount: 120,
-      category: "Food & Dining",
-      dueDate: "2025-10-10",
-    },
-    {
-      id: 2,
-      from: "bob@example.com",
-      amount: 75,
-      category: "Transportation",
-      dueDate: "2025-10-15",
-    },
-  ];
-
-  const historyRequests = [
-    {
-      id: 1,
-      from: "charlie@example.com",
-      amount: 250,
-      category: "Shopping",
-      status: "Received",
-    },
-    {
-      id: 2,
-      from: "david@example.com",
-      amount: 60,
-      category: "Utilities",
-      status: "Declined",
-    },
-    {
-      id: 3,
-      from: "emma@example.com",
-      amount: 90,
-      category: "Entertainment",
-      status: "Received",
-    },
-  ];
-
-  const handleQuickAmount = (value) => {
-    setAmount(value.toString());
-  };
-
-  const handleSubmit = () => {};
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">

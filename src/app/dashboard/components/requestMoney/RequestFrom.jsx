@@ -10,7 +10,7 @@ import {
   Calendar,
 } from "lucide-react";
 
-const RequestForm = ({currentUserEmail}) => { // currentUserEmail prop দিয়ে পাঠানো হবে
+const RequestForm = ({currentUserEmail}) => {
   console.log(currentUserEmail);
   const [form, setForm] = useState({
     receiverEmail: "",
