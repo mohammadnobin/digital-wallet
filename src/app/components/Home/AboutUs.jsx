@@ -178,3 +178,69 @@ export default function AboutUs() {
     </section>
   );
 }
+
+// "use client";
+// import { ShieldCheck, Send, Wallet } from "lucide-react";
+
+// export default function AboutUs() {
+//   return (
+//     <section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 py-20">
+//       {/* Animated Background Circles */}
+//       <div className="absolute top-10 left-10 w-32 h-32 bg-secondary/10 rounded-full blur-3xl animate-pulse"></div>
+//       <div className="absolute bottom-10 right-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl animate-ping"></div>
+
+//       <div className="w-11/12 md:w-10/12 mx-auto relative z-10 text-center">
+//         {/* Title */}
+//         <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900">
+//           About <span className="text-secondary">PayLink Bank</span>
+//         </h2>
+
+//         {/* Subtitle */}
+//         <p className="max-w-2xl mx-auto text-lg text-gray-500 mb-16 leading-relaxed animate-fadeIn">
+//           At PayLink Bank, we’re redefining the way people handle money.  
+//           We believe banking should be **smart, secure, and seamless** — made to fit your lifestyle.  
+//           From real-time transfers to multi-card management, we provide everything you need in one place,  
+//           powered by trust, innovation, and simplicity.
+//         </p>
+
+//         {/* Feature Cards */}
+//         <div className="grid md:grid-cols-3 gap-8 text-left">
+//           {/* Feature 1 */}
+//           <div className="group bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-secondary/10 hover:to-transparent">
+//             <div className="w-12 h-12 flex items-center justify-center bg-secondary/10 text-secondary rounded-full mb-5 group-hover:scale-110 transition-transform duration-500">
+//               <Wallet className="w-6 h-6" />
+//             </div>
+//             <h3 className="text-xl font-semibold mb-2 text-gray-800">Smart Wallet</h3>
+//             <p className="text-gray-500 leading-relaxed">
+//               Manage multiple cards, monitor spending, and make secure payments — all from your dashboard.
+//             </p>
+//           </div>
+
+//           {/* Feature 2 */}
+//           <div className="group bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-secondary/10 hover:to-transparent">
+//             <div className="w-12 h-12 flex items-center justify-center bg-secondary/10 text-secondary rounded-full mb-5 group-hover:scale-110 transition-transform duration-500">
+//               <Send className="w-6 h-6" />
+//             </div>
+//             <h3 className="text-xl font-semibold mb-2 text-gray-800">Instant Transfers</h3>
+//             <p className="text-gray-500 leading-relaxed">
+//               Send money globally within seconds — no hidden fees, no delays, just fast and reliable transfers.
+//             </p>
+//           </div>
+
+//           {/* Feature 3 */}
+//           <div className="group bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-secondary/10 hover:to-transparent">
+//             <div className="w-12 h-12 flex items-center justify-center bg-secondary/10 text-secondary rounded-full mb-5 group-hover:scale-110 transition-transform duration-500">
+//               <ShieldCheck className="w-6 h-6" />
+//             </div>
+//             <h3 className="text-xl font-semibold mb-2 text-gray-800">Secure Banking</h3>
+//             <p className="text-gray-500 leading-relaxed">
+//               Every transaction is encrypted with cutting-edge technology, keeping your money and data safe.
+//             </p>
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
+
+

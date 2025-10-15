@@ -51,12 +51,12 @@ export default function FaqSection() {
         </h2>
       </div>
 
-      <div className="max-w-3xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto space-y-6">
         {faqs.map((faq, index) => (
           <div key={index} className="border-b border-gray-200 pb-4">
             <button
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              className="w-full flex items-center justify-between text-left focus:outline-none"
+              className="w-full flex items-center cursor-pointer justify-between text-left focus:outline-none"
             >
               <span className="text-lg font-semibold text-gray-900">
                 {faq.question}

@@ -29,7 +29,8 @@ const DigitalWalletDashboard = ({user}) => {
     { icon: DollarSign, label: "Request Money", color: "bg-pink-500", href: "/dashboard/requestMoney" },
     { icon: QrCode, label: "Scan QR", color: "bg-purple-500", href: "/scan-qr" },
     { icon: CreditCard, label: "Add Card", color: "bg-orange-500", href: "/dashboard/cards" },
-    { icon: Users, label: "Split Bill", color: "bg-indigo-500", href: "/split-bill" },
+    { icon: Users, label: "Split Bill", color: "bg-indigo-500", href: "/dashboard/splitBill" },
+    { icon: Users, label: "Remittance", color: "bg-indigo-500", href: "/dashboard/remittance" },
   ];
 
   const recentTransactions = [
@@ -96,7 +97,7 @@ const DigitalWalletDashboard = ({user}) => {
   const maxSpending = Math.max(...weeklySpendingData.map(d => d.amount));
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
 
 
       {/* Main Content */}

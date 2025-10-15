@@ -26,7 +26,7 @@ export default function MoneyTransfer() {
   const quickAmounts = [10, 25, 50, 100];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
@@ -50,7 +50,7 @@ export default function MoneyTransfer() {
                 >
                   Send Money
                 </button>
-                <button
+                {/* <button
                   onClick={() => setActiveTab('request')}
                   className={`pb-3 px-4 font-medium transition-colors ${
                     activeTab === 'request'
@@ -59,7 +59,7 @@ export default function MoneyTransfer() {
                   }`}
                 >
                   Request Money
-                </button>
+                </button> */}
               </div>
 
               {/* Send Money Form */}
@@ -175,7 +175,7 @@ export default function MoneyTransfer() {
                 </div>
 
                 {/* Submit Button */}
-                <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-4 rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl">
+                <button className="w-full bg-blue-400 cursor-pointer text-white py-4 rounded-xl font-semibold hover:from-gray-300 hover:to-indigo-200 transition-all shadow-lg hover:shadow-xl">
                   Send Money
                 </button>
 
