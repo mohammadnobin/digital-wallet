@@ -23,31 +23,31 @@ const Navbar = () => {
 
   const { data: session } = useSession();
   const user = session?.user;
-const handleLogout = async () => {
-  // SweetAlert2 confirm dialog
-  const result = await Swal.fire({
-    title: "Are you sure?",
-    text: "Do you want to logout?",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Yes, logout",
-    cancelButtonText: "Cancel",
-  });
-
-  if (result.isConfirmed) {
-    // If user confirms
-    await signOut({ redirect: false });
-    Swal.fire({
-      title: "Logged out!",
-      text: "You have been logged out successfully.",
-      icon: "success",
-      timer: 1500,
-      showConfirmButton: false,
+  const handleLogout = async () => {
+    // SweetAlert2 confirm dialog
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to logout?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, logout",
+      cancelButtonText: "Cancel",
     });
-await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`)
-    router.push("/");
-  }
-};
+
+    if (result.isConfirmed) {
+      // If user confirms
+      await signOut({ redirect: false });
+      Swal.fire({
+        title: "Logged out!",
+        text: "You have been logged out successfully.",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`)
+      router.push("/");
+    }
+  };
 
   const navigationItems = [
     { icon: LayoutDashboard, label: "Dashboard", color: "bg-blue-500", href: "/dashboard" },
@@ -59,16 +59,16 @@ await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`)
   ];
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-gradient-to-br from-purple-50 to-pink-50  sticky top-0 z-50 shadow-sm border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
+          <div className="flex-shrink-0">
             <Link href="/">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <CreditCard className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold text-gray-900">DigitalWallet</span>
+              <div className="flex items-center gap-2 bg-gradient-to-r from-primary to-primary px-4 py-2 rounded-full w-fit cursor-pointer hover:shadow-lg transition">
+                <CreditCard className="w-5 h-5 text-white" />
+                <span className="text-white font-bold text-sm">
+                  DigitalWallet
+                </span>
               </div>
             </Link>
           </div>
@@ -78,11 +78,10 @@ await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`)
               <Link
                 key={item.label}
                 href={item.href}
-                className={`px-3 py-2 flex items-center gap-1 text-sm font-medium transition-colors ${
-                  pathname === item.href
+                className={`px-3 py-2 flex items-center gap-1 text-sm font-medium transition-colors ${pathname === item.href
                     ? "text-blue-600 border-b-2 border-blue-600"
                     : "text-gray-500 hover:text-gray-700"
-                }`}
+                  }`}
               >
                 <item.icon className="inline-block w-4 h-4" />
                 {item.label}
@@ -123,13 +122,13 @@ await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`)
                       className="bg-indigo-600 cursor-pointer text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-transform transform hover:scale-105 flex items-center justify-center shadow-md"
                     >
                       Logout
-                              <ArrowRight className="ml-2 w-5 h-5" />
+                      <ArrowRight className="ml-2 w-5 h-5" />
                     </button>
                   ) : (
                     <Link href="/login">
                       <button className="bg-indigo-600 cursor-pointer text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-transform transform hover:scale-105 flex items-center justify-center shadow-md">
                         Log In
-                          <ArrowRight className="ml-2 w-5 h-5" />
+                        <ArrowRight className="ml-2 w-5 h-5" />
                       </button>
                     </Link>
                   )}
@@ -141,7 +140,7 @@ await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`)
       </div>
     </header>
   );
-  
+
 };
 
 export default Navbar;
