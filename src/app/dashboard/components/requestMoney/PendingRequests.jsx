@@ -12,7 +12,12 @@ const PendingRequests = ({ currentUserEmail }) => {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/requests?email=${currentUserEmail}`
       );
-      setPendingRequests(res.data.data.pending);
+
+      // received থেকে শুধুমাত্র pending ফিল্টার করো
+      const receivedRequests = res.data.data.received || [];
+      const pending = receivedRequests.filter((r) => r.status === "Pending");
+
+      setPendingRequests(pending);
     } catch (error) {
       console.error("Error fetching pending requests:", error.response?.data || error.message);
     } finally {
@@ -21,17 +26,20 @@ const PendingRequests = ({ currentUserEmail }) => {
   };
 
   useEffect(() => {
-    fetchPendingRequests();
-  }, []);
+    if (currentUserEmail) {
+      fetchPendingRequests();
+    }
+  }, [currentUserEmail]);
 
   // Approve / Decline হ্যান্ডলার
   const handleAction = async (requestId, action) => {
     try {
-      const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/requests/status`, {
+      const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/requests/update-status`, {
         requestId,
         status: action,
       });
-      // update local state
+
+      // লোকাল স্টেট আপডেট
       setPendingRequests((prev) => prev.filter((req) => req._id !== requestId));
       alert(`Request ${action === "Received" ? "approved" : "declined"} successfully!`);
     } catch (error) {
@@ -41,13 +49,13 @@ const PendingRequests = ({ currentUserEmail }) => {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (pendingRequests.length === 0) return <p>No pending requests.</p>;
+  if (pendingRequests?.length === 0) return <p>No pending requests.</p>;
 
   return (
     <div>
       <h2 className="text-xl font-semibold text-gray-900 mb-4">Pending Requests</h2>
       <div className="space-y-4">
-        {pendingRequests.map((req) => (
+        {pendingRequests?.map((req) => (
           <div
             key={req._id}
             className="flex items-center justify-between p-4 bg-yellow-50 border border-yellow-200 rounded-lg"
@@ -55,7 +63,8 @@ const PendingRequests = ({ currentUserEmail }) => {
             <div>
               <p className="font-medium text-gray-900">{req.senderEmail}</p>
               <p className="text-sm text-gray-600">
-                {req.category} • Due {req.dueDate ? new Date(req.dueDate).toLocaleDateString() : "-"}
+                {req.category} • Due{" "}
+                {req.dueDate ? new Date(req.dueDate).toLocaleDateString() : "-"}
               </p>
             </div>
             <div className="flex items-center gap-2">
