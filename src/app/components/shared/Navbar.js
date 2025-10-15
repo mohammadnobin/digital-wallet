@@ -56,12 +56,12 @@ const Navbar = () => {
     { icon: CreditCard, label: "Cards", color: "bg-purple-500", href: "/dashboard/cards" },
     { icon: Receipt, label: "Bills", color: "bg-orange-500", href: "/dashboard/bills" },
     { icon: Clock, label: "History", color: "bg-pink-500", href: "/dashboard/history" },
-    { icon: Clock, label: " ", color: "", href: "/dashboard/adminDashboard" },
+    // { icon: Clock, label: " ", color: "", href: "/dashboard/adminDashboard" },
   ];
 
   return (
     <header className="bg-gradient-to-br from-purple-50 to-pink-50  sticky top-0 z-50 shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 ">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
             <Link href="/">

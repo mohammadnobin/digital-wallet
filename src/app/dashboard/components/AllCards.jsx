@@ -440,7 +440,7 @@ export default function CardsManagement() {
   const totalBalance = cards.reduce((s, c) => s + (Number(c.balance) || 0), 0);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
