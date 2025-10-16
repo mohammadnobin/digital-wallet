@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { TrendingUp, Calendar, Users, Clock, CheckCircle, AlertCircle, Loader, Send } from 'lucide-react';
+import { TrendingUp, Calendar, Users, Clock, CheckCircle, AlertCircle, Loader, Send, ArrowLeft, DollarSign } from 'lucide-react';
 
 export default function InternationalRemittance() {
     const [activeTab, setActiveTab] = useState('all');
-    const [selectedCurrency, setSelectedCurrency] = useState('PHP');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         recipient: '',
@@ -160,8 +159,7 @@ export default function InternationalRemittance() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Sending money:', formData);
-        alert(`Successfully initiated transfer of ${formData.amount} to ${formData.recipient} in ${formData.country}`);
+        alert(`Successfully initiated transfer of $${formData.amount} to ${formData.recipient} in ${formData.country}`);
         setIsModalOpen(false);
         setFormData({
             recipient: '',
@@ -176,19 +174,34 @@ export default function InternationalRemittance() {
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Header */}
-                <div className="flex justify-between items-start mb-8">
-                    <div>
-                        <h1 className="text-3xl font-bold text-gray-900">International Remittance</h1>
-                        <p className="text-gray-600 mt-1">Send money to your loved ones worldwide</p>
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
+                    <button 
+                        onClick={() => window.history.back()}
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-sm hover:shadow-md hover:-translate-x-1 transition-all border border-gray-200 text-gray-700 hover:text-blue-600"
+                    >
+                        <ArrowLeft className="w-5 h-5" />
+                        <span className="font-medium">Back to Dashboard</span>
+                    </button>
+                    
+                    <div className="flex items-center mt-6 md:mt-0 space-x-3">
+                        <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-md">
+                            <DollarSign className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">International Remittance</h1>
+                            <p className="text-gray-600 text-sm mt-0.5">Send money to your loved ones worldwide</p>
+                        </div>
                     </div>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors" onClick={() => setIsModalOpen(true)}>
+                    
+                    <button 
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors mt-6 md:mt-0" 
+                        onClick={() => setIsModalOpen(true)}
+                    >
                         <Send className="w-5 h-5" />
                         Send Money
                     </button>
                 </div>
 
-                {/* Stats Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     {stats.map((stat, index) => {
                         const Icon = stat.icon;
@@ -210,7 +223,6 @@ export default function InternationalRemittance() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* Recent Transfers */}
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200">
                             <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
@@ -220,7 +232,6 @@ export default function InternationalRemittance() {
                                 </button>
                             </div>
 
-                            {/* Tabs */}
                             <div className="border-b border-gray-200 px-6">
                                 <div className="flex gap-6">
                                     {['all', 'completed', 'processing', 'failed'].map((tab) => (
@@ -241,7 +252,6 @@ export default function InternationalRemittance() {
                                 </div>
                             </div>
 
-                            {/* Transfer List */}
                             <div className="divide-y divide-gray-200">
                                 {filteredTransfers.map((transfer) => (
                                     <div key={transfer.id} className="px-6 py-4 hover:bg-gray-50 transition-colors">
@@ -275,7 +285,6 @@ export default function InternationalRemittance() {
                         </div>
                     </div>
 
-                    {/* Live Exchange Rates */}
                     <div className="lg:col-span-1">
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200">
                             <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
@@ -313,7 +322,6 @@ export default function InternationalRemittance() {
                                 ))}
                             </div>
 
-                            {/* Quick Calculator */}
                             <div className="px-6 py-4 border-t border-gray-200 bg-blue-50">
                                 <div className="mb-3">
                                     <div className="text-sm font-semibold text-gray-900 mb-2">Quick Calculator</div>
@@ -327,7 +335,6 @@ export default function InternationalRemittance() {
                     </div>
                 </div>
 
-                {/* Send Money Modal */}
                 {isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                         <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -341,9 +348,8 @@ export default function InternationalRemittance() {
                                 </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-6">
+                            <div className="p-6">
                                 <div className="space-y-5">
-                                    {/* Recipient Info */}
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">
                                             Recipient Name *
@@ -354,7 +360,6 @@ export default function InternationalRemittance() {
                                             value={formData.recipient}
                                             onChange={handleInputChange}
                                             placeholder="Enter recipient name"
-                                            required
                                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                                         />
                                     </div>
@@ -367,7 +372,6 @@ export default function InternationalRemittance() {
                                             name="country"
                                             value={formData.country}
                                             onChange={handleInputChange}
-                                            required
                                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                                         >
                                             <option value="">Select country</option>
@@ -380,7 +384,6 @@ export default function InternationalRemittance() {
                                         </select>
                                     </div>
 
-                                    {/* Amount Section */}
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
                                             <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -394,7 +397,6 @@ export default function InternationalRemittance() {
                                                 placeholder="0.00"
                                                 min="1"
                                                 step="0.01"
-                                                required
                                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                                             />
                                         </div>
@@ -407,7 +409,6 @@ export default function InternationalRemittance() {
                                                 name="currency"
                                                 value={formData.currency}
                                                 onChange={handleInputChange}
-                                                required
                                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                                             >
                                                 <option value="PHP">PHP - Philippines Peso</option>
@@ -420,7 +421,6 @@ export default function InternationalRemittance() {
                                         </div>
                                     </div>
 
-                                    {/* Conversion Display */}
                                     {formData.amount && (
                                         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                                             <div className="flex items-center justify-between">
@@ -440,7 +440,6 @@ export default function InternationalRemittance() {
                                         </div>
                                     )}
 
-                                    {/* Purpose */}
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">
                                             Purpose of Transfer *
@@ -449,7 +448,6 @@ export default function InternationalRemittance() {
                                             name="purpose"
                                             value={formData.purpose}
                                             onChange={handleInputChange}
-                                            required
                                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                                         >
                                             <option value="">Select purpose</option>
@@ -462,7 +460,6 @@ export default function InternationalRemittance() {
                                         </select>
                                     </div>
 
-                                    {/* Transfer Method */}
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-3">
                                             Transfer Method *
@@ -493,7 +490,6 @@ export default function InternationalRemittance() {
                                         </div>
                                     </div>
 
-                                    {/* Fee Information */}
                                     <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                                         <div className="flex items-center justify-between mb-2">
                                             <span className="text-sm text-gray-600">Transfer Fee</span>
@@ -510,7 +506,6 @@ export default function InternationalRemittance() {
                                     </div>
                                 </div>
 
-                                {/* Action Buttons */}
                                 <div className="flex gap-3 mt-6">
                                     <button
                                         type="button"
@@ -520,14 +515,15 @@ export default function InternationalRemittance() {
                                         Cancel
                                     </button>
                                     <button
-                                        type="submit"
+                                        type="button"
+                                        onClick={handleSubmit}
                                         className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                                     >
                                         <Send className="w-5 h-5" />
                                         Send Money
                                     </button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 )}
