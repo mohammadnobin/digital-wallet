@@ -9,24 +9,19 @@ import {
   Plus,
   CheckCircle,
   AlertCircle,
-  Shield,
-  Clock,
   Calculator,
   User,
   Phone,
   Calendar,
   Lock,
-  Zap,
   Receipt,
   Star,
   TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import axios from "axios";
 // add
 const AddMoneyPage = ({user}) => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [amount, setAmount] = useState("");
   const [formData, setFormData] = useState({
@@ -45,8 +40,6 @@ const AddMoneyPage = ({user}) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentBalance, setCurrentBalance] = useState(user?.balance || 0);
-  const [loadingBalance, setLoadingBalance] = useState(true);
-  const [balanceError, setBalanceError] = useState("");
 
   // const currentBalance = 2847.65;
   const dailyAddLimit = 10000;
