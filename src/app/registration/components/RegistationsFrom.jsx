@@ -15,11 +15,12 @@ import {
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 const RegistationsFrom = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirect = searchParams.get("redirect");
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
     const [agreedToTerms, setAgreedToTerms] = useState(false);
@@ -43,33 +44,28 @@ const RegistationsFrom = () => {
     });
     if (res.data.message === "User created successfully") {
 
-          const loginRes = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`,
-      { email, password },
-      {withCredentials: 'true'}
-    );
-
-      const response = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-
-      if (response.ok) {
-        await Swal.fire({
-          title: "Registation!",
-          text: "Registation successful",
-          icon: "success",
-        });
-
-        setAgreedToTerms(false);
-      } else {
-        await Swal.fire({
-          icon: "error",
-          title: "Login Failed",
-          text: response.error || "Invalid credentials",
-        });
-      }
+    //       const loginRes = await axios.post(
+    //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`,
+    //   { email, password },
+    //   {withCredentials: 'true'}
+    // );
+    try {
+          const response = await signIn("credentials", {
+            email,
+            password,
+            redirect: true, // এখানে true থাকলে NextAuth নিজে redirect করবে
+            callbackUrl: redirect ? redirect : "/dashboard", // redirect query থাকলে সেখানে নেবে
+          });
+          console.log(response);
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        } finally {
+          setIsLoading(false);
+        }
     }
   } catch (error) {
     console.error("Signup/Login error:", error);

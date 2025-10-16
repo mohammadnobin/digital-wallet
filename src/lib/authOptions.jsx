@@ -8,8 +8,16 @@ export const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "Enter your email" },
-        password: { label: "Password", type: "password", placeholder: "Enter your password" },
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "Enter your email",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "Enter your password",
+        },
       },
       async authorize(credentials, req) {
         try {
@@ -26,14 +34,11 @@ export const authOptions = {
           );
           // API response থেকে user এবং accessToken নেওয়া
           const { user, accessToken } = response.data.data;
-
-
           if (user) {
             return {
               id: user._id,
               email: user.email,
-              name: user.name,
-              accessToken, // JWT callback এ ব্যবহার করা যাবে
+              accessToken,
             };
           }
 
@@ -47,30 +52,24 @@ export const authOptions = {
   ],
 
   pages: {
-    signIn: "/login", // লগইন পেইজ
+    signIn: "/login",
   },
 
   callbacks: {
-    // JWT তৈরি করার সময় user data যোগ করা
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
-        token.name = user.name;
         token.accessToken = user.accessToken;
-        token.role = user.role;
       }
       return token;
     },
 
-    // session তৈরি করার সময় token থেকে user data যোগ করা
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id;
         session.user.email = token.email;
-        session.user.name = token.name;
         session.user.accessToken = token.accessToken;
-        session.user.role = token.role;
       }
       return session;
     },
@@ -176,11 +175,7 @@ export default NextAuth(authOptions);
 //   },
 // };
 
-
 // export default NextAuth(authOptions);
-
-
-
 
 // app/api/auth/[...nextauth]/route.ts
 // import NextAuth from "next-auth";
@@ -232,6 +227,5 @@ export default NextAuth(authOptions);
 //   },
 //   secret: process.env.NEXTAUTH_SECRET,
 // };
-
 
 // export default NextAuth(authOptions);
