@@ -70,9 +70,15 @@ const RequestHistory = ({ email }) => {
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-gray-800">${req.amount}</p>
-                  <p className="text-xs text-gray-600">
-                    {req.status === "Approved" ? "Received" : "Pending"}
-                  </p>
+                            <p className="text-xs text-gray-600">
+    {req.status === "Pending"
+      ? "Pending"
+      : req.status === "Approved"
+      ? "Received"
+      : req.status === "Declined"
+      ? "Declined"
+      : "Unknown"}
+  </p>
                 </div>
               </div>
             ))}
@@ -113,9 +119,15 @@ const RequestHistory = ({ email }) => {
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-gray-800">${req.amount}</p>
-                  <p className="text-xs text-gray-600">
-                    {req.status === "Approved" ? "Sent" : "Pending"}
-                  </p>
+          <p className="text-xs text-gray-600">
+    {req.status === "Pending"
+      ? "Pending"
+      : req.status === "Approved"
+      ? "Sent"
+      : req.status === "Declined"
+      ? "Declined"
+      : "Unknown"}
+  </p>
                 </div>
               </div>
             ))}
