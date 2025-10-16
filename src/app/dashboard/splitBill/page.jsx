@@ -1,62 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Users, FileText, TrendingUp, TrendingDown, Utensils, Plane, Film, Car } from 'lucide-react';
+import { Users, FileText, TrendingUp, TrendingDown, Utensils, Plane, Film, Car, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 export default function SplitBills() {
   const [activeTab, setActiveTab] = useState('all');
 
   const bills = [
-    {
-      id: 1,
-      title: 'Dinner at Italian Restaurant',
-      icon: Utensils,
-      total: 240.00,
-      people: 4,
-      date: '2024-01-15',
-      status: 'pending',
-      yourShare: 60.00
-    },
-    {
-      id: 2,
-      title: 'Weekend Trip to Mountains',
-      icon: Plane,
-      total: 800.00,
-      people: 3,
-      date: '2024-01-12',
-      status: 'paid',
-      yourShare: 266.67
-    },
-    {
-      id: 3,
-      title: 'Office Lunch Order',
-      icon: Utensils,
-      total: 156.50,
-      people: 5,
-      date: '2024-01-10',
-      status: 'settled',
-      yourShare: 31.30
-    },
-    {
-      id: 4,
-      title: 'Movie Night Snacks',
-      icon: Film,
-      total: 45.80,
-      people: 2,
-      date: '2024-01-14',
-      status: 'pending',
-      yourShare: 22.90
-    },
-    {
-      id: 5,
-      title: 'Uber Ride to Airport',
-      icon: Car,
-      total: 85.00,
-      people: 3,
-      date: '2024-01-08',
-      status: 'paid',
-      yourShare: 28.33
-    }
+    { id: 1, title: 'Dinner at Italian Restaurant', icon: Utensils, total: 240.0, people: 4, date: '2024-01-15', status: 'pending', yourShare: 60.0 },
+    { id: 2, title: 'Weekend Trip to Mountains', icon: Plane, total: 800.0, people: 3, date: '2024-01-12', status: 'paid', yourShare: 266.67 },
+    { id: 3, title: 'Office Lunch Order', icon: Utensils, total: 156.5, people: 5, date: '2024-01-10', status: 'settled', yourShare: 31.3 },
+    { id: 4, title: 'Movie Night Snacks', icon: Film, total: 45.8, people: 2, date: '2024-01-14', status: 'pending', yourShare: 22.9 },
+    { id: 5, title: 'Uber Ride to Airport', icon: Car, total: 85.0, people: 3, date: '2024-01-08', status: 'paid', yourShare: 28.33 },
   ];
 
   const filteredBills = bills.filter(bill => {
@@ -67,15 +23,26 @@ export default function SplitBills() {
   });
 
   const stats = {
-    owed: 82.90,
-    paid: 326.30,
-    totalBills: 5,
-    activeGroups: 8
+    owed: bills.filter(b => b.status === 'pending').reduce((sum, b) => sum + b.yourShare, 0),
+    paid: bills.filter(b => b.status === 'paid' || b.status === 'settled').reduce((sum, b) => sum + b.yourShare, 0),
+    totalBills: bills.length,
+    activeGroups: 8,
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Back to Dashboard Button */}
+        <div className="mb-6">
+          <Link href="/dashboard">
+            <button className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-sm hover:shadow-md hover:-translate-x-1 transition-all border border-gray-200 text-gray-700 hover:text-blue-600">
+              <ArrowLeft className="w-5 h-5" />
+              <span className="font-medium">Back to Dashboard</span>
+            </button>
+          </Link>
+        </div>
+
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
           <div>
@@ -98,7 +65,7 @@ export default function SplitBills() {
               </div>
             </div>
             <div className="text-3xl font-bold text-red-600">${stats.owed.toFixed(2)}</div>
-            <div className="text-sm text-gray-500 mt-1">2 pending bills</div>
+            <div className="text-sm text-gray-500 mt-1">{bills.filter(b => b.status === 'pending').length} pending bills</div>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
@@ -109,7 +76,7 @@ export default function SplitBills() {
               </div>
             </div>
             <div className="text-3xl font-bold text-green-600">${stats.paid.toFixed(2)}</div>
-            <div className="text-sm text-gray-500 mt-1">1 settled bill</div>
+            <div className="text-sm text-gray-500 mt-1">{bills.filter(b => b.status === 'paid' || b.status === 'settled').length} settled bills</div>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
@@ -140,92 +107,61 @@ export default function SplitBills() {
           {/* Tabs */}
           <div className="border-b border-gray-200 px-6">
             <div className="flex gap-8">
-              <button
-                onClick={() => setActiveTab('all')}
-                className={`py-4 font-medium transition-colors relative ${
-                  activeTab === 'all'
-                    ? 'text-blue-600'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                All Bills
-                {activeTab === 'all' && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"></div>
-                )}
-              </button>
-              <button
-                onClick={() => setActiveTab('pending')}
-                className={`py-4 font-medium transition-colors relative ${
-                  activeTab === 'pending'
-                    ? 'text-blue-600'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                Pending
-                {activeTab === 'pending' && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"></div>
-                )}
-              </button>
-              <button
-                onClick={() => setActiveTab('settled')}
-                className={`py-4 font-medium transition-colors relative ${
-                  activeTab === 'settled'
-                    ? 'text-blue-600'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                Settled
-                {activeTab === 'settled' && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"></div>
-                )}
-              </button>
+              {['all', 'pending', 'settled'].map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`py-4 font-medium transition-colors relative ${
+                    activeTab === tab ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  {tab === 'all' ? 'All Bills' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  {activeTab === tab && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"></div>}
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Bills Items */}
           <div className="divide-y divide-gray-200">
-            {filteredBills.map((bill) => {
+            {filteredBills.length === 0 && (
+              <div className="px-6 py-5 text-center text-gray-500">No bills found for this tab.</div>
+            )}
+            {filteredBills.map(bill => {
               const Icon = bill.icon;
               return (
-                <div
-                  key={bill.id}
-                  className="px-6 py-5 hover:bg-gray-50 transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="bg-gray-100 p-3 rounded-lg">
-                        <Icon className="w-6 h-6 text-gray-600" />
+                <div key={bill.id} className="px-6 py-5 hover:bg-gray-50 transition-colors cursor-pointer flex justify-between items-center">
+                  <div className="flex items-center gap-4 flex-1">
+                    <div className="bg-gray-100 p-3 rounded-lg">
+                      <Icon className="w-6 h-6 text-gray-600" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="font-semibold text-gray-900">{bill.title}</h3>
+                        <span
+                          className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            bill.status === 'pending'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : bill.status === 'paid'
+                              ? 'bg-blue-100 text-blue-800'
+                              : 'bg-green-100 text-green-800'
+                          }`}
+                        >
+                          {bill.status.charAt(0).toUpperCase() + bill.status.slice(1)}
+                        </span>
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-1">
-                          <h3 className="font-semibold text-gray-900">{bill.title}</h3>
-                          <span
-                            className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                              bill.status === 'pending'
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : bill.status === 'paid'
-                                ? 'bg-blue-100 text-blue-800'
-                                : 'bg-green-100 text-green-800'
-                            }`}
-                          >
-                            {bill.status.charAt(0).toUpperCase() + bill.status.slice(1)}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-4 text-sm text-gray-600">
-                          <span>Total: ${bill.total.toFixed(2)}</span>
-                          <span>•</span>
-                          <span>{bill.people} people</span>
-                          <span>•</span>
-                          <span>{bill.date}</span>
-                        </div>
+                      <div className="flex items-center gap-4 text-sm text-gray-600">
+                        <span>Total: ${bill.total.toFixed(2)}</span>
+                        <span>•</span>
+                        <span>{bill.people} people</span>
+                        <span>•</span>
+                        <span>{bill.date}</span>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm text-gray-600 mb-1">Your share</div>
-                      <div className="text-xl font-bold text-gray-900">
-                        ${bill.yourShare.toFixed(2)}
-                      </div>
-                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm text-gray-600 mb-1">Your share</div>
+                    <div className="text-xl font-bold text-gray-900">${bill.yourShare.toFixed(2)}</div>
                   </div>
                 </div>
               );

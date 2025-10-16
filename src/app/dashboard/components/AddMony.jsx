@@ -278,7 +278,7 @@ const AddMoneyPage = ({user}) => {
           <div className="lg:col-span-2">
             <div className="space-y-6">
               {/* Current Balance */}
-              <div className="bg-blue-600  rounded-xl shadow-sm p-6 text-white">
+              <div className="bg-blue-400  rounded-xl shadow-sm p-6 text-white">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold">Current Balance</h2>
                   <TrendingUp className="w-6 h-6" />
