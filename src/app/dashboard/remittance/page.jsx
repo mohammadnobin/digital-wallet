@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, Loader, AlertCircle, Send } from 'lucide-react';
 import useUser from '@/hooks/useUser';
+import Swal from 'sweetalert2';
 
 export default function InternationalRemittance() {
     const user = useUser();
@@ -46,15 +47,15 @@ export default function InternationalRemittance() {
 
             const data = await res.json();
             if (data.success) {
-                alert(`✅ ${data.message}\nReceiver gets: ${data.data.amountReceived} ${data.data.toCurrency}`);
+                Swal.fire("Success", data.message + `\nReceiver gets: ${data.data.amountReceived} ${data.data.toCurrency}`, "success");
                 setIsModalOpen(false);
                 fetchHistory(); // Refresh history
             } else {
-                alert(`❌ ${data.message}`);
+                Swal.fire("Error", data.message, "error");
             }
         } catch (error) {
             console.error(error);
-            alert('Server error occurred!');
+            Swal.fire("Error", "Failed to send money. Please try again.", "error");
         } finally {
             setLoading(false);
         }

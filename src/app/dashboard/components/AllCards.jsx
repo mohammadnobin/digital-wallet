@@ -346,6 +346,7 @@ import {
   Download,
   ArrowLeft,
 } from "lucide-react";
+import Swal from "sweetalert2";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -356,23 +357,23 @@ export default function CardsManagement() {
   const [modal, setModal] = useState({ open: false, type: "", card: null });
   const dropdownRef = useRef(null);
 
-  // Fetch cards
-  useEffect(() => {
-    async function fetchCards() {
-      setLoading(true);
-      try {
-        const res = await axios.get(`${API_URL}/api/cards/my-cards`, {
-          withCredentials: true,
-        });
-        setCards(res.data || []);
-      } catch (err) {
-        console.error(err?.response?.data || err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCards();
-  }, []);
+  // // Fetch cards
+  // useEffect(() => {
+  //   async function fetchCards() {
+  //     setLoading(true);
+  //     try {
+  //       const res = await axios.get(`${API_URL}/api/cards/my-cards`, {
+  //         withCredentials: true,
+  //       });
+  //       setCards(res.data || []);
+  //     } catch (err) {
+  //       console.error(err?.response?.data || err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   fetchCards();
+  // }, []);
 
   // Close dropdown if click outside
   useEffect(() => {
@@ -400,10 +401,10 @@ export default function CardsManagement() {
         withCredentials: true,
       });
       setCards((prev) => prev.filter((c) => c._id !== cardId));
-      alert("Card deleted");
+    Swal.fire("Deleted!", "Card has been deleted.", "success");
     } catch (err) {
       console.error(err?.response?.data || err.message);
-      alert(err?.response?.data?.message || "Failed to delete card");
+     Swal.fire("Error", err?.response?.data?.message || "Failed to delete card", "error");
     }
   };
 
@@ -426,10 +427,10 @@ export default function CardsManagement() {
         );
       }
       setModal({ open: false, type: "", card: null });
-      alert("Success");
+      Swal.fire("Success", `Card ${modal.type === "add" ? "added" : "updated"} successfully`, "success");
     } catch (err) {
       console.error(err?.response?.data || err.message);
-      alert(err?.response?.data?.message || "Failed");
+      Swal.fire("Error", err?.response?.data?.message || `Failed to ${modal.type === "add" ? "add" : "update"} card`, "error");
     }
   };
 
@@ -440,7 +441,7 @@ export default function CardsManagement() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
           <button
             onClick={() => window.history.back()}
-            className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-200 text-gray-700 hover:text-blue-600"
+            className="flex items-center gap-2 px-4 py-2 cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-200 text-gray-700 hover:text-blue-600"
           >
             <ArrowLeft className="w-5 h-5" />
             Back to Dashboard
@@ -645,7 +646,7 @@ function CardForm({ card, onSubmit, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!cardName || !cardNumber || !expiryDate) {
-      return alert("Please fill all required fields");
+      return swal.fire("Error", "Please fill in all required fields", "error");
     }
     onSubmit({ cardName, cardNumber, expiryDate, cardType, balance });
   };

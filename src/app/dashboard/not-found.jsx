@@ -32,7 +32,7 @@ const NotFoundPage = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
           <button 
             onClick={() => window.history.back()}
-            className="flex items-center gap-2 bg-gray-900 cursor-pointer text-white font-medium px-6 py-3 rounded-full hover:bg-gray-800 transition-colors w-full sm:w-auto"
+            className="flex items-center gap-2 bg-gray-900 text-white font-medium px-6 py-3 rounded-full hover:bg-gray-800 transition-colors w-full sm:w-auto"
           >
             <ArrowLeft size={18} />
             Go Back
@@ -40,7 +40,7 @@ const NotFoundPage = () => {
           
           <button 
             onClick={() => window.location.href = '/'}
-            className="flex items-center gap-2 bg-white text-gray-900 cursor-pointer font-medium px-6 py-3 rounded-full border-2 border-gray-200 hover:border-gray-300 transition-colors w-full sm:w-auto"
+            className="flex items-center gap-2 bg-white text-gray-900 font-medium px-6 py-3 rounded-full border-2 border-gray-200 hover:border-gray-300 transition-colors w-full sm:w-auto"
           >
             <Home size={18} />
             Go Home

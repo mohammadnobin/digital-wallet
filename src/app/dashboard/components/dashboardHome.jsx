@@ -28,7 +28,7 @@ const DigitalWalletDashboard = ({user}) => {
     { icon: SquareArrowOutUpRight, label: "Cash Out", color: "bg-green-500", href: "/dashboard/cashout" },
     { icon: DollarSign, label: "Request Money", color: "bg-pink-500", href: "/dashboard/requestMoney" },
     { icon: Users, label: "Remittance", color: "bg-indigo-500", href: "/dashboard/remittance" },
-    { icon: QrCode, label: "Scan QR", color: "bg-purple-500", href: "/scan-qr" },
+    { icon: QrCode, label: "Scan QR", color: "bg-purple-500", href: "/dashboard/scanQR" },
     { icon: CreditCard, label: "Add Card", color: "bg-orange-500", href: "/dashboard/cards" },
     { icon: Users, label: "Split Bill", color: "bg-indigo-500", href: "/dashboard/splitBill" },
     
