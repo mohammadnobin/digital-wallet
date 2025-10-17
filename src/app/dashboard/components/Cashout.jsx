@@ -159,6 +159,7 @@ const CashoutPage = ({user}) => {
   if (showSuccess) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        
         <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-green-600" />
@@ -202,28 +203,28 @@ const CashoutPage = ({user}) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
-            <Link href="/dashboard">
-              <button className="flex cursor-pointer items-center text-gray-600 hover:text-gray-900 mr-4">
-                <ArrowLeft className="w-5 h-5 mr-2" />
-                Back to Dashboard
-              </button>
-            </Link>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <DollarSign className="w-5 h-5 text-white" />
-              </div>
-              <h1 className="text-xl font-bold text-gray-900">Cash Out</h1>
+   <div className="min-h-screen bg-gradient-to-br from-blue-50 via-gray-50 to-purple-50 py-10 px-6">
+      <div  className="max-w-4xl mx-auto">
+       {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
+          {/* Back Button */}
+          <Link href="/dashboard">
+            <button className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-sm hover:shadow-md hover:-translate-x-1 transition-all border border-gray-200 text-gray-700 hover:text-blue-600">
+              <ArrowLeft className="w-5 h-5" />
+              <span className="font-medium">Back to Dashboard</span>
+            </button>
+          </Link>
+
+          {/* Title */}
+          <div className="flex items-center mt-6 md:mt-0 space-x-3">
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
+              <DollarSign className="w-5 h-5 text-white" />
             </div>
+              <h1 className="text-xl font-bold text-gray-900">Cash Out</h1>
           </div>
         </div>
-      </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-4xl mx-auto  py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Section */}
           <div className="lg:col-span-2">
@@ -562,7 +563,7 @@ const CashoutPage = ({user}) => {
                 className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${
                   isProcessing || !amount || getTotalAmount() > availableBalance
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-blue-600 text-white cursor-pointer hover:bg-blue-700"
+                    : "bg-primary text-white cursor-pointer hover:bg-primary/90"
                 }`}
               >
                 {isProcessing ? (
@@ -651,6 +652,7 @@ const CashoutPage = ({user}) => {
             )}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
