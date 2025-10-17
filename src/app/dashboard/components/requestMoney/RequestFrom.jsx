@@ -9,9 +9,9 @@ import {
   ShoppingBag,
   Calendar,
 } from "lucide-react";
+import Swal from "sweetalert2";
 
 const RequestForm = ({currentUserEmail}) => {
-  console.log(currentUserEmail);
   const [form, setForm] = useState({
     receiverEmail: "",
     amount: "",
@@ -47,7 +47,7 @@ const RequestForm = ({currentUserEmail}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.receiverEmail || !form.amount) {
-      alert("Please fill in required fields!");
+      Swal.fire("Error", "Please fill in all required fields", "error");
       return;
     }
     try {
@@ -62,8 +62,7 @@ const RequestForm = ({currentUserEmail}) => {
           message: form.message,
         }
       );
-      console.log(res.data);
-      alert("Request sent successfully!");
+      Swal.fire("Success", "Request sent successfully", "success");
       setForm({
         receiverEmail: "",
         amount: "",
@@ -73,7 +72,7 @@ const RequestForm = ({currentUserEmail}) => {
       });
     } catch (error) {
       console.error("Error sending request:", error.response?.data || error.message);
-      alert("Failed to send request.");
+      Swal.fire("Error", "Failed to send request", "error");
     }
   };
 

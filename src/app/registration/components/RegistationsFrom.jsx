@@ -56,7 +56,6 @@ const RegistationsFrom = () => {
             redirect: true, // এখানে true থাকলে NextAuth নিজে redirect করবে
             callbackUrl: redirect ? redirect : "/dashboard", // redirect query থাকলে সেখানে নেবে
           });
-          console.log(response);
         } catch (error) {
           Swal.fire({
             icon: "error",

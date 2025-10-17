@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 const CashoutPage = ({user}) => {
@@ -126,7 +127,7 @@ const CashoutPage = ({user}) => {
   } catch (error) {
     const message =
       error.response?.data?.message || "Something went wrong. Please try again.";
-    alert(message);
+      Swal.fire("Error", message, "error");
   } finally {
     setIsProcessing(false);
     setAmount("");
@@ -209,7 +210,7 @@ const CashoutPage = ({user}) => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
           {/* Back Button */}
           <Link href="/dashboard">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-sm hover:shadow-md hover:-translate-x-1 transition-all border border-gray-200 text-gray-700 hover:text-blue-600">
+            <button className="flex items-center cursor-pointer gap-2 px-4 py-2 bg-white rounded-xl shadow-sm hover:shadow-md hover:-translate-x-1 transition-all border border-gray-200 text-gray-700 hover:text-blue-600">
               <ArrowLeft className="w-5 h-5" />
               <span className="font-medium">Back to Dashboard</span>
             </button>

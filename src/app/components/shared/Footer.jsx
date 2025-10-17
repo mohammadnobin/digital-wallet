@@ -87,8 +87,8 @@ export default function FooterSection() {
             {/* Brand Section */}
             <div className="lg:col-span-2">
               <div className="flex items-center mb-6">
-                <div className="bg-blue-600 p-2 rounded-xl mr-3">
-                  <Wallet className="w-8 h-8 text-white" />
+                <div className="bg-white p-2 rounded-xl mr-3">
+                  <Wallet className="w-8 h-8 text-primary" />
                 </div>
                 <span className="text-2xl font-bold">DigitalWallet</span>
               </div>

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 export default function AddCard() {
   const [formData, setFormData] = useState({
@@ -25,10 +26,10 @@ export default function AddCard() {
         formData,
         { withCredentials: true } // ✅ important for cookies
       );
-      alert("Card added successfully!");
+      Swal.fire("Success", "Card added successfully", "success");
       router.push("/dashboard/my-cards");
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to add card");
+      Swal.fire("Error", "Failed to add card", "error");
     }
   };
 

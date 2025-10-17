@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { CheckCircle, XCircle } from "lucide-react";
+import Swal from "sweetalert2";
 
 const PendingRequests = ({ currentUserEmail }) => {
   const [pendingRequests, setPendingRequests] = useState([]);
@@ -44,13 +45,13 @@ const PendingRequests = ({ currentUserEmail }) => {
       );
 
       setPendingRequests((prev) => prev.filter((req) => req._id !== requestId));
-      alert(`Request ${status.toLowerCase()} successfully!`);
+    Swal.fire("Success", `Request ${status.toLowerCase()} successfully`, "success");
     } catch (error) {
       console.error(
         "Error updating request:",
         error.response?.data || error.message
       );
-      alert("Failed to update request.");
+      Swal.fire("Error", "Failed to update request", "error");
     }
   };
 

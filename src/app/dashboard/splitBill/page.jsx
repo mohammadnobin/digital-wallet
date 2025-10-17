@@ -36,7 +36,7 @@ export default function SplitBills() {
         {/* Back to Dashboard Button */}
         <div className="mb-6">
           <Link href="/dashboard">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-sm hover:shadow-md hover:-translate-x-1 transition-all border border-gray-200 text-gray-700 hover:text-blue-600">
+            <button className="flex items-center cursor-pointer gap-2 px-4 py-2 bg-white rounded-xl shadow-sm hover:shadow-md hover:-translate-x-1 transition-all border border-gray-200 text-gray-700 hover:text-blue-600">
               <ArrowLeft className="w-5 h-5" />
               <span className="font-medium">Back to Dashboard</span>
             </button>
