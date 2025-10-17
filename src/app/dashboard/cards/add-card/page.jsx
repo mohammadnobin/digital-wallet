@@ -34,6 +34,7 @@ export default function AddCard() {
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-xl">
+       
       <h2 className="text-xl font-semibold mb-4 text-center">Add New Card</h2>
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
