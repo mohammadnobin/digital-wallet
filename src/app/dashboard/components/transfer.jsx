@@ -23,10 +23,10 @@ export default function MoneyTransfer() {
     { name: 'Sarah Wilson', date: 'Jan 12, 03:15 PM', amount: 300.00, status: 'completed' },
   ];
 
-  const quickAmounts = [10, 25, 50, 100];
+  const quickAmounts = [10, 25, 50, 100]; 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
+    <div className="min-h-screen  bg-gray-50 rounded-2xl  hover:shadow-2xl transition-all duration-500">
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">

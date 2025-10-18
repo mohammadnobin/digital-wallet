@@ -124,7 +124,7 @@ export default function Header({ user }) {
   };
 
   return (
-    <header className="bg-white border-b sticky top-0 z-50 shadow-sm">
+    <header className="bg-white   sticky top-0 z-50 shadow-sm">
       <div className="flex items-center justify-between px-4 sm:px-6 py-3 md:py-4">
         {/* 🔹 Left: Logo */}
         <div className="flex items-center gap-2 sm:gap-3">
@@ -139,7 +139,8 @@ export default function Header({ user }) {
             )}
           </button>
 
-          <div className="flex items-center gap-2">
+          <Link className="flex items-center gap-2 cursor-pointer "
+          href="/"> 
             <div
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-white"
               style={{ backgroundColor: colors.primary }}
@@ -152,7 +153,7 @@ export default function Header({ user }) {
             >
               DigitalWallet
             </span>
-          </div>
+          </Link>
         </div>
 
         {/* 🔹 Right: Desktop Controls */}

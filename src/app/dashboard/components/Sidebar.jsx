@@ -39,13 +39,14 @@ export default function Sidebar() {
       >
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
-
+ 
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 left-0 h-full bg-white border-r z-40
+          fixed top-0 left-0 h-  bg-white  
+          shadow-lg z-40
           w-64 p-4
-          transform transition-transform duration-300
+        hover:shadow-2xl transition-all duration-500
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0 md:static md:block
         `}
@@ -63,7 +64,7 @@ export default function Sidebar() {
             ))}
           </div>
 
-          {/* Upgrade Pro */}
+          {/* Upgrade Pro
           <div
             className="px-4 py-6 rounded-2xl bg-[#f5f2f9] mb-6"
             style={{ backgroundColor: colors.primaryExtraLight }}
@@ -84,15 +85,15 @@ export default function Sidebar() {
             >
               Upgrade Now
             </button>
-          </div>
+          </div> */}
 
           {/* Settings */}
-          <div className="space-y-1">
+          {/* <div className="space-y-1">
             <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50">
               <Settings className="w-5 h-5" />
               Settings
             </button>
-          </div>
+          </div> */}
         </nav>
       </aside>
 

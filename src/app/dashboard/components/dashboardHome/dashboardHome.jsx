@@ -276,7 +276,7 @@ import {
   CreditCard, Send, Download, Scan, UserPlus, Split, Eye, EyeOff, ArrowRight,
   Users,
 } from 'lucide-react';
-import { href } from 'react-router';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const colors = {
@@ -284,7 +284,7 @@ const colors = {
   primaryLight: '#7d66ab',
   primaryExtraLight: '#f5f2f9',
   secondary: '#e0c9a4',
-  success: '#10b981',
+  sccess: '#10b981',
   warning: '#f59e0b',
   danger: '#ef4444',
   info: '#3b82f6',
