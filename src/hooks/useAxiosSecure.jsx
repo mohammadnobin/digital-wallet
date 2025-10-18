@@ -1,12 +1,13 @@
 // import axios from "axios";
 // import { useRouter } from "next/navigation";
+// import useUser from "./useUser";
 
 // const axiosSecure = axios.create({
 //   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-//   withCredentials: true, // কুকি সবসময় পাঠানোর জন্য
 // });
 
 // const useAxiosSecure = () => {
+//   const user = useUser();
 //   const router = useRouter();
 
 //     const requestInterceptor = axiosSecure.interceptors.request.use(
@@ -43,31 +44,61 @@
 
 
 
-// lib/axiosSecure.js
+
+
+
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import useUser from "./useUser";
 
 const axiosSecure = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  withCredentials: true, 
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
-axiosSecure.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const status = error.response?.status;
+const useAxiosSecure = () => {
+  const user = useUser();
+  const router = useRouter();
 
-    if (status === 403) {
+  // ✅ Request interceptor
+  const requestInterceptor = axiosSecure.interceptors.request.use(
+    (config) => {
+      config.withCredentials = true;
 
-    } else if (status === 401) {
+      // ✅ user থেকে token পেয়ে header-এ সেট করা
+      const token = user?.accessToken || user?.token;
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
 
-    } else {
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+
+  // ✅ Response interceptor
+  const responseInterceptor = axiosSecure.interceptors.response.use(
+    (res) => res,
+    (error) => {
+      const status = error.response?.status;
+
+      if (status === 403) {
+        router.push("/not-found");
+      } else if (status === 401) {
+        router.push("/login");
+      }
+
+      return Promise.reject(error);
     }
+  );
 
-    return Promise.reject(error);
-  }
-);
+  // ✅ Cleanup function for interceptors
+  return () => {
+    axiosSecure.interceptors.request.eject(requestInterceptor);
+    axiosSecure.interceptors.response.eject(responseInterceptor);
+  };
 
-export default axiosSecure;
+  // ✅ Return the axios instance
+  return axiosSecure;
+};
+
+export default useAxiosSecure;
