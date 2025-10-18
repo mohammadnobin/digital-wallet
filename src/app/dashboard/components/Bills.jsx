@@ -111,7 +111,7 @@ export default function BillsPayment() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gray-50 rounded-2xl p-4 md:p-8 hover:shadow-2xl transition-all duration-500">
       <div className="max-w-6xl mx-auto">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
