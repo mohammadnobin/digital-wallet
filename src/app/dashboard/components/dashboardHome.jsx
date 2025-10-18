@@ -10,18 +10,17 @@ import {
   Zap,
   Eye,
   EyeOff,
-
-
   Plus,
   SquareArrowOutUpRight
 } from 'lucide-react';
 import Link from 'next/link';
 
-const DigitalWalletDashboard = ({user}) => {
+const DigitalWalletDashboard = ({ user }) => {
 
   const [showBalance, setShowBalance] = useState(true);
-  const [totalbalance, setTotalBalance] = useState(user?.balance || 0);
-
+  const [totalbalance, setTotalBalance] = useState(
+    parseFloat((user?.balance || 0).toFixed(2))
+  );
 
   const quickActions = [
     { icon: Plus, label: "Add Money", color: "bg-blue-500", href: "/dashboard/addMoney" },
@@ -31,7 +30,7 @@ const DigitalWalletDashboard = ({user}) => {
     { icon: QrCode, label: "Scan QR", color: "bg-purple-500", href: "/dashboard/scanQR" },
     { icon: CreditCard, label: "Add Card", color: "bg-orange-500", href: "/dashboard/cards" },
     { icon: Users, label: "Split Bill", color: "bg-indigo-500", href: "/dashboard/splitBill" },
-    
+
   ];
 
   const recentTransactions = [
@@ -105,7 +104,7 @@ const DigitalWalletDashboard = ({user}) => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome back, {user?.name}</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome back <span className='text-primary uppercase text-md '>{user?.name}</span></h1>
           <p className="text-gray-600">Manage your finances with ease</p>
         </div>
 
@@ -220,7 +219,7 @@ const DigitalWalletDashboard = ({user}) => {
                     <span className="text-sm text-gray-600 w-8">{data.day}</span>
                     <div className="flex-1 bg-gray-200 rounded-full h-2">
                       <div
-                        className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                        className="bg-primary h-2 rounded-full transition-all duration-300"
                         style={{ width: `${(data.amount / maxSpending) * 100}%` }}
                       ></div>
                     </div>
@@ -236,7 +235,7 @@ const DigitalWalletDashboard = ({user}) => {
 
               {/* Donut Chart Representation */}
               <div className="relative w-32 h-32 mx-auto mb-6">
-                <div className="w-full h-full rounded-full border-8 border-blue-500 relative">
+                <div className="w-full h-full rounded-full border-8 border-primary relative">
                   <div className="absolute inset-2 rounded-full border-8 border-green-500">
                     <div className="absolute inset-2 rounded-full border-8 border-orange-500">
                       <div className="absolute inset-2 rounded-full border-8 border-red-500">
