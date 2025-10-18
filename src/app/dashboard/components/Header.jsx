@@ -173,7 +173,7 @@ export default function Header({ user }) {
             <Bell className="w-5 h-5 text-gray-600" />
             <span
               className="absolute top-1 right-1 w-2 h-2 rounded-full"
-              style={{ backgroundColor: colors.secondary }}
+              // style={{ backgroundColor: colors.secondary }}
             ></span>
           </button>
 
