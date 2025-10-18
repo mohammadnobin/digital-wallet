@@ -45,12 +45,16 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0   w-64 bg-white shadow-xl z-40 p-6
-        transform transition-transform duration-500 ease-in-out
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-        md:translate-x-0 md:static md:block`}
+        className={`
+  fixed top-0 left-0 w-64 bg-white z-40 p-6
+  transform transition-transform duration-500 ease-in-out
+  hover:shadow-2xl hover:transition-shadow hover:duration-700  
+  ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+  md:translate-x-0 md:static md:block
+`}
+
       >
-        
+
         {/* Menu Items */}
         <nav className="space-y-2">
           {menuItems.map((item) => {
