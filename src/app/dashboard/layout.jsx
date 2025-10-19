@@ -20,7 +20,6 @@ export default async function DashboardLayout({ children }) {
       <Sidebar />
       </div>
       <div className="flex flex-col md:mt-0 mt-12 flex-1 md:ml-64 lg:ml-72 min-h-screen">
-        {/* Main content */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           {children}
         </main>

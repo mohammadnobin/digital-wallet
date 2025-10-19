@@ -206,25 +206,30 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Send, CheckCircle, Clock } from 'lucide-react';
 
-export default function MoneyTransfer({ user,}) {
+export default function MoneyTransfer({ user,session}) {
   const [amount, setAmount] = useState('');
   const [recipient, setRecipient] = useState('');
   const [transferSpeed, setTransferSpeed] = useState('instant');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [transfers, setTransfers] = useState([]); // ✅ ট্রান্সফার হিস্টোরি
+  const [transfers, setTransfers] = useState([]);
   const [fetching, setFetching] = useState(false);
+        const token = session.user.accessToken;
+      console.log(token);
+      if (!session || !session.user || !session.user.accessToken) {
+  return <p>Loading user data...</p>;
+}
 
   const senderEmail = user.email;
   const quickAmounts = [10, 25, 50, 100];
 
   // ✅ ট্রান্সফার হিস্টোরি ফেচ করার ফাংশন
   const fetchTransfers = async () => {
+
     try {
       setFetching(true);
-      const token = localStorage.getItem('access-token'); // JWT Token (তুমি যেমন রাখো)
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/transfers/my-transfers`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/transfers`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -239,10 +244,11 @@ export default function MoneyTransfer({ user,}) {
     }
   };
 
-  // ✅ লোডের সময় হিস্টোরি ফেচ
-  useEffect(() => {
-    fetchTransfers();
-  }, []);
+useEffect(() => {
+  if (!token) return; // token আসার পরেই কল হবে
+  fetchTransfers();
+}, [token]);
+
 
   // ✅ Send Money
   const handleSendMoney = async () => {

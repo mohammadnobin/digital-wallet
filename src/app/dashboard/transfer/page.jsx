@@ -1,11 +1,12 @@
 import MoneyTransfer from '../components/transfer';
-import authOptions from "@/lib/authOptions";
 import axios from "axios";
+import { authOptions } from '@/lib/authOptions';
 import { getServerSession } from 'next-auth/next';
 
+
 const page = async () => {
-    const session = await getServerSession(authOptions);
-  if (!session) {
+    const session=await getServerSession(authOptions);
+      if (!session) {
     return <div>Please login to access this page</div>;
   }
   const email = session.user.email;
@@ -13,7 +14,7 @@ const page = async () => {
   const user = res.data;
     return (
         <div>
-          <MoneyTransfer user={user} />
+          <MoneyTransfer user={user} session={session} />
         </div>
     );
 };
