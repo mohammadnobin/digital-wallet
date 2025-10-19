@@ -150,7 +150,6 @@ const AddMoneyPage = ({user}) => {
   if (!validateForm()) return;
 
   setIsProcessing(true);
-
   try {
     const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wallets/addmoney`,{
       user: user.email,

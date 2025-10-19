@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import {
   CreditCard, Send, Download, Scan, Split, Eye, EyeOff, ArrowRight,
   Users,
+  ArrowUpRight,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -17,7 +18,8 @@ const colors = {
   info: '#3b82f6',
   dark: '#1f2937',
   indigo: '#cd8b62',
-  added:'#a3573a'
+  added:'#a3573a',
+  cashout: "#014D4E"
 };
 
 export default function DigitalWalletDashboard({ user }) {
@@ -52,7 +54,8 @@ export default function DigitalWalletDashboard({ user }) {
 
   const quickActions = [
     { name: 'Add Money', icon: CreditCard, bgColor: colors.primary, href: "/dashboard/addMoney"},
-    { name: 'Send', icon: Send, bgColor: colors.success, href:"/dashboard/cashout"},
+    { name: 'Send money', icon: Send, bgColor: colors.success, href:"/dashboard/send-money"},
+    { name: 'Cashout', icon: ArrowUpRight, bgColor: colors.cashout, href:"/dashboard/cashout"},
     { name: 'Request', icon: Download, bgColor: colors.info, href:"/dashboard/requestMoney"},
     { name: "Remittance", icon: Users, bgColor: colors.indigo, href: "/dashboard/remittance" },
     { name: 'Scan QR', icon: Scan, bgColor: colors.secondary, href:"/dashboard/scanQR" },
@@ -71,7 +74,7 @@ export default function DigitalWalletDashboard({ user }) {
       {/* Welcome Section - Responsive text sizing */}
       <div className="mb-6 sm:mb-8 text-center md:text-left">
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-1">
-          Welcome back <span className="text-primary break-words">{user.name}</span> 👋
+          Welcome back <span className="text-primary break-words">{user.name}</span>
         </h1>
         <p className="text-gray-500 text-xs sm:text-sm md:text-base">Here's your financial overview</p>
       </div>

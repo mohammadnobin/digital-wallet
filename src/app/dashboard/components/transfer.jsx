@@ -44,7 +44,7 @@ export default function MoneyTransfer() {
                   onClick={() => setActiveTab('send')}
                   className={`pb-3 px-4 font-medium transition-colors ${
                     activeTab === 'send'
-                      ? 'text-blue-600 border-b-2 border-blue-600'
+                      ? 'text-primary border-b-2 border-primary'
                       : 'text-gray-500 hover:text-gray-700'
                   }`}
                 >
@@ -55,7 +55,7 @@ export default function MoneyTransfer() {
               {/* Send Money Form */}
               <div className="space-y-6">
                 <div className="bg-blue-50 rounded-xl p-4 flex items-start space-x-3">
-                  <Send className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <Send className="w-5 h-5 text-primary mt-0.5" />
                   <div>
                     <h3 className="font-semibold text-gray-900">Send Money</h3>
                     <p className="text-sm text-gray-600">Transfer funds instantly</p>
@@ -111,7 +111,7 @@ export default function MoneyTransfer() {
                     Transfer Speed
                   </label>
                   <div className="space-y-3">
-                    <label className="flex items-center justify-between p-4 border-2 border-blue-500 rounded-xl cursor-pointer bg-blue-50">
+                    <label className="flex items-center justify-between p-4 border-2 border-primary rounded-xl cursor-pointer bg-blue-50">
                       <div className="flex items-center space-x-3">
                         <input
                           type="radio"
@@ -119,14 +119,14 @@ export default function MoneyTransfer() {
                           value="instant"
                           checked={transferSpeed === 'instant'}
                           onChange={(e) => setTransferSpeed(e.target.value)}
-                          className="w-4 h-4 text-blue-600"
+                          className="w-4 h-4 text-primary"
                         />
                         <div>
                           <p className="font-medium text-gray-900">Instant Transfer</p>
                           <p className="text-sm text-gray-600">Available in minutes</p>
                         </div>
                       </div>
-                      <span className="text-blue-600 font-semibold">$1.99</span>
+                      <span className="text-primary font-semibold">$1.99</span>
                     </label>
                     <label className="flex items-center justify-between p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-gray-300">
                       <div className="flex items-center space-x-3">
@@ -136,7 +136,7 @@ export default function MoneyTransfer() {
                           value="standard"
                           checked={transferSpeed === 'standard'}
                           onChange={(e) => setTransferSpeed(e.target.value)}
-                          className="w-4 h-4 text-blue-600"
+                          className="w-4 h-4 text-primary"
                         />
                         <div>
                           <p className="font-medium text-gray-900">Standard Transfer</p>
@@ -159,13 +159,13 @@ export default function MoneyTransfer() {
                     onChange={(e) => setMessage(e.target.value)}
                     maxLength={500}
                     rows={3}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none"
                   />
                   <p className="mt-2 text-xs text-gray-500">{message.length}/500 characters</p>
                 </div>
 
                 {/* Submit Button */}
-                <button className="w-full bg-blue-400 cursor-pointer text-white py-4 rounded-xl font-semibold hover:from-gray-300 hover:to-indigo-200 transition-all shadow-lg hover:shadow-xl">
+                <button className="w-full bg-primary cursor-pointer text-white py-4 rounded-xl font-semibold hover:from-gray-300 hover:to-indigo-200 transition-all shadow-lg hover:shadow-xl">
                   Send Money
                 </button>
 
@@ -187,7 +187,7 @@ export default function MoneyTransfer() {
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-semibold text-gray-900">Recent Contacts</h3>
-                <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">View All</button>
+                <button className="text-sm text-primary hover:text-blue-700 font-medium">View All</button>
               </div>
               <div className="space-y-3">
                 {recentContacts.map((contact, idx) => (
@@ -206,7 +206,7 @@ export default function MoneyTransfer() {
                     <p className="text-xs text-gray-400">{contact.date}</p>
                   </button>
                 ))}
-                <button className="w-full py-3 text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center justify-center space-x-2 border-2 border-dashed border-gray-300 rounded-xl hover:border-blue-300 transition-colors">
+                <button className="w-full py-3 text-sm text-primary hover:text-primary font-medium flex items-center justify-center space-x-2 border-2 border-dashed border-gray-300 rounded-xl hover:border-blue-300 transition-colors">
                   <span>+</span>
                   <span>Add New Contact</span>
                 </button>
@@ -217,7 +217,7 @@ export default function MoneyTransfer() {
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-semibold text-gray-900">Transfer History</h3>
-                <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">View All</button>
+                <button className="text-sm text-primary hover:text-primary font-medium">View All</button>
               </div>
               <div className="space-y-3">
                 {transferHistory.map((transfer, idx) => (
