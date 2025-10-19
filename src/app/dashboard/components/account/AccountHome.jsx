@@ -572,7 +572,6 @@ const AccountHome = ({ user }) => {
   const handleSave = () => {
     setIsEditing(false);
     // here you can call your backend to update user info
-    console.log("Saved Data:", formData);
   };
 
   if (!user) {
