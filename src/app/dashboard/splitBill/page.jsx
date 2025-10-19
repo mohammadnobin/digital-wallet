@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Users,
   FileText,
@@ -12,20 +12,11 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import Link from 'next/link';
+import axios from 'axios';
 
 export default function SplitBills() {
   const [activeTab, setActiveTab] = useState('all');
-
-  // initial dummy bills
-  const [bills, setBills] = useState([
-    { id: 1, title: 'Dinner at Italian Restaurant', icon: Utensils, total: 240.0, people: 4, date: '2024-01-15', status: 'pending', yourShare: 60.0 },
-    { id: 2, title: 'Weekend Trip to Mountains', icon: Plane, total: 800.0, people: 3, date: '2024-01-12', status: 'paid', yourShare: 266.67 },
-    { id: 3, title: 'Office Lunch Order', icon: Utensils, total: 156.5, people: 5, date: '2024-01-10', status: 'settled', yourShare: 31.3 },
-    { id: 4, title: 'Movie Night Snacks', icon: Film, total: 45.8, people: 2, date: '2024-01-14', status: 'pending', yourShare: 22.9 },
-    { id: 5, title: 'Uber Ride to Airport', icon: Car, total: 85.0, people: 3, date: '2024-01-08', status: 'paid', yourShare: 28.33 },
-  ]);
-
-  // Create Bill Form state
+  const [bills, setBills] = useState([]);
   const [form, setForm] = useState({
     title: '',
     total: '',
@@ -33,6 +24,22 @@ export default function SplitBills() {
     date: '',
     status: 'pending',
   });
+
+  // Replace with the logged-in user's email
+  const userEmail = "test@example.com";
+
+  // Fetch bills from server
+  useEffect(() => {
+    const fetchBills = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/splitbills?user=${userEmail}`);
+        setBills(res.data.bills || []);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchBills();
+  }, []);
 
   // Filter bills based on tab
   const filteredBills = bills.filter(bill => {
@@ -47,28 +54,37 @@ export default function SplitBills() {
     owed: bills.filter(b => b.status === 'pending').reduce((sum, b) => sum + b.yourShare, 0),
     paid: bills.filter(b => b.status === 'paid' || b.status === 'settled').reduce((sum, b) => sum + b.yourShare, 0),
     totalBills: bills.length,
-    activeGroups: 8,
+    activeGroups: 8, // static for now
   };
 
+  // Map icon name to component
+  const iconMap = { Utensils, Plane, Film, Car };
+
   // Handle create new bill
-  const handleCreateBill = (e) => {
+  const handleCreateBill = async (e) => {
     e.preventDefault();
     const { title, total, people, date, status } = form;
     if (!title || !total || !people || !date) return;
 
     const newBill = {
-      id: Date.now(),
       title,
       total: Number(total),
       people: Number(people),
       date,
       status,
-      yourShare: Number(total) / Number(people),
-      icon: Utensils, // default icon
+      createdBy: userEmail,
+      icon: "Utensils",
     };
 
-    setBills([newBill, ...bills]);
-    setForm({ title: '', total: '', people: '', date: '', status: 'pending' });
+    try {
+      const res = await axios.post("http://localhost:5000/api/splitbills", newBill);
+      if (res.data.success) {
+        setBills([res.data.bill, ...bills]);
+        setForm({ title: '', total: '', people: '', date: '', status: 'pending' });
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -91,10 +107,6 @@ export default function SplitBills() {
             <h1 className="text-3xl font-bold text-gray-900">Split Bills</h1>
             <p className="text-gray-600 mt-1">Manage shared expenses with friends and groups</p>
           </div>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors">
-            <span className="text-xl">+</span>
-            Create Split
-          </button>
         </div>
 
         {/* Stats */}
@@ -144,7 +156,7 @@ export default function SplitBills() {
           </div>
         </div>
 
-        {/* Main Content: Two Columns */}
+        {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
           {/* Left Column: Create Bill */}
@@ -217,9 +229,9 @@ export default function SplitBills() {
                 <div className="px-6 py-5 text-center text-gray-500">No bills found for this tab.</div>
               )}
               {filteredBills.map(bill => {
-                const Icon = bill.icon;
+                const Icon = iconMap[bill.icon] || Utensils;
                 return (
-                  <div key={bill.id} className="px-6 py-5 hover:bg-gray-50 transition-colors cursor-pointer flex justify-between items-center">
+                  <div key={bill._id} className="px-6 py-5 hover:bg-gray-50 transition-colors cursor-pointer flex justify-between items-center">
                     <div className="flex items-center gap-4 flex-1">
                       <div className="bg-gray-100 p-3 rounded-lg">
                         <Icon className="w-6 h-6 text-gray-600" />
@@ -244,7 +256,7 @@ export default function SplitBills() {
                           <span>•</span>
                           <span>{bill.people} people</span>
                           <span>•</span>
-                          <span>{bill.date}</span>
+                          <span>{new Date(bill.date).toLocaleDateString()}</span>
                         </div>
                       </div>
                     </div>
