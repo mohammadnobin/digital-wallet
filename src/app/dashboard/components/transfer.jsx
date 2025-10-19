@@ -215,7 +215,6 @@ export default function MoneyTransfer({ user,session}) {
   const [transfers, setTransfers] = useState([]);
   const [fetching, setFetching] = useState(false);
         const token = session.user.accessToken;
-      console.log(token);
       if (!session || !session.user || !session.user.accessToken) {
   return <p>Loading user data...</p>;
 }

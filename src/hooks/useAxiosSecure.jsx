@@ -10,7 +10,6 @@ const axiosSecure = axios.create({
 
 const useAxiosSecure = () => {
   const user = useUser();
-  console.log(user?.accessToken);
   const router = useRouter();
   const requestInterceptor = axiosSecure.interceptors.request.use(
     (config) => {
