@@ -1,282 +1,9 @@
-// 'use client';
-// import React, { useState } from 'react';
-// import {
-//   QrCode,
-//   CreditCard,
-//   DollarSign,
-//   Users,
-//   ArrowUpRight,
-//   ArrowDownLeft,
-//   Zap,
-//   Eye,
-//   EyeOff,
-
-
-//   Plus,
-//   SquareArrowOutUpRight
-// } from 'lucide-react';
-// import Link from 'next/link';
-
-// const DigitalWalletDashboard = ({user}) => {
-
-//   const [showBalance, setShowBalance] = useState(true);
-//   const [totalbalance, setTotalBalance] = useState(user?.balance || 0);
-
-
-//   const quickActions = [
-//     { icon: Plus, label: "Add Money", color: "bg-blue-500", href: "/dashboard/addMoney" },
-//     { icon: SquareArrowOutUpRight, label: "Cash Out", color: "bg-green-500", href: "/dashboard/cashout" },
-//     { icon: DollarSign, label: "Request Money", color: "bg-pink-500", href: "/dashboard/requestMoney" },
-//     { icon: Users, label: "Remittance", color: "bg-indigo-500", href: "/dashboard/remittance" },
-//     { icon: QrCode, label: "Scan QR", color: "bg-purple-500", href: "/dashboard/scanQR" },
-//     { icon: CreditCard, label: "Add Card", color: "bg-orange-500", href: "/dashboard/cards" },
-//     { icon: Users, label: "Split Bill", color: "bg-indigo-500", href: "/dashboard/splitBill" },
-    
-//   ];
-
-//   const recentTransactions = [
-//     {
-//       id: 1,
-//       type: 'received',
-//       title: 'Payment from Sarah Wilson',
-//       date: '2024-01-15',
-//       time: '2:30 PM',
-//       amount: 450.00,
-//       icon: ArrowDownLeft,
-//       color: 'text-green-500'
-//     },
-//     {
-//       id: 2,
-//       type: 'sent',
-//       title: 'Grocery Store Payment',
-//       date: '2024-01-15',
-//       time: '11:45 AM',
-//       amount: -89.50,
-//       icon: ArrowUpRight,
-//       color: 'text-red-500'
-//     },
-//     {
-//       id: 3,
-//       type: 'bill',
-//       title: 'Electricity Bill',
-//       date: '2024-01-14',
-//       time: '6:20 PM',
-//       amount: -125.75,
-//       icon: Zap,
-//       color: 'text-orange-500'
-//     },
-//     {
-//       id: 4,
-//       type: 'received',
-//       title: 'Freelance Payment',
-//       date: '2024-01-14',
-//       time: '3:15 PM',
-//       amount: 1200.00,
-//       icon: ArrowDownLeft,
-//       color: 'text-green-500'
-//     }
-//   ];
-
-//   const expenseCategories = [
-//     { name: 'Food & Dining', percentage: 35, color: 'bg-blue-500' },
-//     { name: 'Shopping', percentage: 25, color: 'bg-green-500' },
-//     { name: 'Transportation', percentage: 20, color: 'bg-orange-500' },
-//     { name: 'Utilities', percentage: 12, color: 'bg-red-500' },
-//     { name: 'Entertainment', percentage: 8, color: 'bg-purple-500' }
-//   ];
-
-//   const weeklySpendingData = [
-//     { day: 'Mon', amount: 80 },
-//     { day: 'Tue', amount: 120 },
-//     { day: 'Wed', amount: 160 },
-//     { day: 'Thu', amount: 90 },
-//     { day: 'Fri', amount: 180 },
-//     { day: 'Sat', amount: 240 },
-//     { day: 'Sun', amount: 160 }
-//   ];
-
-//   const maxSpending = Math.max(...weeklySpendingData.map(d => d.amount));
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
-
-
-//       {/* Main Content */}
-//       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-//         {/* Welcome Section */}
-//         <div className="mb-8">
-//           <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome back, {user?.name}</h1>
-//           <p className="text-gray-600">Manage your finances with ease</p>
-//         </div>
-
-//         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-//           {/* Left Column */}
-//           <div className="lg:col-span-2 space-y-8">
-//             {/* Account Overview */}
-//             <div className="bg-white rounded-xl shadow-sm p-6">
-//               <h2 className="text-lg font-semibold text-gray-900 mb-6">Account Overview</h2>
-//               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-//                 <div className="bg-blue-50 rounded-lg p-4">
-//                   <div className="flex items-center justify-between mb-2">
-//                     <CreditCard className="w-8 h-8 text-blue-600" />
-//                     <button
-//                       onClick={() => setShowBalance(!showBalance)}
-//                       className="text-blue-600 cursor-pointer hover:text-blue-700"
-//                     >
-//                       {showBalance ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-//                     </button>
-//                   </div>
-//                   <p className="text-sm text-gray-600 mb-1">Total Balance</p>
-//                   <p className="text-2xl font-bold text-gray-900">
-//                     {showBalance ? `${totalbalance}` : '••••••'}
-//                   </p>
-//                 </div>
-
-//                 <div className="bg-green-50 rounded-lg p-4">
-//                   <div className="flex items-center mb-2">
-//                     <ArrowDownLeft className="w-8 h-8 text-green-600" />
-//                   </div>
-//                   <p className="text-sm text-gray-600 mb-1">Monthly Income</p>
-//                   <p className="text-2xl font-bold text-gray-900">$4,250.00</p>
-//                 </div>
-
-//                 <div className="bg-red-50 rounded-lg p-4">
-//                   <div className="flex items-center mb-2">
-//                     <ArrowUpRight className="w-8 h-8 text-red-600" />
-//                   </div>
-//                   <p className="text-sm text-gray-600 mb-1">Monthly Expenses</p>
-//                   <p className="text-2xl font-bold text-gray-900">$2,847.32</p>
-//                 </div>
-
-//                 <div className="bg-purple-50 rounded-lg p-4">
-//                   <div className="flex items-center mb-2">
-//                     <CreditCard className="w-8 h-8 text-purple-600" />
-//                   </div>
-//                   <p className="text-sm text-gray-600 mb-1">Active Cards</p>
-//                   <p className="text-2xl font-bold text-gray-900">3</p>
-//                 </div>
-//               </div>
-//             </div>
-
-//             {/* Quick Actions */}
-//             <div className="bg-white rounded-xl shadow-sm p-6">
-//               <h2 className="text-lg font-semibold text-gray-900 mb-6">Quick Actions</h2>
-//               <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-//                 {quickActions.map((action, index) => (
-//                   <Link href={action.href} key={index}>
-
-//                     <button
-//                       className="flex flex-col cursor-pointer items-center p-4 rounded-lg hover:bg-gray-50 transition-colors group"
-//                     >
-//                       <div className={`w-12 h-12 ${action.color} rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-//                         <action.icon className="w-6 h-6 text-white" />
-//                       </div>
-//                       <span className="text-sm font-medium text-gray-700">{action.label}</span>
-//                     </button>
-//                   </Link>
-//                 ))}
-//               </div>
-//             </div>
-
-//             {/* Recent Transactions */}
-//             <div className="bg-white rounded-xl shadow-sm p-6">
-//               <div className="flex justify-between items-center mb-6">
-//                 <h2 className="text-lg font-semibold text-gray-900">Recent Transactions</h2>
-//                 <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-//                   View All
-//                 </button>
-//               </div>
-//               <div className="space-y-4">
-//                 {recentTransactions.map((transaction) => (
-//                   <div key={transaction.id} className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-lg transition-colors">
-//                     <div className="flex items-center space-x-4">
-//                       <div className={`w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center`}>
-//                         <transaction.icon className={`w-5 h-5 ${transaction.color}`} />
-//                       </div>
-//                       <div>
-//                         <p className="font-medium text-gray-900">{transaction.title}</p>
-//                         <p className="text-sm text-gray-500">{transaction.date} • {transaction.time}</p>
-//                       </div>
-//                     </div>
-//                     <div className="text-right">
-//                       <p className={`font-semibold ${transaction.amount > 0 ? 'text-green-600' : 'text-red-600'}`}>
-//                         {transaction.amount > 0 ? '+' : ''}${Math.abs(transaction.amount).toFixed(2)}
-//                       </p>
-//                     </div>
-//                   </div>
-//                 ))}
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* Right Column */}
-//           <div className="space-y-8">
-//             {/* Weekly Spending Chart */}
-//             <div className="bg-white rounded-xl shadow-sm p-6">
-//               <h2 className="text-lg font-semibold text-gray-900 mb-6">Weekly Spending</h2>
-//               <div className="space-y-4">
-//                 {weeklySpendingData.map((data, index) => (
-//                   <div key={index} className="flex items-center space-x-3">
-//                     <span className="text-sm text-gray-600 w-8">{data.day}</span>
-//                     <div className="flex-1 bg-gray-200 rounded-full h-2">
-//                       <div
-//                         className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-//                         style={{ width: `${(data.amount / maxSpending) * 100}%` }}
-//                       ></div>
-//                     </div>
-//                     <span className="text-sm font-medium text-gray-900 w-8">${data.amount}</span>
-//                   </div>
-//                 ))}
-//               </div>
-//             </div>
-
-//             {/* Expense Categories */}
-//             <div className="bg-white rounded-xl shadow-sm p-6">
-//               <h2 className="text-lg font-semibold text-gray-900 mb-6">Expense Categories</h2>
-
-//               {/* Donut Chart Representation */}
-//               <div className="relative w-32 h-32 mx-auto mb-6">
-//                 <div className="w-full h-full rounded-full border-8 border-blue-500 relative">
-//                   <div className="absolute inset-2 rounded-full border-8 border-green-500">
-//                     <div className="absolute inset-2 rounded-full border-8 border-orange-500">
-//                       <div className="absolute inset-2 rounded-full border-8 border-red-500">
-//                         <div className="absolute inset-2 rounded-full border-4 border-purple-500">
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               <div className="space-y-3">
-//                 {expenseCategories.map((category, index) => (
-//                   <div key={index} className="flex items-center justify-between">
-//                     <div className="flex items-center space-x-3">
-//                       <div className={`w-3 h-3 rounded-full ${category.color}`}></div>
-//                       <span className="text-sm text-gray-700">{category.name}</span>
-//                     </div>
-//                     <span className="text-sm font-medium text-gray-900">{category.percentage}%</span>
-//                   </div>
-//                 ))}
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default DigitalWalletDashboard;
-
-
 'use client';
 import React, { useState } from 'react';
 import {
   CreditCard, Send, Download, Scan, UserPlus, Split, Eye, EyeOff, ArrowRight,
   Users,
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const colors = {
@@ -284,7 +11,7 @@ const colors = {
   primaryLight: '#7d66ab',
   primaryExtraLight: '#f5f2f9',
   secondary: '#e0c9a4',
-  sccess: '#10b981',
+  success: '#10b981',
   warning: '#f59e0b',
   danger: '#ef4444',
   info: '#3b82f6',
@@ -326,7 +53,7 @@ export default function DigitalWalletDashboard({ user }) {
     { name: 'Add Money', icon: CreditCard, bgColor: colors.primary, href: "/dashboard/addMoney"},
     { name: 'Send', icon: Send, bgColor: colors.success, href:"/dashboard/cashout"},
     { name: 'Request', icon: Download, bgColor: colors.info, href:"/dashboard/requestMoney"},
-     { name: "Remittance", icon: Users, bgColor: colors.indigo, href: "/dashboard/remittance" },
+    { name: "Remittance", icon: Users, bgColor: colors.indigo, href: "/dashboard/remittance" },
     { name: 'Scan QR', icon: Scan, bgColor: colors.secondary, href:"/dashboard/scanQR" },
     { name: "Add Card",icon: CreditCard,  bgColor: colors.added, href: "/dashboard/cards" },
     { name: 'Split Bill', icon: Split, bgColor: colors.danger, href:"/dashboard/splitBill" },
@@ -339,17 +66,17 @@ export default function DigitalWalletDashboard({ user }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 md:p-8">
-      {/* Welcome Section */}
-      <div className="mb-8 text-center md:text-left">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-1">
-          Welcome back <span className="text-primary">{user.name}</span> 👋
+    <div className="min-h-screen bg-gray-50 p-3 sm:p-4 md:p-6 lg:p-8">
+      {/* Welcome Section - Responsive text sizing */}
+      <div className="mb-6 sm:mb-8 text-center md:text-left">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-1">
+          Welcome back <span className="text-primary break-words">{user.name}</span> 👋
         </h1>
-        <p className="text-gray-500 text-sm md:text-base">Here's your financial overview</p>
+        <p className="text-gray-500 text-xs sm:text-sm md:text-base">Here's your financial overview</p>
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+      {/* Quick Stats - Enhanced responsive grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
         {[
           { label: 'Total Balance', value: '$3,332.30', change: '+12.5%', trend: 'up', icon: '💰' },
           { label: 'Income', value: '$4,250.00', change: '+8.2%', trend: 'up', icon: '📈' },
@@ -358,65 +85,68 @@ export default function DigitalWalletDashboard({ user }) {
         ].map((stat, i) => (
           <div
             key={i}
-            className="bg-white rounded-2xl p-5 border border-gray-100 hover:shadow-md transition"
+            className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 border border-gray-100 hover:shadow-md transition"
           >
-            <div className="flex items-start justify-between mb-3">
-              <span className="text-2xl md:text-3xl">{stat.icon}</span>
+            <div className="flex items-start justify-between mb-2 sm:mb-3">
+              <span className="text-xl sm:text-2xl md:text-3xl">{stat.icon}</span>
               <span
-                className={`text-xs font-semibold px-2 py-1 rounded-full ${
+                className={`text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full ${
                   stat.trend === 'up' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'
                 }`}
               >
                 {stat.change}
               </span>
             </div>
-            <div className="text-gray-500 text-sm mb-1">{stat.label}</div>
-            <div className="text-lg md:text-2xl font-bold text-gray-800">{stat.value}</div>
+            <div className="text-gray-500 text-[11px] sm:text-xs md:text-sm mb-1">{stat.label}</div>
+            <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 truncate">{stat.value}</div>
           </div>
         ))}
       </div>
 
-      {/* Main Dashboard Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Section (Cards + Quick Actions + Transactions) */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* My Cards */}
+      {/* Main Dashboard Content - Enhanced responsive layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+        {/* Left Section */}
+        <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+          {/* My Cards - Responsive card grid */}
           <div>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg md:text-xl font-bold text-gray-800">My Cards</h2>
-              <button className="text-sm font-medium flex items-center gap-1 text-primary hover:gap-2 transition-all">
-                View all <ArrowRight className="w-4 h-4" />
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-800">My Cards</h2>
+              <button className="text-xs sm:text-sm font-medium flex items-center gap-1 text-primary hover:gap-2 transition-all">
+                View all <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {cards.map((card) => (
                 <div
                   key={card.id}
-                  className="rounded-3xl p-6 md:p-8 text-white relative overflow-hidden hover:shadow-xl transition-all"
+                  className="rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 text-white relative overflow-hidden hover:shadow-xl transition-all"
                   style={{ backgroundColor: card.bgColor }}
                 >
-                  <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 bg-white transform translate-x-1/3 -translate-y-1/3"></div>
+                  <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 rounded-full opacity-10 bg-white transform translate-x-1/3 -translate-y-1/3"></div>
                   <div className="relative z-10">
-                    <div className="flex justify-between items-start mb-12 md:mb-16">
-                      <div>
-                        <div className="text-xs opacity-80 mb-2">Balance</div>
+                    <div className="flex justify-between items-start mb-10 sm:mb-12 md:mb-16">
+                      <div className="min-w-0 flex-1">
+                        <div className="text-[10px] sm:text-xs opacity-80 mb-1 sm:mb-2">Balance</div>
                         <div className="flex items-center gap-2">
-                          <div className="text-xl md:text-2xl font-bold">
+                          <div className="text-lg sm:text-xl md:text-2xl font-bold truncate">
                             {showBalance ? `${card.balance.toLocaleString()}` : '•••••'}
                           </div>
-                          <button onClick={() => setShowBalance(!showBalance)} className="p-1 hover:bg-white hover:bg-opacity-10 rounded-lg">
-                            {showBalance ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                          <button 
+                            onClick={() => setShowBalance(!showBalance)} 
+                            className="p-1 hover:bg-white hover:bg-opacity-10 rounded-lg flex-shrink-0"
+                          >
+                            {showBalance ? <Eye className="w-3 h-3 sm:w-4 sm:h-4" /> : <EyeOff className="w-3 h-3 sm:w-4 sm:h-4" />}
                           </button>
                         </div>
-                        <div className="text-xs opacity-80">{card.currency}</div>
+                        <div className="text-[10px] sm:text-xs opacity-80">{card.currency}</div>
                       </div>
-                      <div className="w-10 h-10 bg-white bg-opacity-10 rounded-2xl flex items-center justify-center">
-                        <CreditCard className="w-5 h-5" />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white bg-opacity-10 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <CreditCard className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
                     </div>
                     <div className="flex justify-between items-end">
-                      <div className="text-lg tracking-wider">•••• {card.last4}</div>
-                      <div className="text-sm font-bold">{card.type}</div>
+                      <div className="text-base sm:text-lg tracking-wider">•••• {card.last4}</div>
+                      <div className="text-xs sm:text-sm font-bold">{card.type}</div>
                     </div>
                   </div>
                 </div>
@@ -424,80 +154,59 @@ export default function DigitalWalletDashboard({ user }) {
             </div>
           </div>
 
-          {/* Quick Actions */}
-          {/* <div>
-            <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+          {/* Quick Actions - Enhanced responsive grid */}
+          <div>
+            <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-2 sm:gap-3 md:gap-4">
               {quickActions.map((action, i) => {
                 const Icon = action.icon;
                 return (
-                  <button
-                    key={i}
-                    className="bg-white border border-gray-100 rounded-2xl p-4 flex flex-col items-center gap-2 hover:border-gray-200 hover:shadow-md transition"
-                  >
-                    <div
-                      className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-white"
-                      style={{ backgroundColor: action.bgColor }}
-                    >
-                      <Icon className="w-5 h-5 md:w-6 md:h-6" />
+                  <Link key={i} href={action.href || "#"}>
+                    <div className="bg-white border border-gray-100 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center gap-2 hover:border-gray-200 hover:shadow-md transition cursor-pointer">
+                      <div
+                        className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-white flex-shrink-0"
+                        style={{ backgroundColor: action.bgColor }}
+                      >
+                        <Icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                      </div>
+                      <span className="text-[10px] sm:text-xs font-medium text-gray-700 text-center leading-tight">{action.name}</span>
                     </div>
-                    <span className="text-xs font-medium text-gray-700">{action.name}</span>
-                  </button>
+                  </Link>
                 );
               })}
             </div>
-          </div> */}
-
-          <div>
-  <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
-  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
-    {quickActions.map((action, i) => {
-      const Icon = action.icon;
-      return (
-        <Link key={i} href={action.href || "#"}>
-          <div className="bg-white border border-gray-100 rounded-2xl p-4 flex flex-col items-center gap-2 hover:border-gray-200 hover:shadow-md transition cursor-pointer">
-            <div
-              className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-white"
-              style={{ backgroundColor: action.bgColor }}
-            >
-              <Icon className="w-5 h-5 md:w-6 md:h-6" />
-            </div>
-            <span className="text-xs font-medium text-gray-700">{action.name}</span>
           </div>
-        </Link>
-      );
-    })}
-  </div>
-</div>
 
-          {/* Recent Transactions */}
-          <div className="bg-white rounded-2xl p-5 border border-gray-100">
+          {/* Recent Transactions - Enhanced mobile layout */}
+          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg md:text-xl font-bold text-gray-800">Recent Transactions</h2>
-              <button className="text-sm font-medium flex items-center gap-1 text-primary hover:gap-2 transition-all">
-                View all <ArrowRight className="w-4 h-4" />
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-800">Recent Transactions</h2>
+              <button className="text-xs sm:text-sm font-medium flex items-center gap-1 text-primary hover:gap-2 transition-all">
+                View all <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
             </div>
             <div className="space-y-2">
               {recentTransactions.map((tx) => (
                 <div
                   key={tx.id}
-                  className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-all"
+                  className="flex items-center justify-between p-2 sm:p-3 hover:bg-gray-50 rounded-lg sm:rounded-xl transition-all gap-2"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-2xl">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gray-50 rounded-lg sm:rounded-xl flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
                       {tx.icon}
                     </div>
-                    <div>
-                      <div className="font-semibold text-gray-800 text-sm md:text-base">{tx.name}</div>
-                      <div className="text-xs text-gray-500">{tx.date} • {tx.time}</div>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold text-gray-800 text-xs sm:text-sm md:text-base truncate">{tx.name}</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500">
+                        <span className="hidden sm:inline">{tx.date} • </span>{tx.time}
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className={`text-sm md:text-lg font-bold ${tx.amount > 0 ? 'text-green-600' : 'text-gray-800'}`}>
+                  <div className="text-right flex-shrink-0">
+                    <div className={`text-sm sm:text-base md:text-lg font-bold ${tx.amount > 0 ? 'text-green-600' : 'text-gray-800'}`}>
                       {tx.amount > 0 ? '+' : ''}${Math.abs(tx.amount).toFixed(2)}
                     </div>
-                    <div className="text-xs text-gray-500">{tx.category}</div>
+                    <div className="text-[10px] sm:text-xs text-gray-500 hidden sm:block">{tx.category}</div>
                   </div>
                 </div>
               ))}
@@ -505,17 +214,17 @@ export default function DigitalWalletDashboard({ user }) {
           </div>
         </div>
 
-        {/* Right Section (Charts & Savings) */}
-        <div className="space-y-8">
-          {/* Weekly Spending */}
-          <div className="bg-white rounded-2xl p-5 border border-gray-100">
+        {/* Right Section - Charts & Savings */}
+        <div className="space-y-6 sm:space-y-8">
+          {/* Weekly Spending - Enhanced responsive chart */}
+          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100">
             <div className="flex justify-between items-center mb-4">
               <div>
-                <p className="text-sm text-gray-500 mb-1">Weekly Spending</p>
-                <h3 className="text-lg md:text-2xl font-bold text-gray-800">${totalWeekSpending}</h3>
+                <p className="text-xs sm:text-sm text-gray-500 mb-1">Weekly Spending</p>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">${totalWeekSpending}</h3>
               </div>
               <select
-                className="text-sm border border-gray-200 rounded-xl px-2 py-1 bg-gray-50"
+                className="text-xs sm:text-sm border border-gray-200 rounded-lg sm:rounded-xl px-2 py-1 sm:py-1.5 bg-gray-50 focus:outline-none focus:border-gray-300"
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value)}
               >
@@ -525,51 +234,75 @@ export default function DigitalWalletDashboard({ user }) {
               </select>
             </div>
 
-            <div className="h-40 flex items-end justify-between gap-2">
+            <div className="h-32 sm:h-40 flex items-end justify-between gap-1.5 sm:gap-2">
               {weeklySpending.map((day, i) => {
                 const height = (day.amount / maxSpending) * 100;
                 return (
                   <div key={i} className="flex-1 flex flex-col items-center gap-1 group">
                     <div
-                      className="w-full rounded-t-xl transition-all duration-300"
+                      className="w-full rounded-t-lg sm:rounded-t-xl transition-all duration-300 hover:opacity-80 cursor-pointer"
                       style={{
                         height: `${height}%`,
                         backgroundColor: day.highlight ? colors.primary : colors.secondary,
                       }}
                     ></div>
-                    <span className="text-xs font-medium text-gray-500">{day.day}</span>
+                    <span className="text-[10px] sm:text-xs font-medium text-gray-500">{day.day}</span>
                   </div>
                 );
               })}
             </div>
           </div>
 
-          {/* Savings Goal */}
+          {/* Savings Goal - Enhanced responsive layout */}
           <div
-            className="rounded-2xl p-6 border-2"
+            className="rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border-2"
             style={{ backgroundColor: colors.primaryExtraLight, borderColor: colors.secondary }}
           >
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-lg font-bold" style={{ color: colors.primary }}>
+              <h3 className="text-base sm:text-lg font-bold" style={{ color: colors.primary }}>
                 Savings Goal
               </h3>
-              <div className="text-2xl">🎯</div>
+              <div className="text-xl sm:text-2xl">🎯</div>
             </div>
             <div className="mb-3">
-              <div className="flex justify-between text-sm mb-1" style={{ color: colors.primary }}>
+              <div className="flex justify-between text-xs sm:text-sm mb-1" style={{ color: colors.primary }}>
                 <span>$7,250</span>
                 <span>$10,000</span>
               </div>
-              <div className="w-full h-3 bg-white rounded-full overflow-hidden">
+              <div className="w-full h-2.5 sm:h-3 bg-white rounded-full overflow-hidden">
                 <div
-                  className="h-full rounded-full"
+                  className="h-full rounded-full transition-all duration-500"
                   style={{ width: '72.5%', backgroundColor: colors.primary }}
                 ></div>
               </div>
             </div>
-            <p className="text-sm font-medium" style={{ color: colors.primary }}>
+            <p className="text-xs sm:text-sm font-medium" style={{ color: colors.primary }}>
               72.5% completed - Keep going! 💪
             </p>
+          </div>
+
+          {/* Expense Categories - Additional mobile-friendly section */}
+          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100">
+            <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-4">Expense Breakdown</h3>
+            <div className="space-y-3">
+              {expenseCategories.map((category, i) => (
+                <div key={i}>
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700 truncate mr-2">{category.name}</span>
+                    <span className="text-xs sm:text-sm font-bold text-gray-800 flex-shrink-0">${category.amount.toFixed(2)}</span>
+                  </div>
+                  <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all duration-500"
+                      style={{ 
+                        width: `${category.percentage}%`, 
+                        backgroundColor: category.color 
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
