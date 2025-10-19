@@ -603,7 +603,7 @@ const AccountHome = ({ user }) => {
             {!isEditing ? (
               <button
                 onClick={() => setIsEditing(true)}
-                className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-white font-medium hover:opacity-90 transition-all w-full sm:w-auto"
+                className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-white font-medium hover:opacity-90 cursor-pointer transition-all w-full sm:w-auto"
                 style={{ backgroundColor: '#5f4a94' }}
               >
                 <Edit2 className="w-4 h-4" />
@@ -648,15 +648,15 @@ const AccountHome = ({ user }) => {
                 </div>
               )}
               <button
-                className="absolute -bottom-2 -right-2 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white shadow-lg"
+                className="absolute -bottom-2 -right-2 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center cursor-pointer text-white shadow-lg"
                 style={{ backgroundColor: '#e0c9a4' }}
               >
-                <Edit2 className="w-4 h-4 text-gray-800" />
+                <Edit2 className="w-4 h-4 text-gray-800 cursor-pointer" />
               </button>
             </div>
 
             <div className="flex-1 text-center sm:text-left">
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1">{formData.name}</h3>
+              <h3 className="text-xl sm:text-2xl font-bold  text-gray-800 mb-1">{formData.name}</h3>
               <p className="text-gray-500 mb-3 text-sm sm:text-base">{formData.email}</p>
               <div className="flex flex-wrap justify-center sm:justify-start gap-2">
                 <span className="px-3 py-1 rounded-full text-xs font-semibold text-white" style={{ backgroundColor: '#5f4a94' }}>
@@ -688,10 +688,10 @@ const AccountHome = ({ user }) => {
                     name={name}
                     value={formData[name]}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-300 text-sm sm:text-base"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none cursor-pointer focus:border-purple-300 text-sm sm:text-base"
                   />
                 ) : (
-                  <div className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800 font-medium text-sm sm:text-base">
+                  <div className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800 cursor-pointer font-medium text-sm sm:text-base">
                     {formData[name]}
                   </div>
                 )}
@@ -710,10 +710,10 @@ const AccountHome = ({ user }) => {
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-300 text-sm sm:text-base"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none cursor-pointer focus:border-purple-300 text-sm sm:text-base"
                 />
               ) : (
-                <div className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800 font-medium text-sm sm:text-base">
+                <div className="px-4 py-3 bg-gray-50 rounded-xl text-gray-800 cursor-pointer font-medium text-sm sm:text-base">
                   {formData.address}
                 </div>
               )}
