@@ -45,6 +45,7 @@ export default function Sidebar() {
     { icon: CreditCard, label: "My Cards", href: "/dashboard/cards" },
     { icon: PieChart, label: "Bills", href: "/dashboard/bills" },
     { icon: Users, label: "History", href: "/dashboard/history" },
+    { icon: Users, label: "Ai", href: "/dashboard/aiChatBot" },
   ];
 
   return (
