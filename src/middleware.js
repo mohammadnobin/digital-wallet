@@ -262,6 +262,7 @@ export const middleware = async (req) => {
     if (pathname.startsWith("/dashboard")) {
       return NextResponse.next();
     }
+    
     // User trying to access admin routes or other protected routes
     return NextResponse.redirect(new URL("/", req.nextUrl.origin));
   }
