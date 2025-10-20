@@ -30,7 +30,7 @@ const RegistationsFrom = () => {
   const form = e.target;
   const formData = new FormData(form);
   const formObj = Object.fromEntries(formData.entries());
-  const { firstName, lastName, email, password } = formObj;
+  const { firstName, lastName, email, password, phone } = formObj;
   const name = `${firstName} ${lastName}`;
 
   setIsLoading(true);
@@ -41,6 +41,7 @@ const RegistationsFrom = () => {
       name,
       email,
       password,
+      phone
     });
     if (res.data.message === "User created successfully") {
 
@@ -53,8 +54,8 @@ const RegistationsFrom = () => {
           const response = await signIn("credentials", {
             email,
             password,
-            redirect: true, // এখানে true থাকলে NextAuth নিজে redirect করবে
-            callbackUrl: redirect ? redirect : "/dashboard", // redirect query থাকলে সেখানে নেবে
+            redirect: true, 
+            callbackUrl: redirect ? redirect : "/dashboard", 
           });
         } catch (error) {
           Swal.fire({

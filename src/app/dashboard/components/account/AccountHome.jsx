@@ -529,6 +529,7 @@ const AccountHome = ({ user }) => {
       setFormData({
         name: user.name || '',
         email: user.email || '',
+        role: user.role || '',
         phone: user.phone || '+880 1234-567890',
         address: user.address || 'Kafrul, Dhaka, Bangladesh',
         dateOfBirth: user.dateOfBirth || '15 January 1995',
@@ -659,7 +660,7 @@ const AccountHome = ({ user }) => {
               <p className="text-gray-500 mb-3 text-sm sm:text-base">{formData.email}</p>
               <div className="flex flex-wrap justify-center sm:justify-start gap-2">
                 <span className="px-3 py-1 rounded-full text-xs font-semibold text-white" style={{ backgroundColor: '#5f4a94' }}>
-                  Pro Member
+                  {formData.role}
                 </span>
                 <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-600">
                   Verified
