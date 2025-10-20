@@ -1,123 +1,151 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, TrendingDown, TrendingUp, Wallet, ShoppingCart, ArrowUpRight, ArrowDownLeft, FileText, Zap, Coffee, DollarSign, Download, FileSpreadsheet } from 'lucide-react';
+import useUser from '@/hooks/useUser';
+import useAxiosSecure from '@/hooks/useAxiosSecure';
 
 export default function TransactionHistory() {
+  const user = useUser();
+  console.log(user?.accessToken);
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
   const [timeFilter, setTimeFilter] = useState('All Time');
+  const axiosSecure = useAxiosSecure();
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  console.log(transactions);
 
-  const transactions = [
-    {
-      id: 1,
-      title: 'Transfer to Sarah Johnson',
-      date: 'Jan 15, 2024, 04:30 PM',
-      status: 'Completed',
-      transactionId: 'TXN001234567',
-      amount: -250.00,
-      type: 'Transfer',
-      icon: ArrowUpRight,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600'
-    },
-    {
-      id: 2,
-      title: 'Online Shopping - Amazon',
-      date: 'Jan 15, 2024, 02:45 PM',
-      status: 'Completed',
-      transactionId: 'PAY001234568',
-      amount: -89.99,
-      type: 'Shopping',
-      icon: ShoppingCart,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600'
-    },
-    {
-      id: 3,
-      title: 'Salary Deposit',
-      date: 'Jan 14, 2024, 03:00 PM',
-      status: 'Completed',
-      transactionId: 'DEP001234569',
-      amount: 2500.00,
-      type: 'Income',
-      icon: ArrowDownLeft,
-      iconBg: 'bg-green-100',
-      iconColor: 'text-green-600'
-    },
-    {
-      id: 4,
-      title: 'Electricity Bill Payment',
-      date: 'Jan 13, 2024, 06:20 PM',
-      status: 'Completed',
-      transactionId: 'BILL001234570',
-      amount: -125.50,
-      type: 'Utilities',
-      icon: Zap,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600'
-    },
-    {
-      id: 5,
-      title: 'Transfer to Michael Chen',
-      date: 'Jan 12, 2024, 10:15 PM',
-      status: 'Completed',
-      transactionId: 'TXN001234571',
-      amount: -75.00,
-      type: 'Transfer',
-      icon: ArrowUpRight,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600'
-    },
-    {
-      id: 6,
-      title: 'Netflix Subscription',
-      date: 'Jan 12, 2024, 06:00 PM',
-      status: 'Completed',
-      transactionId: 'PAY001234572',
-      amount: -45.99,
-      type: 'Entertainment',
-      icon: ShoppingCart,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600'
-    },
-    {
-      id: 7,
-      title: 'Internet Bill Payment',
-      date: 'Jan 8, 2024, 04:00 PM',
-      status: 'Completed',
-      transactionId: 'BILL001234576',
-      amount: -89.99,
-      type: 'Utilities',
-      icon: FileText,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600'
-    },
-    {
-      id: 8,
-      title: 'Coffee Shop - Starbucks',
-      date: 'Jan 8, 2024, 02:30 PM',
-      status: 'Completed',
-      transactionId: 'PAY001234577',
-      amount: -25.50,
-      type: 'Food & Drink',
-      icon: Coffee,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600'
-    },
-    {
-      id: 9,
-      title: 'Freelance Payment',
-      date: 'Jan 7, 2024, 08:00 PM',
-      status: 'Completed',
-      transactionId: 'DEP001234578',
-      amount: 150.00,
-      type: 'Income',
-      icon: ArrowDownLeft,
-      iconBg: 'bg-green-100',
-      iconColor: 'text-green-600'
+useEffect(() => {
+  if (!user?.accessToken) return; // 🛑 টোকেন না থাকলে fetch করবে না
+
+  const fetchTransactions = async () => {
+    try {
+      setLoading(true);
+      const res = await axiosSecure.get("/api/transactions/my");
+      setTransactions(res.data.transactions || []);
+    } catch (error) {
+      console.error("Failed to fetch transactions:", error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  fetchTransactions();
+}, [axiosSecure, user?.accessToken]); // ✅ টোকেন পরিবর্তন হলে আবার চলবে
+
+
+  if (loading) return <p className="text-center py-6">Loading...</p>;
+  // const transactions = [
+  //   {
+  //     id: 1,
+  //     title: 'Transfer to Sarah Johnson',
+  //     date: 'Jan 15, 2024, 04:30 PM',
+  //     status: 'Completed',
+  //     transactionId: 'TXN001234567',
+  //     amount: -250.00,
+  //     type: 'Transfer',
+  //     icon: ArrowUpRight,
+  //     iconBg: 'bg-blue-100',
+  //     iconColor: 'text-blue-600'
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Online Shopping - Amazon',
+  //     date: 'Jan 15, 2024, 02:45 PM',
+  //     status: 'Completed',
+  //     transactionId: 'PAY001234568',
+  //     amount: -89.99,
+  //     type: 'Shopping',
+  //     icon: ShoppingCart,
+  //     iconBg: 'bg-blue-100',
+  //     iconColor: 'text-blue-600'
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Salary Deposit',
+  //     date: 'Jan 14, 2024, 03:00 PM',
+  //     status: 'Completed',
+  //     transactionId: 'DEP001234569',
+  //     amount: 2500.00,
+  //     type: 'Income',
+  //     icon: ArrowDownLeft,
+  //     iconBg: 'bg-green-100',
+  //     iconColor: 'text-green-600'
+  //   },
+  //   {
+  //     id: 4,
+  //     title: 'Electricity Bill Payment',
+  //     date: 'Jan 13, 2024, 06:20 PM',
+  //     status: 'Completed',
+  //     transactionId: 'BILL001234570',
+  //     amount: -125.50,
+  //     type: 'Utilities',
+  //     icon: Zap,
+  //     iconBg: 'bg-blue-100',
+  //     iconColor: 'text-blue-600'
+  //   },
+  //   {
+  //     id: 5,
+  //     title: 'Transfer to Michael Chen',
+  //     date: 'Jan 12, 2024, 10:15 PM',
+  //     status: 'Completed',
+  //     transactionId: 'TXN001234571',
+  //     amount: -75.00,
+  //     type: 'Transfer',
+  //     icon: ArrowUpRight,
+  //     iconBg: 'bg-blue-100',
+  //     iconColor: 'text-blue-600'
+  //   },
+  //   {
+  //     id: 6,
+  //     title: 'Netflix Subscription',
+  //     date: 'Jan 12, 2024, 06:00 PM',
+  //     status: 'Completed',
+  //     transactionId: 'PAY001234572',
+  //     amount: -45.99,
+  //     type: 'Entertainment',
+  //     icon: ShoppingCart,
+  //     iconBg: 'bg-blue-100',
+  //     iconColor: 'text-blue-600'
+  //   },
+  //   {
+  //     id: 7,
+  //     title: 'Internet Bill Payment',
+  //     date: 'Jan 8, 2024, 04:00 PM',
+  //     status: 'Completed',
+  //     transactionId: 'BILL001234576',
+  //     amount: -89.99,
+  //     type: 'Utilities',
+  //     icon: FileText,
+  //     iconBg: 'bg-blue-100',
+  //     iconColor: 'text-blue-600'
+  //   },
+  //   {
+  //     id: 8,
+  //     title: 'Coffee Shop - Starbucks',
+  //     date: 'Jan 8, 2024, 02:30 PM',
+  //     status: 'Completed',
+  //     transactionId: 'PAY001234577',
+  //     amount: -25.50,
+  //     type: 'Food & Drink',
+  //     icon: Coffee,
+  //     iconBg: 'bg-blue-100',
+  //     iconColor: 'text-blue-600'
+  //   },
+  //   {
+  //     id: 9,
+  //     title: 'Freelance Payment',
+  //     date: 'Jan 7, 2024, 08:00 PM',
+  //     status: 'Completed',
+  //     transactionId: 'DEP001234578',
+  //     amount: 150.00,
+  //     type: 'Income',
+  //     icon: ArrowDownLeft,
+  //     iconBg: 'bg-green-100',
+  //     iconColor: 'text-green-600'
+  //   }
+  // ];
 
   const totalIncome = transactions
     .filter(t => t.amount > 0)
@@ -239,14 +267,14 @@ export default function TransactionHistory() {
               const Icon = transaction.icon;
               return (
                 <div 
-                  key={transaction.id} 
+                  key={transaction._id} 
                   className="p-5 hover:bg-gray-50 transition-colors cursor-pointer"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4 flex-1">
-                      <div className={`${transaction.iconBg} w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0`}>
+                      {/* <div className={`${transaction.iconBg} w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0`}>
                         <Icon className={transaction.iconColor} size={24} />
-                      </div>
+                      </div> */}
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-gray-900 mb-1">{transaction.title}</h3>
                         <div className="flex items-center gap-3 text-sm text-gray-500">
