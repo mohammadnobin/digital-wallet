@@ -12,6 +12,8 @@ import {
   Wallet,
   User,
   Settings,
+  FileText,
+  BarChart2,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,7 +23,7 @@ const colors = {
   primaryExtraLight: "#f5f2f9",
 };
 
-export default function Sidebar() {
+export default function Sidebar({ user }) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -39,20 +41,29 @@ export default function Sidebar() {
     return () => document.removeEventListener("keydown", handleEscape);
   }, []);
 
+  // সাধারণ menu items
   const menuItems = [
     { icon: Home, label: "Dashboard", href: "/dashboard" },
     { icon: Receipt, label: "Transfer", href: "/dashboard/transfer" },
     { icon: CreditCard, label: "My Cards", href: "/dashboard/cards" },
     { icon: PieChart, label: "Bills", href: "/dashboard/bills" },
     { icon: Users, label: "History", href: "/dashboard/history" },
-    { icon: Users, label: "Ai", href: "/dashboard/aiChatBot" },
+    { icon: Users, label: "AI", href: "/dashboard/aiChatBot" },
   ];
+
+  // যদি user admin হয়, extra menu items যোগ করা হচ্ছে
+  if (user?.role === "admin") {
+    menuItems.push(
+      { icon: Users, label: "User Management", href: "/dashboard/admin/users" },
+      { icon: BarChart2, label: "Admin Reports", href: "/dashboard/admin/reports" },
+      { icon: FileText, label: "All Transactions", href: "/dashboard/admin/transactions" }
+    );
+  }
 
   return (
     <>
-      {/* ✅ Mobile Top Bar (Menu button + Logo) */}
+      {/* Mobile Top Bar (Menu button + Logo) */}
       <div className="fixed top-0 left-0 w-full flex items-center justify-between bg-white shadow-sm px-4 py-3 z-50 md:hidden">
-        {/* Logo (Left side) */}
         <Link href="/" className="flex items-center gap-2 cursor-pointer">
           <div
             className="w-8 h-8 rounded-xl flex items-center justify-center text-white"
@@ -60,25 +71,17 @@ export default function Sidebar() {
           >
             <Wallet className="w-4 h-4" />
           </div>
-          <span
-            className="text-lg font-bold"
-            style={{ color: colors.primary }}
-          >
+          <span className="text-lg font-bold" style={{ color: colors.primary }}>
             Digital<span className="hidden sm:inline">Wallet</span>
           </span>
         </Link>
 
-        {/* Menu Button (Right side) */}
         <button
           onClick={toggleSidebar}
           aria-label="Toggle Sidebar"
           className="p-2 bg-white border rounded-lg shadow-sm hover:shadow-md transition-all"
         >
-          {isOpen ? (
-            <X className="w-5 h-5 text-gray-700" />
-          ) : (
-            <Menu className="w-5 h-5 text-gray-700" />
-          )}
+          {isOpen ? <X className="w-5 h-5 text-gray-700" /> : <Menu className="w-5 h-5 text-gray-700" />}
         </button>
       </div>
 
@@ -101,10 +104,7 @@ export default function Sidebar() {
             >
               <Wallet className="w-5 h-5" />
             </div>
-            <span
-              className="text-xl font-bold"
-              style={{ color: colors.primary }}
-            >
+            <span className="text-xl font-bold" style={{ color: colors.primary }}>
               DigitalWallet
             </span>
           </Link>
@@ -118,15 +118,11 @@ export default function Sidebar() {
               <Link key={item.label} href={item.href}>
                 <button
                   className={`w-full flex cursor-pointer items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${
-                    isActive
-                      ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm"
-                      : "text-gray-600 hover:bg-gray-50"
+                    isActive ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm" : "text-gray-600 hover:bg-gray-50"
                   }`}
                 >
                   <item.icon
-                    className={`w-5 h-5 flex-shrink-0 ${
-                      isActive ? "text-[#5f4a94]" : "text-gray-500"
-                    }`}
+                    className={`w-5 h-5 flex-shrink-0 ${isActive ? "text-[#5f4a94]" : "text-gray-500"}`}
                   />
                   <span className="truncate">{item.label}</span>
                 </button>
@@ -136,14 +132,11 @@ export default function Sidebar() {
         </nav>
 
         {/* Bottom Buttons (Account & Settings) */}
-        <div className="absolute bottom-12   left-0 w-full px-4">
-          {/* Account */}
+        <div className="absolute bottom-12 left-0 w-full px-4">
           <Link href="/dashboard/account">
             <button
               className={`w-full flex cursor-pointer items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${
-                pathname === "/dashboard/account"
-                  ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm"
-                  : "text-gray-600 hover:bg-gray-50"
+                pathname === "/dashboard/account" ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm" : "text-gray-600 hover:bg-gray-50"
               }`}
             >
               <User className="w-5 h-5" />
@@ -151,13 +144,10 @@ export default function Sidebar() {
             </button>
           </Link>
 
-          {/* Settings */}
-          <Link href="/dashboard/settings" >
+          <Link href="/dashboard/settings">
             <button
               className={`w-full flex mt-2.5 cursor-pointer items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${
-                pathname === "/dashboard/settings"
-                  ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm"
-                  : "text-gray-600 hover:bg-gray-50"
+                pathname === "/dashboard/settings" ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm" : "text-gray-600 hover:bg-gray-50"
               }`}
             >
               <Settings className="w-5 h-5" />
