@@ -54,9 +54,9 @@ export default function Sidebar({ user }) {
   // যদি user admin হয়, extra menu items যোগ করা হচ্ছে
   if (user?.role === "admin") {
     menuItems.push(
-      { icon: Users, label: "User Management", href: "/dashboard/admin/users" },
-      { icon: BarChart2, label: "Admin Reports", href: "/dashboard/admin/reports" },
-      { icon: FileText, label: "All Transactions", href: "/dashboard/admin/transactions" }
+      { icon: Users, label: "User Management", href: "/dashboard/userManagement" },
+      { icon: BarChart2, label: "Admin Reports", href: "/dashboard/userReports" },
+      { icon: FileText, label: "All Transactions", href: "/dashboard/allHistory" }
     );
   }
 
