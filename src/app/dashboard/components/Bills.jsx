@@ -1,314 +1,372 @@
-'use client';
-import React, { useState, useRef, useEffect } from 'react';
-import { Plus, Clock, Zap, Wifi, Droplet, Phone, Flame, Shield, MoreVertical, Edit, Trash2, Bell } from 'lucide-react';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Plus,
+  Clock,
+  Zap,
+  Wifi,
+  Droplet,
+  Phone,
+  Flame,
+  Shield,
+  MoreVertical,
+  Edit,
+  Trash2,
+  Bell,
+  X,
+} from "lucide-react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import useUser from "@/hooks/useUser";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 
 export default function BillsPayment() {
-  const [activeTab, setActiveTab] = useState('upcoming');
+  const user = useUser();
+  const axiossecure = useAxiosSecure();
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [bills, setBills] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [userBalance, setUserBalance] = useState(0);
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    amount: "",
+    dueDate: "",
+    autoPay: false,
+    color: "bg-blue-500",
+    icon: "Zap",
+    userEmail: "",
+  });
+
   const dropdownRef = useRef(null);
 
+  // Close dropdown on outside click
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setOpenDropdown(null);
       }
     }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const [bills, setBills] = useState([
-    {
-      id: 1,
-      name: 'Electricity Bill',
-      company: 'PowerGrid Electric',
-      amount: 89.5,
-      status: 'pending',
-      daysOverdue: 619,
-      dueDate: '1/20/2024',
-      autoPay: true,
-      icon: Zap,
-      color: 'bg-yellow-500'
-    },
-    {
-      id: 2,
-      name: 'Internet Service',
-      company: 'FastNet Broadband',
-      amount: 65,
-      status: 'pending',
-      daysOverdue: 617,
-      dueDate: '1/22/2024',
-      autoPay: false,
-      icon: Wifi,
-      color: 'bg-blue-500'
-    },
-    {
-      id: 3,
-      name: 'Water Bill',
-      company: 'City Water Department',
-      amount: 45.75,
-      status: 'pending',
-      daysOverdue: 614,
-      dueDate: '1/25/2024',
-      autoPay: true,
-      icon: Droplet,
-      color: 'bg-cyan-500'
-    },
-    {
-      id: 4,
-      name: 'Phone Bill',
-      company: 'MobileConnect',
-      amount: 55,
-      status: 'overdue',
-      daysOverdue: 621,
-      dueDate: '1/18/2024',
-      autoPay: false,
-      icon: Phone,
-      color: 'bg-green-500'
-    },
-    {
-      id: 5,
-      name: 'Gas Bill',
-      company: 'Natural Gas Co.',
-      amount: 78.25,
-      status: 'pending',
-      daysOverdue: 611,
-      dueDate: '1/28/2024',
-      autoPay: true,
-      icon: Flame,
-      color: 'bg-orange-500'
-    },
-    {
-      id: 6,
-      name: 'Insurance Premium',
-      company: 'SafeGuard Insurance',
-      amount: 125,
-      status: 'pending',
-      daysOverdue: 609,
-      dueDate: '1/30/2024',
-      autoPay: true,
-      icon: Shield,
-      color: 'bg-purple-500'
+  // Fetch Bills only if user and accessToken exist
+  const fetchBills = async () => {
+    if (!user?.accessToken) return;
+    try {
+      const res = await axiossecure.get("/api/bills", {
+        headers: { Authorization: `Bearer ${user.accessToken}` },
+      });
+      if (res.data.success) {
+        setBills(res.data.bills);
+      }
+    } catch (error) {
+      console.error("Error fetching bills:", error);
     }
-  ]);
-
-  const totalUpcoming = bills.reduce((sum, bill) => sum + bill.amount, 0);
-  const overdueBills = bills.filter(bill => bill.status === 'overdue').length;
-  const autoPayActive = bills.filter(bill => bill.autoPay).length;
-
-  const handleDropdownClick = (billId) => {
-    setOpenDropdown(openDropdown === billId ? null : billId);
   };
 
-  const handleAction = (action, billId) => {
-    setOpenDropdown(null);
+  useEffect(() => {
+    fetchBills();
+  }, [user?.accessToken]);
+
+  // Add Bill only if user and accessToken exist
+  const handleAddBill = async (e) => {
+    e.preventDefault();
+    if (!user?.accessToken) {
+      Swal.fire("Error", "You must be logged in to add a bill", "error");
+      return;
+    }
+
+    try {
+      const billPayload = { ...formData, userEmail: user.email };
+      const res = await axios.post(
+        "http://localhost:5000/api/bills/add",
+        billPayload,
+        {
+          headers: { Authorization: `Bearer ${user.accessToken}` },
+        }
+      );
+      if (res.data.success) {
+        Swal.fire("Success", "Bill added successfully", "success");
+        setShowModal(false);
+        setFormData({
+          name: "",
+          company: "",
+          amount: "",
+          dueDate: "",
+          autoPay: false,
+          color: "bg-blue-500",
+          icon: "Zap",
+          userEmail: "",
+        });
+        fetchBills();
+      }
+    } catch (error) {
+      console.error("Error adding bill:", error);
+      Swal.fire(
+        "Error",
+        error.response?.data?.message || "Failed to add bill",
+        "error"
+      );
+    }
   };
 
-  const toggleAutoPay = (billId) => {
-    setBills(bills.map(bill => 
-      bill.id === billId ? { ...bill, autoPay: !bill.autoPay } : bill
-    ));
+  // Toggle AutoPay
+  const toggleAutoPay = async (billId, current) => {
+    try {
+      const res = await axiossecure.patch(
+        `/api/bills/${billId}`,
+        { autoPay: !current },
+        { headers: { Authorization: `Bearer ${user?.accessToken}` } }
+      );
+      setBills((prev) =>
+        prev.map((b) => (b._id === billId ? res.data.bill : b))
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // Delete Bill
+  const deleteBill = async (billId) => {
+    if (!confirm("Are you sure you want to delete this bill?")) return;
+    try {
+      await axiossecure.delete(`/api/bills/${billId}`, {
+        headers: { Authorization: `Bearer ${user?.accessToken}` },
+      });
+      setBills(bills.filter((b) => b._id !== billId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Pay Bill
+  const handlePay = async (bill) => {
+    try {
+      const res = await axiossecure.patch(`/api/bills/pay/${bill}`, {}, {
+        headers: { Authorization: `Bearer ${user?.accessToken}` },
+      });
+
+      if (res.data.success) {
+        Swal.fire("Payment Successful", res.data.message, "success");
+        setBills((prev) =>
+          prev.map((b) => (b._id === bill._id ? res.data.bill : b))
+        );
+        setUserBalance(res.data.userBalance);
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      Swal.fire(
+        "Payment Failed",
+        error.response?.data?.message || "An error occurred during payment.",
+        "error"
+      );
+    }
+  };
+
+  const totalUpcoming = bills.reduce((sum, bill) => sum + Number(bill.amount), 0);
+  const overdueBills = bills.filter((bill) => bill.status === "overdue").length;
+  const autoPayActive = bills.filter((bill) => bill.autoPay).length;
+
+
 
   return (
-    <div className="min-h-screen bg-gray-50 rounded-2xl p-4 md:p-8 hover:shadow-2xl transition-all duration-500">
+    <div className="min-h-screen bg-gray-50 rounded-2xl p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
-        {/* Stats Cards */}
+        {/* === Stats Section === */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-xl p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex justify-between mb-2">
               <span className="text-sm text-gray-600">Total Upcoming</span>
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Clock className="w-5 h-5 text-blue-600" />
-              </div>
+              <Clock className="w-5 h-5 text-blue-600" />
             </div>
-            <div className="text-2xl font-bold text-gray-900">${totalUpcoming.toFixed(2)}</div>
+            <div className="text-2xl font-bold">
+              ${totalUpcoming.toFixed(2)}
+            </div>
           </div>
 
           <div className="bg-white rounded-xl p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex justify-between mb-2">
               <span className="text-sm text-gray-600">Overdue Bills</span>
-              <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                <Bell className="w-5 h-5 text-red-600" />
-              </div>
+              <Bell className="w-5 h-5 text-red-600" />
             </div>
-            <div className="text-2xl font-bold text-gray-900">{overdueBills}</div>
+            <div className="text-2xl font-bold">{overdueBills}</div>
           </div>
 
           <div className="bg-white rounded-xl p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex justify-between mb-2">
               <span className="text-sm text-gray-600">AutoPay Active</span>
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <Zap className="w-5 h-5 text-green-600" />
-              </div>
+              <Zap className="w-5 h-5 text-green-600" />
             </div>
-            <div className="text-2xl font-bold text-gray-900">{autoPayActive}</div>
-          </div>
-
-          <div className="bg-white rounded-xl p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">This Month</span>
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" />
-                </svg>
-              </div>
-            </div>
-            <div className="text-2xl font-bold text-gray-900">${totalUpcoming.toFixed(2)}</div>
+            <div className="text-2xl font-bold">{autoPayActive}</div>
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="bg-white rounded-xl shadow-sm mb-6 p-1 flex gap-2">
-          <button
-            onClick={() => setActiveTab('upcoming')}
-            className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
-              activeTab === 'upcoming'
-                ? 'bg-blue-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
-            }`}
-          >
-            <span className="flex items-center justify-center gap-2">
-              <Clock size={18} />
-              Upcoming Bills
-            </span>
-          </button>
-          <button
-            onClick={() => setActiveTab('history')}
-            className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
-              activeTab === 'history'
-                ? 'bg-blue-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
-            }`}
-          >
-            <span className="flex items-center justify-center gap-2">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-              </svg>
-              Payment History
-            </span>
-          </button>
-        </div>
-
-        {/* Header */}
+        {/* === Header === */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Upcoming Bills</h2>
-          <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-colors shadow-lg shadow-indigo-200">
+          <h2 className="text-2xl font-bold">Upcoming Bills</h2>
+          <button
+            onClick={() => setShowModal(true)}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg flex items-center gap-2"
+          >
             <Plus size={18} />
             Add Bill
           </button>
         </div>
 
-        {/* Bills Grid */}
+        {/* === Bills Grid === */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {bills.map((bill) => {
-            const Icon = bill.icon;
+            const Icon =
+              { Zap, Wifi, Droplet, Phone, Flame, Shield }[bill.icon] || Zap;
             return (
-              <div key={bill.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                <div className="p-5">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`${bill.color} w-12 h-12 rounded-xl flex items-center justify-center`}>
-                        <Icon className="text-white" size={24} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">{bill.name}</h3>
-                        <p className="text-sm text-gray-500">{bill.company}</p>
-                      </div>
+              <div key={bill._id} className="bg-white rounded-xl shadow p-5">
+                <div className="flex justify-between mb-4">
+                  <div className="flex gap-3">
+                    <div
+                      className={`${bill.color} w-12 h-12 rounded-xl flex items-center justify-center`}
+                    >
+                      <Icon className="text-white" size={24} />
                     </div>
-                    <div className="text-right">
-                      <div className="text-xl font-bold text-gray-900">${bill.amount}</div>
-                      <span className={`text-xs px-2 py-1 rounded-full ${
-                        bill.status === 'pending' 
-                          ? 'bg-yellow-100 text-yellow-700' 
-                          : 'bg-red-100 text-red-700'
-                      }`}>
-                        {bill.status}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Info */}
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                     <div>
-                      <span className="block">{bill.daysOverdue} days overdue</span>
-                      <span className="block">Due: {bill.dueDate}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs">AutoPay</span>
-                      <button
-                        onClick={() => toggleAutoPay(bill.id)}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                          bill.autoPay ? 'bg-green-500' : 'bg-gray-300'
-                        }`}
-                      >
-                        <span
-                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                            bill.autoPay ? 'translate-x-6' : 'translate-x-1'
-                          }`}
-                        />
-                      </button>
+                      <h3 className="font-semibold">{bill.name}</h3>
+                      <p className="text-sm text-gray-500">{bill.company}</p>
                     </div>
                   </div>
+                  <div className="text-right">
+                    <div className="text-xl font-bold">${bill.amount}</div>
+                    <span
+                      className={`text-xs px-2 py-1 rounded-full ${
+                        bill.status === "pending"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : "bg-red-100 text-red-700"
+                      }`}
+                    >
+                      {bill.status}
+                    </span>
+                  </div>
+                </div>
 
-                  {/* Actions */}
-                  <div className="flex gap-2">
-                    <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium transition-colors">
-                      Pay Now
+                {/* AutoPay */}
+                <div className="flex justify-between text-sm text-gray-500 mb-4">
+                  <div>Due: {bill.dueDate}</div>
+                  <div className="flex items-center gap-2">
+                    <span>AutoPay</span>
+                    <button
+                      onClick={() => toggleAutoPay(bill._id, bill.autoPay)}
+                      className={`relative cursor-pointer inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        bill.autoPay ? "bg-green-500" : "bg-gray-300"
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          bill.autoPay ? "translate-x-6" : "translate-x-1"
+                        }`}
+                      />
                     </button>
-                    <div className="relative" ref={openDropdown === bill.id ? dropdownRef : null}>
-                      <button
-                        onClick={() => handleDropdownClick(bill.id)}
-                        className="p-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                      >
-                        <MoreVertical size={18} className="text-gray-600" />
-                      </button>
-                      
-                      {openDropdown === bill.id && (
-                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-50 border border-gray-100">
-                          <button
-                            onClick={() => handleAction('Edit Bill', bill.id)}
-                            className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
-                          >
-                            <Edit size={16} />
-                            <span className="text-sm">Edit Bill</span>
-                          </button>
-                          <button
-                            onClick={() => handleAction('View Details', bill.id)}
-                            className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                            <span className="text-sm">View Details</span>
-                          </button>
-                          <button
-                            onClick={() => handleAction('Set Reminder', bill.id)}
-                            className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
-                          >
-                            <Bell size={16} />
-                            <span className="text-sm">Set Reminder</span>
-                          </button>
-                          <div className="border-t border-gray-100 my-1"></div>
-                          <button
-                            onClick={() => handleAction('Delete Bill', bill.id)}
-                            className="w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors"
-                          >
-                            <Trash2 size={16} />
-                            <span className="text-sm">Delete Bill</span>
-                          </button>
-                        </div>
-                      )}
-                    </div>
                   </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handlePay(bill._id)}
+                    disabled={bill.status === "paid"} // ✅ যদি paid হয়, disabled হবে
+                    className={`flex-1 cursor-pointer py-2.5 rounded-lg font-medium transition-colors ${
+                      bill.status === "paid"
+                        ? "bg-gray-400 text-white" // Paid হলে gray
+                        : "bg-blue-600 hover:bg-blue-700 text-white" // Otherwise blue
+                    }`}
+                  >
+                    {bill.status === "paid" ? "Paid" : "Pay Now"}{" "}
+                    {/* Paid হলে text দেখাবে */}
+                  </button>
+
+                  <button
+                    onClick={() => deleteBill(bill._id)}
+                    className="p-2.5 cursor-pointer border border-gray-200 rounded-lg hover:bg-red-50 text-red-600 transition-colors"
+                  >
+                    <Trash2 size={18} />
+                  </button>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
+
+      {/* === Modal === */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Add New Bill</h3>
+              <button onClick={() => setShowModal(false)}>
+                <X />
+              </button>
+            </div>
+            <form onSubmit={handleAddBill} className="space-y-3">
+              <input
+                type="text"
+                placeholder="Bill Name"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                className="w-full border rounded-lg px-3 py-2"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Company"
+                value={formData.company}
+                onChange={(e) =>
+                  setFormData({ ...formData, company: e.target.value })
+                }
+                className="w-full border rounded-lg px-3 py-2"
+                required
+              />
+              <input
+                type="number"
+                placeholder="Amount"
+                value={formData.amount}
+                onChange={(e) =>
+                  setFormData({ ...formData, amount: e.target.value })
+                }
+                className="w-full border rounded-lg px-3 py-2"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Due Date (e.g., 2025-10-30)"
+                value={formData.dueDate}
+                onChange={(e) =>
+                  setFormData({ ...formData, dueDate: e.target.value })
+                }
+                className="w-full border rounded-lg px-3 py-2"
+                required
+              />
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={formData.autoPay}
+                  onChange={(e) =>
+                    setFormData({ ...formData, autoPay: e.target.checked })
+                  }
+                />
+                <label>Enable AutoPay</label>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg"
+              >
+                Add Bill
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
