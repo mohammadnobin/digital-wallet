@@ -24,7 +24,7 @@ const colors = {
   info: '#3b82f6',
   dark: '#1f2937',
   indigo: '#cd8b62',
-  added:'#a3573a',
+  added: '#a3573a',
   cashout: "#014D4E"
 };
 
@@ -35,6 +35,9 @@ export default function DigitalWalletDashboard({ user }) {
   const [selectedPeriod, setSelectedPeriod] = useState('Week');
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState([]);
+  const [transactions, setTransactions] = useState([]);
+  console.log(transactions)
+
 
 
   // ✅ API Data State
@@ -45,7 +48,7 @@ export default function DigitalWalletDashboard({ user }) {
     totalSaved: 0
   });
 
-  
+
 
   // Quick dummy data
   const weeklySpending = [
@@ -69,21 +72,40 @@ export default function DigitalWalletDashboard({ user }) {
   ];
 
   const quickActions = [
-    { name: 'Add Money', icon: CreditCard, bgColor: colors.primary, href: "/dashboard/addMoney"},
-    { name: 'Send money', icon: Send, bgColor: colors.success, href:"/dashboard/send-money"},
-    { name: 'Cashout', icon: ArrowUpRight, bgColor: colors.cashout, href:"/dashboard/cashout"},
-    { name: 'Request', icon: Download, bgColor: colors.info, href:"/dashboard/requestMoney"},
+    { name: 'Add Money', icon: CreditCard, bgColor: colors.primary, href: "/dashboard/addMoney" },
+    { name: 'Send money', icon: Send, bgColor: colors.success, href: "/dashboard/send-money" },
+    { name: 'Cashout', icon: ArrowUpRight, bgColor: colors.cashout, href: "/dashboard/cashout" },
+    { name: 'Request', icon: Download, bgColor: colors.info, href: "/dashboard/requestMoney" },
     { name: "Remittance", icon: Users, bgColor: colors.indigo, href: "/dashboard/remittance" },
-    { name: 'Scan QR', icon: Scan, bgColor: colors.secondary, href:"/dashboard/scanQR" },
-    { name: "Add Card",icon: CreditCard,  bgColor: colors.added, href: "/dashboard/cards" },
-    { name: 'Split Bill', icon: Split, bgColor: colors.danger, href:"/dashboard/splitBill" },
+    { name: 'Scan QR', icon: Scan, bgColor: colors.secondary, href: "/dashboard/scanQR" },
+    { name: "Add Card", icon: CreditCard, bgColor: colors.added, href: "/dashboard/cards" },
+    { name: 'Split Bill', icon: Split, bgColor: colors.danger, href: "/dashboard/splitBill" },
   ];
 
-  const recentTransactions = [
-    { id: 1, name: 'Grocery Store', category: 'Food & Dining', date: '03 Aug 2022', time: '15:43', amount: -85.5, icon: '🛒' },
-    { id: 2, name: 'Salary Deposit', category: 'Income', date: '01 Aug 2022', time: '12:58', amount: 4250.0, icon: '💰' },
-    { id: 3, name: 'Electric Bill', category: 'Utilities', date: '28 Jul 2022', time: '21:40', amount: -120.0, icon: '⚡' },
-  ];
+  // const recentTransactions = [
+  //   { id: 1, name: 'Grocery Store', category: 'Food & Dining', date: '03 Aug 2022', time: '15:43', amount: -85.5, icon: '🛒' },
+  //   { id: 2, name: 'Salary Deposit', category: 'Income', date: '01 Aug 2022', time: '12:58', amount: 4250.0, icon: '💰' },
+  //   { id: 3, name: 'Electric Bill', category: 'Utilities', date: '28 Jul 2022', time: '21:40', amount: -120.0, icon: '⚡' },
+  // ];
+
+  // fetch history
+  useEffect(() => {
+    if (!users?.accessToken) return;
+
+    const fetchTransactions = async () => {
+      try {
+        setLoading(true);
+        const res = await axiosSecure.get("/api/transactions/my");
+        setTransactions(res.data.transactions.slice(0, 4) || []);
+      } catch (error) {
+        console.error("Failed to fetch transactions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTransactions();
+  }, [axiosSecure, users?.accessToken]);
 
   // fetch cards
   const fetchCards = async () => {
@@ -106,7 +128,7 @@ export default function DigitalWalletDashboard({ user }) {
 
   // ✅ Fetch Transaction Summary
   useEffect(() => {
-    if (!users?.accessToken) return; 
+    if (!users?.accessToken) return;
     const fetchSummary = async () => {
       setLoading(true);
       try {
@@ -138,7 +160,7 @@ export default function DigitalWalletDashboard({ user }) {
       {/* Quick Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
         {[
-          { label: 'Total Balance', value: `$${summary.totalBalance.toFixed(2)}`, trend: 'up', icon: '💰' },
+          { label: 'Total Balance', value: `$${user.balance.toFixed(2)}`, trend: 'up', icon: '💰' },
           { label: 'Income', value: `$${summary.totalIncome.toFixed(2)}`, trend: 'up', icon: '📈' },
           { label: 'Expenses', value: `$${summary.totalExpenses.toFixed(2)}`, trend: 'down', icon: '📉' },
           { label: 'Saved', value: `$${summary.totalSaved.toFixed(2)}`, trend: 'up', icon: '💎' },
@@ -150,9 +172,8 @@ export default function DigitalWalletDashboard({ user }) {
             <div className="flex items-start justify-between mb-2 sm:mb-3">
               <span className="text-xl sm:text-2xl md:text-3xl">{stat.icon}</span>
               <span
-                className={`text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full ${
-                  stat.trend === 'up' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'
-                }`}
+                className={`text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full ${stat.trend === 'up' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'
+                  }`}
               >
                 {loading ? '...' : stat.trend === 'up' ? '+0%' : '-0%'}
               </span>
@@ -174,83 +195,83 @@ export default function DigitalWalletDashboard({ user }) {
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-800">My Cards</h2>
               <Link href="/dashboard/cards">
-               <button className="text-xs sm:text-sm cursor-pointer font-medium flex items-center gap-1 text-primary hover:gap-2 transition-all">
-                View all <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
-              </button>
+                <button className="text-xs sm:text-sm cursor-pointer font-medium flex items-center gap-1 text-primary hover:gap-2 transition-all">
+                  View all <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                </button>
               </Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {cards.map((card) => {
-            const gradient =
-              card.cardType === "Visa"
-                ? "from-blue-600 to-blue-700"
-                : card.cardType === "MasterCard"
-                  ? "from-red-600 to-yellow-600"
-                  : card.cardType === "Amex"
-                    ? "from-green-600 to-green-700"
-                    : "from-purple-600 to-purple-700";
+                const gradient =
+                  card.cardType === "Visa"
+                    ? "from-blue-600 to-blue-700"
+                    : card.cardType === "MasterCard"
+                      ? "from-red-600 to-yellow-600"
+                      : card.cardType === "Amex"
+                        ? "from-green-600 to-green-700"
+                        : "from-purple-600 to-purple-700";
 
-            return (
-              <div key={card._id} className="group">
-                <div
-                  className={`bg-gradient-to-br ${gradient} rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden`}
-                >
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute -right-8 -top-8 w-40 h-40 bg-white rounded-full"></div>
-                    <div className="absolute -left-8 -bottom-8 w-32 h-32 bg-white rounded-full"></div>
-                  </div>
-
-                  <div className="relative z-10">
-                    <div className="flex justify-between items-start mb-8">
-                      <div className="flex items-center gap-2">
-                        <div className="w-10 h-8 bg-yellow-400 rounded flex items-center justify-center text-xs font-bold text-gray-900">
-                          CHIP
-                        </div>
-                        <span className="text-sm font-medium">
-                          {card.cardType}
-                        </span>
+                return (
+                  <div key={card._id} className="group">
+                    <div
+                      className={`bg-gradient-to-br ${gradient} rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden`}
+                    >
+                      <div className="absolute inset-0 opacity-10">
+                        <div className="absolute -right-8 -top-8 w-40 h-40 bg-white rounded-full"></div>
+                        <div className="absolute -left-8 -bottom-8 w-32 h-32 bg-white rounded-full"></div>
                       </div>
 
-                      
+                      <div className="relative z-10">
+                        <div className="flex justify-between items-start mb-8">
+                          <div className="flex items-center gap-2">
+                            <div className="w-10 h-8 bg-yellow-400 rounded flex items-center justify-center text-xs font-bold text-gray-900">
+                              CHIP
+                            </div>
+                            <span className="text-sm font-medium">
+                              {card.cardType}
+                            </span>
+                          </div>
+
+
+                        </div>
+
+                        <div className="mb-6 text-2xl font-semibold tracking-wider">
+                          •••• •••• •••• {card.meta?.last4 || "0000"}
+                        </div>
+
+                        <div className="flex justify-between items-end">
+                          <div>
+                            <div className="text-xs text-white/70 mb-1">
+                              CARD NAME
+                            </div>
+                            <div className="font-medium">{card.cardName}</div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-xs text-white/70 mb-1">
+                              EXPIRES
+                            </div>
+                            <div className="font-medium">{card.expiryDate}</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="mb-6 text-2xl font-semibold tracking-wider">
-                      •••• •••• •••• {card.meta?.last4 || "0000"}
-                    </div>
-
-                    <div className="flex justify-between items-end">
+                    <div className="bg-white rounded-xl mt-4 p-4 shadow-md flex justify-between items-center">
                       <div>
-                        <div className="text-xs text-white/70 mb-1">
-                          CARD NAME
+                        <div className="text-xs text-gray-500 mb-1">
+                          Available Balance
                         </div>
-                        <div className="font-medium">{card.cardName}</div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-xs text-white/70 mb-1">
-                          EXPIRES
+                        <div className="text-xl font-bold text-gray-900">
+                          $
+                          {Number(card.balance || 0).toLocaleString("en-US", {
+                            minimumFractionDigits: 2,
+                          })}
                         </div>
-                        <div className="font-medium">{card.expiryDate}</div>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="bg-white rounded-xl mt-4 p-4 shadow-md flex justify-between items-center">
-                  <div>
-                    <div className="text-xs text-gray-500 mb-1">
-                      Available Balance
-                    </div>
-                    <div className="text-xl font-bold text-gray-900">
-                      $
-                      {Number(card.balance || 0).toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
             </div>
           </div>
 
@@ -281,24 +302,25 @@ export default function DigitalWalletDashboard({ user }) {
           <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-800">Recent Transactions</h2>
-              <button className="text-xs sm:text-sm font-medium flex items-center gap-1 text-primary hover:gap-2 transition-all">
-                View all <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
-              </button>
+              <Link href="/dashboard/history">
+                <button className="text-xs sm:text-sm font-medium flex items-center gap-1 text-primary hover:gap-2 transition-all">
+                  View all <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                </button>
+              </Link>
             </div>
             <div className="space-y-2">
-              {recentTransactions.map((tx) => (
+              {transactions.map((tx, i) => (
                 <div
-                  key={tx.id}
+                  key={i}
                   className="flex items-center justify-between p-2 sm:p-3 hover:bg-gray-50 rounded-lg sm:rounded-xl transition-all gap-2"
                 >
                   <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gray-50 rounded-lg sm:rounded-xl flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
-                      {tx.icon}
-                    </div>
                     <div className="min-w-0 flex-1">
-                      <div className="font-semibold text-gray-800 text-xs sm:text-sm md:text-base truncate">{tx.name}</div>
+                      <div className="font-semibold text-gray-800 text-xs sm:text-sm md:text-base truncate">{tx.type
+                      }</div>
                       <div className="text-[10px] sm:text-xs text-gray-500">
-                        <span className="hidden sm:inline">{tx.date} • </span>{tx.time}
+                        <span className="hidden sm:inline">{tx.createdAt
+                        } </span>
                       </div>
                     </div>
                   </div>
@@ -394,9 +416,9 @@ export default function DigitalWalletDashboard({ user }) {
                   <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-500"
-                      style={{ 
-                        width: `${category.percentage}%`, 
-                        backgroundColor: category.color 
+                      style={{
+                        width: `${category.percentage}%`,
+                        backgroundColor: category.color
                       }}
                     ></div>
                   </div>
