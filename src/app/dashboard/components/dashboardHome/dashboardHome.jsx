@@ -73,7 +73,7 @@ export default function DigitalWalletDashboard({ user }) {
 
   const quickActions = [
     { name: 'Add Money', icon: CreditCard, bgColor: colors.primary, href: "/dashboard/addMoney" },
-    { name: 'Send money', icon: Send, bgColor: colors.success, href: "/dashboard/send-money" },
+    { name: 'Send money', icon: Send, bgColor: colors.success, href: "/dashboard/transfer" },
     { name: 'Cashout', icon: ArrowUpRight, bgColor: colors.cashout, href: "/dashboard/cashout" },
     { name: 'Request', icon: Download, bgColor: colors.info, href: "/dashboard/requestMoney" },
     { name: "Remittance", icon: Users, bgColor: colors.indigo, href: "/dashboard/remittance" },
@@ -82,11 +82,6 @@ export default function DigitalWalletDashboard({ user }) {
     { name: 'Split Bill', icon: Split, bgColor: colors.danger, href: "/dashboard/splitBill" },
   ];
 
-  // const recentTransactions = [
-  //   { id: 1, name: 'Grocery Store', category: 'Food & Dining', date: '03 Aug 2022', time: '15:43', amount: -85.5, icon: '🛒' },
-  //   { id: 2, name: 'Salary Deposit', category: 'Income', date: '01 Aug 2022', time: '12:58', amount: 4250.0, icon: '💰' },
-  //   { id: 3, name: 'Electric Bill', category: 'Utilities', date: '28 Jul 2022', time: '21:40', amount: -120.0, icon: '⚡' },
-  // ];
 
   // fetch history
   useEffect(() => {
