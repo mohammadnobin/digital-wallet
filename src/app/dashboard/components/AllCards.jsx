@@ -43,7 +43,7 @@ export default function CardsManagement() {
       setCards(res.data || []);
     } catch (err) {
       console.error(err?.response?.data || err.message);
-      Swal.fire("Error", "কার্ড লোড করতে সমস্যা হয়েছে", "error");
+      Swal.fire("Error", "There was a problem loading the card", "error");
     } finally {
       setLoading(false);
     }
