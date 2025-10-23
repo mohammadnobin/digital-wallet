@@ -30,7 +30,7 @@ const RegistationsFrom = () => {
   const form = e.target;
   const formData = new FormData(form);
   const formObj = Object.fromEntries(formData.entries());
-  const { firstName, lastName, email, password } = formObj;
+  const { firstName, lastName, email, password, phone } = formObj;
   const name = `${firstName} ${lastName}`;
 
   setIsLoading(true);
@@ -41,6 +41,7 @@ const RegistationsFrom = () => {
       name,
       email,
       password,
+      phone
     });
     if (res.data.message === "User created successfully") {
 
@@ -53,10 +54,9 @@ const RegistationsFrom = () => {
           const response = await signIn("credentials", {
             email,
             password,
-            redirect: true, // এখানে true থাকলে NextAuth নিজে redirect করবে
-            callbackUrl: redirect ? redirect : "/dashboard", // redirect query থাকলে সেখানে নেবে
+            redirect: true, 
+            callbackUrl: redirect ? redirect : "/dashboard", 
           });
-          console.log(response);
         } catch (error) {
           Swal.fire({
             icon: "error",
@@ -99,7 +99,7 @@ const RegistationsFrom = () => {
               <input
                 type="text"
                 name="firstName"
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 transition"
+                className="w-full pl-12 pr-4 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
                 placeholder="First name"
                 required
               />
@@ -112,7 +112,7 @@ const RegistationsFrom = () => {
             <input
               type="text"
               name="lastName"
-              className="w-full pl-4 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 transition"
+              className="w-full pl-4 pr-4 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
               placeholder="Last name"
               required
             />
@@ -131,7 +131,7 @@ const RegistationsFrom = () => {
             <input
               type="email"
               name="email"
-              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 transition"
+              className="w-full pl-12 pr-4 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
               placeholder="Email address"
               required
             />
@@ -150,7 +150,7 @@ const RegistationsFrom = () => {
             <input
               type="tel"
               name="phone"
-              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 transition"
+              className="w-full pl-12 pr-4 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
               placeholder="Phone number"
               required
             />
@@ -169,7 +169,7 @@ const RegistationsFrom = () => {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 transition"
+              className="w-full pl-12 pr-12 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
               placeholder="Password"
               required
             />
@@ -199,7 +199,7 @@ const RegistationsFrom = () => {
             <input
               type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
-              className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 transition"
+              className="w-full pl-12 pr-12 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
               placeholder="Confirm Password"
               required
             />
@@ -222,12 +222,12 @@ const RegistationsFrom = () => {
           <input
             type="checkbox"
             name="agreeTerms"
-            className="h-4 w-4 text-purple-600 border-gray-300 rounded mt-1"
+            className="h-4 w-4 text-primary border-primary rounded mt-1"
             required
           />
           <label className="text-sm text-gray-700">
             I agree to the{" "}
-            <a href="#" className="text-purple-600">
+            <a href="#" className="text-primary">
               Terms & Privacy
             </a>
           </label>
@@ -237,7 +237,7 @@ const RegistationsFrom = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-3 cursor-pointer px-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-indigo-700 transition disabled:opacity-50"
+          className="w-full py-3 cursor-pointer px-4 bg-primary text-white rounded-xl font-semibold hover:from-primary hover:to-primary  disabled:opacity-50"
         >
           {isLoading ? "Creating..." : "Create Account"}{" "}
           <ArrowRight className="inline ml-2 h-4 w-4" />
@@ -245,7 +245,7 @@ const RegistationsFrom = () => {
 
         <div className="text-center text-sm text-gray-500">
           Already have an account?{" "}
-          <Link href="/login" className="text-purple-600 font-medium">
+          <Link href="/login" className="text-primary font-medium">
             Sign In
           </Link>
         </div>

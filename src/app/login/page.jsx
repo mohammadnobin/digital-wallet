@@ -1,4 +1,4 @@
-import { Wallet, Shield } from "lucide-react";
+import { Wallet, Shield, CreditCard } from "lucide-react";
 import Link from "next/link";
 import LoginFrom from "./components/LoginFrom";
 
@@ -10,8 +10,8 @@ const page = () => {
         <div className="text-center">
           <div className="flex justify-center mb-6">
             <Link href="/">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-2xl shadow-lg">
-                <Wallet className="h-10 w-10 text-white" />
+              <div className="bg-primary p-4 rounded-2xl shadow-lg">
+                <CreditCard className="h-10 w-10 text-white" />
               </div>
             </Link>
           </div>

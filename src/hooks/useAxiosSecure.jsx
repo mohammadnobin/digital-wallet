@@ -1,73 +1,49 @@
-// import axios from "axios";
-// import { useRouter } from "next/navigation";
-
-// const axiosSecure = axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-//   withCredentials: true, // কুকি সবসময় পাঠানোর জন্য
-// });
-
-// const useAxiosSecure = () => {
-//   const router = useRouter();
-
-//     const requestInterceptor = axiosSecure.interceptors.request.use(
-//       (config) => {
-//         config.withCredentials = true;
-//         return config;
-//       },
-//       (error) => Promise.reject(error)
-//     );
-
-//     const responseInterceptor = axiosSecure.interceptors.response.use(
-//       (res) => res,
-//       (error) => {
-//         const status = error.response?.status;
-//         if (status === 403) {
-//           router.push("/not-found");
-//         } else{
-//             router.push("/login");
-//         }
-//         return Promise.reject(error);
-//       }
-//     );
-
-//     return () => {
-//       axiosSecure.interceptors.request.eject(requestInterceptor);
-//       axiosSecure.interceptors.response.eject(responseInterceptor);
-//     };
-
-
-//   return axiosSecure;
-// };
-
-// export default useAxiosSecure;
-
-
-
-// lib/axiosSecure.js
+'use client';
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import useUser from "./useUser";
+import { useEffect } from "react";
 
 const axiosSecure = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  withCredentials: true, 
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
-axiosSecure.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const status = error.response?.status;
+const useAxiosSecure = () => {
+  const user = useUser();
+  const router = useRouter();
+  const requestInterceptor = axiosSecure.interceptors.request.use(
+    (config) => {
+      config.withCredentials = true;
+      const token = user?.accessToken;
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
 
-    if (status === 403) {
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+  const responseInterceptor = axiosSecure.interceptors.response.use(
+    (res) => res,
+    (error) => {
+      const status = error.response?.status;
 
-    } else if (status === 401) {
+      if (status === 403) {
+        router.push("/not-found");
+      } else if (status === 401) {
+        router.push("/login");
+      }
 
-    } else {
+      return Promise.reject(error);
     }
+  );
+  useEffect(() => {
+    return () => {
+      axiosSecure.interceptors.request.eject(requestInterceptor);
+      axiosSecure.interceptors.response.eject(responseInterceptor);
+    };
+  }, []);
+  return axiosSecure;
+};
 
-    return Promise.reject(error);
-  }
-);
-
-export default axiosSecure;
+export default useAxiosSecure;

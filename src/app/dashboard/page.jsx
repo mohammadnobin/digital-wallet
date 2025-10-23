@@ -1,5 +1,5 @@
 import React from 'react';
-import DigitalWalletDashboard from './components/dashboardHome';
+import DigitalWalletDashboard from './components/dashboardHome/dashboardHome';
 
 import { authOptions } from '@/lib/authOptions';
 import { getServerSession } from 'next-auth/next';
