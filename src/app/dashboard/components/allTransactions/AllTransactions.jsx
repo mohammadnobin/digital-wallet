@@ -143,26 +143,97 @@ if (searchTerm) {
           ) : filteredTransactions.length === 0 ? (
             <div className="p-12 text-center text-gray-500">No transactions found</div>
           ) : (
-            <div className="divide-y divide-gray-200">
-              {filteredTransactions.map((transaction) => (
-                <div key={transaction._id} className="p-6 hover:bg-gray-50 transition-colors cursor-pointer flex justify-between">
-                  <div className="flex items-center space-x-4">
-                    {getTypeIcon(transaction.type)}
-                    <div>
-                      <h3 className="text-lg font-semibold">{getTypeLabel(transaction.type)}</h3>
-                      <p className="text-gray-600">{transaction.message}</p>
-                      <span className="text-sm text-gray-500">{formatDate(transaction.createdAt)}</span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className={`text-xl font-bold ${transaction.type.includes('received') ? 'text-green-600' : 'text-red-600'}`}>
-                      {transaction.type.includes('received') ? '+' : '-'}{transaction.amount} {transaction.currency}
-                    </div>
-                    {getStatusIcon(transaction.status)}
-                  </div>
-                </div>
-              ))}
-            </div>
+            // <div className="divide-y divide-gray-200">
+            //   {filteredTransactions.map((transaction) => (
+            //     <div key={transaction._id} className="p-6 hover:bg-gray-50 transition-colors cursor-pointer flex justify-between">
+            //       <div className="flex items-center space-x-4">
+            //         {getTypeIcon(transaction.type)}
+            //         <div>
+            //           <h3 className="text-lg font-semibold">{getTypeLabel(transaction.type)}</h3>
+            //           <p className="text-gray-600">{transaction.message}</p>
+            //           <span className="text-sm text-gray-500">{formatDate(transaction.createdAt)}</span>
+            //         </div>
+            //       </div>
+            //       <div className="text-right">
+            //         <div className={`text-xl font-bold ${transaction.type.includes('received') ? 'text-green-600' : 'text-red-600'}`}>
+            //           {transaction.type.includes('received') ? '+' : '-'}{transaction.amount} {transaction.currency}
+            //         </div>
+            //         {getStatusIcon(transaction.status)}
+            //       </div>
+            //     </div>
+            //   ))}
+            // </div>
+
+            <div className="divide-y divide-gray-100">
+  {transactions.map((transaction) => (
+    <div
+      key={transaction._id}
+      className="p-5 hover:bg-gray-50 transition-all duration-300 cursor-pointer"
+    >
+      <div className="flex items-center justify-between gap-4">
+        {/* Left side: transaction info */}
+        <div className="flex flex-col flex-1 min-w-0">
+          <h3 className="font-semibold text-gray-900 text-base mb-1">
+            {transaction.type.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+          </h3>
+
+          {/* Sender & Receiver Info */}
+          <div className="text-sm text-gray-500 mb-1">
+            <p>
+              <span className="font-medium text-gray-700">From:</span>{" "}
+              {transaction.senderId?.name || "N/A"}{" "}
+              <span className="text-gray-400">({transaction.senderId?.email})</span>
+            </p>
+            <p>
+              <span className="font-medium text-gray-700">To:</span>{" "}
+              {transaction.receiverId?.name || "N/A"}{" "}
+              <span className="text-gray-400">({transaction.receiverId?.email})</span>
+            </p>
+          </div>
+
+          {/* Meta message if available */}
+          {transaction.meta?.messageSender && (
+            <p className="text-sm text-gray-600 italic">
+              💬 {transaction.meta.messageSender}
+            </p>
+          )}
+
+          {/* Date + Status */}
+          <div className="flex items-center flex-wrap gap-2 mt-2 text-xs text-gray-500">
+            <span>{new Date(transaction.createdAt).toLocaleDateString()}</span>
+            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+            <span
+              className={`px-2 py-0.5 rounded-full font-medium ${
+                transaction.status === "completed"
+                  ? "bg-green-100 text-green-700"
+                  : transaction.status === "pending"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-red-100 text-red-700"
+              }`}
+            >
+              {transaction.status}
+            </span>
+            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+            <span className="text-gray-400">ID: {transaction._id.slice(-6)}</span>
+          </div>
+        </div>
+
+        {/* Right side: Amount */}
+        <div className="text-right ml-4 flex-shrink-0">
+          <div
+            className={`text-xl font-bold ${
+              transaction.amount > 0 ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {transaction.amount > 0 ? "+" : "-"}
+            {transaction.currency || "BDT"} {Math.abs(transaction.amount).toFixed(2)}
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
           )}
         </div>
 
