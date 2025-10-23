@@ -36,17 +36,13 @@ export default function DigitalWalletDashboard({ user }) {
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState([]);
   const [transactions, setTransactions] = useState([]);
-  console.log(transactions)
-
-
-
   // ✅ API Data State
-  const [summary, setSummary] = useState({
-    totalBalance: 0,
-    totalIncome: 0,
-    totalExpenses: 0,
-    totalSaved: 0
-  });
+const [summary, setSummary] = useState({
+  totalBalance: 0,
+  totalIncome: 0,
+  totalExpenses: 0,
+  totalSaved: 0,
+});
 
 
 
@@ -122,25 +118,42 @@ export default function DigitalWalletDashboard({ user }) {
   }, [axiosSecure, users?.accessToken]);
 
   // ✅ Fetch Transaction Summary
-  useEffect(() => {
-    if (!users?.accessToken) return;
-    const fetchSummary = async () => {
-      setLoading(true);
-      try {
-        const token = localStorage.getItem('token'); // ensure JWT is stored
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/summary`, {
-          headers: { Authorization: `Bearer ${users?.accessToken}` },
-        });
-        setSummary(res.data);
-      } catch (error) {
-        console.error('Failed to fetch summary:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  if (!users?.accessToken) return;
+  
+  const fetchSummary = async () => {
+    setLoading(true);
+    try {
+      const res = await axiosSecure.get(`/api/transactions/summary`);
+      setSummary(res.data.data); // ✅ ঠিক করা হয়েছে
+    } catch (error) {
+      console.error('Failed to fetch summary:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchSummary();
-  }, [users?.accessToken]);
+  fetchSummary();
+}, [users?.accessToken]);
+
+
+useEffect(() => {
+  if (!user?.accessToken) return;
+
+  const fetchRecentTransactions = async () => {
+    try {
+      setLoadingRecent(true);
+      const { data } = await axiosSecure.get(`/api/transactions/recent`);
+      setRecentTransactions(data.transactions || []);
+    } catch (error) {
+      console.error("Failed to fetch recent transactions:", error.response?.data || error.message);
+    } finally {
+      setLoadingRecent(false);
+    }
+  };
+
+  fetchRecentTransactions();
+}, [user?.accessToken, axiosSecure]);
 
   return (
     <div className="min-h-screen bg-gray-50 p-3 sm:p-4 md:p-6 lg:p-8">
