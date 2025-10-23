@@ -161,7 +161,7 @@ export default function Navbar() {
                       className="text-gray-700 group-hover:text-primary transition-colors duration-300 group-hover:animate-swing" 
                     />
                     {notificationCount > 0 && (
-                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-red-500 to-pink-600 text-white text-xs font-bold rounded-full flex items-center justify-center animate-pulse shadow-lg">
+                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs font-bold rounded-full flex items-center justify-center animate-pulse shadow-lg">
                         {notificationCount > 9 ? '9+' : notificationCount}
                       </span>
                     )}
@@ -176,7 +176,7 @@ export default function Navbar() {
                     }`}
                   >
                     {/* Modal Header */}
-                    <div className="bg-purple-400 px-6 py-4 flex items-center justify-between">
+                    <div className="bg-primary px-6 py-4 flex items-center justify-between">
                       <div>
                         <h3 className="text-white font-bold text-lg">Notifications</h3>
                         <p className="text-indigo-100 text-xs">{notificationCount} unread messages</p>
@@ -284,7 +284,7 @@ export default function Navbar() {
                     }`}
                   >
                     {/* Dropdown Header */}
-                    <div className="bg-purple-400   px-6 py-4">
+                    <div className="bg-primary  px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-full bg-white p-0.5 ring-2 ring-white/50">
                           <Image
@@ -313,7 +313,7 @@ export default function Navbar() {
                         onClick={() => setOpenDropdown(false)}
                         className="group flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-purple-100 rounded-xl transition-all duration-200 transform hover:translate-x-1"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-purple-400 flex items-center justify-center text-white text-sm font-semibold group-hover:scale-110 transition-transform duration-200">
+                        <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white text-sm font-semibold group-hover:scale-110 transition-transform duration-200">
                           <CreditCard size={16} />
                         </div>
                         <span className="font-medium text-sm">Dashboard</span>
@@ -377,7 +377,7 @@ export default function Navbar() {
                   className="text-gray-700" 
                 />
                 {notificationCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">
                     {notificationCount > 9 ? '9+' : notificationCount}
                   </span>
                 )}
@@ -391,7 +391,7 @@ export default function Navbar() {
                   e.stopPropagation();
                   setOpenDropdown(!openDropdown);
                 }}
-                className="relative bg-gradient-to-br from-purple-400 to-purple-500 rounded-full p-0.5 shadow-md"
+                className="relative bg-primary rounded-full p-0.5 shadow-md"
               >
                 <div className="w-8 h-8 rounded-full bg-white p-0.5 overflow-hidden">
                   <Image
@@ -411,13 +411,13 @@ export default function Navbar() {
 
         {/* Mobile Notification Modal */}
         {openNotifications && (
-          <div className="md:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 animate-fadeIn">
+          <div className="md:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-end sm:items-center justify-center p-5 animate-fadeIn">
             <div 
               className="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-md max-h-[80vh] flex flex-col animate-slideUp"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="bg-gradient-to-br from-indigo-500 to-purple-600 px-6 py-5 flex items-center justify-between rounded-t-3xl sm:rounded-t-3xl">
+              <div className="bg-primary px-6 py-5 flex items-center justify-between rounded-t-3xl sm:rounded-t-3xl">
                 <div>
                   <h3 className="text-white font-bold text-lg">Notifications</h3>
                   <p className="text-indigo-100 text-xs">{notificationCount} unread messages</p>
@@ -502,7 +502,7 @@ export default function Navbar() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Dropdown Header */}
-              <div className="bg-gradient-to-br from-purple-500 to-purple-600 px-6 py-5 rounded-t-3xl sm:rounded-t-3xl">
+              <div className="bg-primary px-6 py-5 rounded-t-3xl sm:rounded-t-3xl">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-white font-bold text-lg">Account</h3>
                   <button 
@@ -512,7 +512,7 @@ export default function Navbar() {
                     <X size={20} />
                   </button>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 ">
                   <div className="w-16 h-16 rounded-full bg-white p-0.5 ring-2 ring-white/50">
                     <Image
                       src={session.user?.image || "/user.jpg"}
@@ -540,7 +540,7 @@ export default function Navbar() {
                   onClick={() => setOpenDropdown(false)}
                   className="flex items-center gap-3 px-4 py-4 text-gray-700 active:bg-gradient-to-r active:from-purple-50 active:to-purple-100 rounded-xl transition-all duration-200"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-purple-400 flex items-center justify-center text-white">
+                  <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
                     <CreditCard size={20} />
                   </div>
                   <span className="font-medium">Dashboard</span>
@@ -612,35 +612,6 @@ export default function Navbar() {
                 </>
               )}
             </div>
-
-            {/* Mobile Dashboard & Logout for logged-in users */}
-            {session && (
-              <div className="space-y-2 pt-2">
-                <Link
-                  href="/dashboard"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 mx-2 text-gray-700 bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl transition-all duration-200"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-purple-400 flex items-center justify-center text-white">
-                    <CreditCard size={20} />
-                  </div>
-                  <span className="font-medium">Dashboard</span>
-                </Link>
-
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    handleLogout();
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 mx-2 text-red-600 bg-red-50 rounded-xl transition-all duration-200"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white">
-                    <IoMdLogOut size={22} />
-                  </div>
-                  <span className="font-medium">Logout</span>
-                </button>
-              </div>
-            )}
           </div>
         )}
       </div>
