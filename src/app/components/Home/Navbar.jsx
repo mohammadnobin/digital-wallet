@@ -359,7 +359,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
+          <div
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden text-gray-700 flex items-center gap-3"
           >
@@ -406,7 +406,7 @@ export default function Navbar() {
             )}
 
             {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </div>
         </div>
 
         {/* Mobile Notification Modal */}

@@ -6,15 +6,14 @@ import useAxiosSecure from '@/hooks/useAxiosSecure';
 
 export default function TransactionHistory() {
   const user = useUser();
-  console.log(user?.accessToken);
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
   const [timeFilter, setTimeFilter] = useState('All Time');
   const axiosSecure = useAxiosSecure();
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
   console.log(transactions);
+  const [loading, setLoading] = useState(true);
 
 useEffect(() => {
   if (!user?.accessToken) return; 
