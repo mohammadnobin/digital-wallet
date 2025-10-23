@@ -13,7 +13,6 @@ export const middleware = async (req) => {
     secret: process.env.NEXTAUTH_SECRET,
     secureCookie: process.env.NODE_ENV === "production",
   });
-  console.log(token);
 
   if (!token) {
     return NextResponse.redirect(new URL(`/login?redirect=${pathname}`, req.nextUrl.origin));
