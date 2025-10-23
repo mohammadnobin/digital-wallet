@@ -11,57 +11,7 @@ const LoginFrom = () => {
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
 
-  //   const form = e.target;
-  //   const formData = new FormData(form);
-  //   const formObj = Object.fromEntries(formData.entries());
-  //   const { email, password } = formObj;
-
-  //   // Simple validation
-  //   if (!email || !password) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Error",
-  //       text: "Please fill all required fields",
-  //     });
-  //     return;
-  //   }
-
-  //   setIsLoading(true);
-
-  //   try {
-  //     const response = await signIn("credentials", {
-  //       email,
-  //       password,
-  //       redirect: true,
-  //       callbackUrl: redirect ? redirect : "/",
-  //     });
-
-  //     if (response.ok) {
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Login Successful",
-  //         text: "Welcome back!",
-  //       });
-  //     } else {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Login Failed",
-  //         text: response.error || "Please check your credentials",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Oops...",
-  //       text: "An error occurred while signing in.",
-  //     });
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,7 +67,7 @@ const LoginFrom = () => {
             name="email"
             type="email"
             placeholder="Enter your email address"
-            className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
+            className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500"
           />
         </div>
       </div>
@@ -136,7 +86,7 @@ const LoginFrom = () => {
             name="password"
             type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
-            className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
+            className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pritext-primary text-gray-900 placeholder-gray-500"
           />
 
           <button
@@ -159,13 +109,13 @@ const LoginFrom = () => {
         <label className="flex items-center space-x-2">
           <input
             type="checkbox"
-            className="h-4 w-4 text-blue-600 cursor-pointer focus:ring-blue-500 border-gray-300 rounded"
+            className="h-4 w-4 textprimary cursor-pointer focus:ring-primary border-gray-300 rounded"
           />
           <span className="text-sm text-gray-700">Remember me</span>
         </label>
         <Link
           href="/forgot-password"
-          className="text-sm font-medium text-blue-600 hover:text-blue-500"
+          className="text-sm font-medium text-primary hover:text-primary"
         >
           Forgot password?
         </Link>
@@ -175,10 +125,10 @@ const LoginFrom = () => {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full flex justify-center cursor-pointer items-center py-3 px-4 rounded-xl text-white font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full flex justify-center cursor-pointer items-center py-3 px-4 rounded-xl text-white font-semibold bg-primary hover:from-primary/70  hover:to-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? (
-          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-5 h-5 border-2 border-primary rounded-full animate-spin"></div>
         ) : (
           <>
             Sign In <ArrowRight className="ml-2 h-4 w-4" />

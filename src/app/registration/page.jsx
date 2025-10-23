@@ -1,7 +1,7 @@
 import React from "react";
 import RegistationsFrom from "./components/RegistationsFrom";
 import Link from "next/link";
-import { Wallet } from "lucide-react";
+import { CreditCard, Wallet } from "lucide-react";
 
 const page = () => {
   return (
@@ -11,8 +11,8 @@ const page = () => {
         <div className="text-center">
           <div className="flex justify-center mb-6">
             <Link href="/">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-2xl shadow-lg">
-                <Wallet className="h-10 w-10 text-white" />
+              <div className="bg-primary p-4 rounded-2xl shadow-lg">
+                <CreditCard className="h-10 w-10 text-white" />
               </div>
             </Link>
           </div>
@@ -24,8 +24,9 @@ const page = () => {
           </p>
         </div>
         <RegistationsFrom />
+       
+        </div>
       </div>
-    </div>
   );
 };
 
