@@ -1,6 +1,5 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import {
   CreditCard, Send, Download, Scan, Split, Eye, EyeOff, ArrowRight,
   Users,
@@ -136,24 +135,6 @@ useEffect(() => {
   fetchSummary();
 }, [users?.accessToken]);
 
-
-useEffect(() => {
-  if (!user?.accessToken) return;
-
-  const fetchRecentTransactions = async () => {
-    try {
-      setLoadingRecent(true);
-      const { data } = await axiosSecure.get(`/api/transactions/recent`);
-      setRecentTransactions(data.transactions || []);
-    } catch (error) {
-      console.error("Failed to fetch recent transactions:", error.response?.data || error.message);
-    } finally {
-      setLoadingRecent(false);
-    }
-  };
-
-  fetchRecentTransactions();
-}, [user?.accessToken, axiosSecure]);
 
   return (
     <div className="min-h-screen bg-gray-50 p-3 sm:p-4 md:p-6 lg:p-8">
