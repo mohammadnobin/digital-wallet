@@ -143,27 +143,6 @@ if (searchTerm) {
           ) : filteredTransactions.length === 0 ? (
             <div className="p-12 text-center text-gray-500">No transactions found</div>
           ) : (
-            // <div className="divide-y divide-gray-200">
-            //   {filteredTransactions.map((transaction) => (
-            //     <div key={transaction._id} className="p-6 hover:bg-gray-50 transition-colors cursor-pointer flex justify-between">
-            //       <div className="flex items-center space-x-4">
-            //         {getTypeIcon(transaction.type)}
-            //         <div>
-            //           <h3 className="text-lg font-semibold">{getTypeLabel(transaction.type)}</h3>
-            //           <p className="text-gray-600">{transaction.message}</p>
-            //           <span className="text-sm text-gray-500">{formatDate(transaction.createdAt)}</span>
-            //         </div>
-            //       </div>
-            //       <div className="text-right">
-            //         <div className={`text-xl font-bold ${transaction.type.includes('received') ? 'text-green-600' : 'text-red-600'}`}>
-            //           {transaction.type.includes('received') ? '+' : '-'}{transaction.amount} {transaction.currency}
-            //         </div>
-            //         {getStatusIcon(transaction.status)}
-            //       </div>
-            //     </div>
-            //   ))}
-            // </div>
-
             <div className="divide-y divide-gray-100">
   {transactions.map((transaction) => (
     <div

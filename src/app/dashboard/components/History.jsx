@@ -12,7 +12,7 @@
 //   const [timeFilter, setTimeFilter] = useState('All Time');
 //   const axiosSecure = useAxiosSecure();
 //   const [transactions, setTransactions] = useState([]);
-
+//   console.log(transactions);
 //   const [loading, setLoading] = useState(true);
 
 // useEffect(() => {
@@ -202,6 +202,7 @@
 //   );
 // }
 
+
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Search, TrendingDown, TrendingUp, Wallet, Download, FileSpreadsheet } from 'lucide-react';
@@ -361,98 +362,111 @@ export default function TransactionHistory() {
           <div className="p-5 border-b border-gray-100">
             <h2 className="text-lg font-semibold text-gray-900">Transactions ({total})</h2>
           </div>
-
-          <div className="divide-y divide-gray-100">
+          
+          {/* <div className="divide-y divide-gray-100">
             {transactions.map((transaction) => (
-              <div
-                key={transaction._id}
-                className="p-5 hover:bg-gray-50 transition-all duration-300 cursor-pointer"
+              <div 
+                key={transaction._id} 
+                className="p-5 hover:bg-gray-50 transition-colors cursor-pointer"
               >
-                <div className="flex items-center justify-between gap-4">
-                  {/* Left side: transaction info */}
-                  <div className="flex flex-col flex-1 min-w-0">
-                    <h3 className="font-semibold text-gray-900 text-base mb-1">
-                      {transaction.type.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
-                    </h3>
-
-                    {/* Sender & Receiver Info */}
-                    <div className="text-sm text-gray-500 mb-1">
-                      <p>
-                        <span className="font-medium text-gray-700">From:</span>{" "}
-                        {transaction.senderId?.name || "N/A"}{" "}
-                        <span className="text-gray-400">({transaction.senderId?.email})</span>
-                      </p>
-                      <p>
-                        <span className="font-medium text-gray-700">To:</span>{" "}
-                        {transaction.receiverId?.name || "N/A"}{" "}
-                        <span className="text-gray-400">({transaction.receiverId?.email})</span>
-                      </p>
-                    </div>
-
-                    {/* Meta message if available */}
-                    {transaction.meta?.messageSender && (
-                      <p className="text-sm text-gray-600 italic">
-                        💬 {transaction.meta.messageSender}
-                      </p>
-                    )}
-
-                    {/* Date + Status */}
-                    <div className="flex items-center flex-wrap gap-2 mt-2 text-xs text-gray-500">
-                      <span>{new Date(transaction.createdAt).toLocaleDateString()}</span>
-                      <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                      <span
-                        className={`px-2 py-0.5 rounded-full font-medium ${
-                          transaction.status === "completed"
-                            ? "bg-green-100 text-green-700"
-                            : transaction.status === "pending"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : "bg-red-100 text-red-700"
-                        }`}
-                      >
-                        {transaction.status}
-                      </span>
-                      <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                      <span className="text-gray-400">ID: {transaction._id.slice(-6)}</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4 flex-1">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-gray-900 mb-1">
+                        {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
+                      </h3>
+                      <div className="flex items-center gap-3 text-sm text-gray-500">
+                        <span>{new Date(transaction.createdAt).toLocaleDateString()}</span>
+                        <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                        <span className="px-2 py-0.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                          {transaction.status}
+                        </span>
+                        <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                        <span className="text-xs">{transaction._id.slice(-6)}</span>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Right side: Amount */}
                   <div className="text-right ml-4 flex-shrink-0">
-                    {(() => {
-                      let isPositive = false;
-                      let color = "text-gray-800";
-
-                      // ✅ Determine sign & color by type
-                      switch (transaction.type) {
-                        case "add_money":
-                        case "request_accepted": // You received money
-                          isPositive = true;
-                          color = "text-green-600";
-                          break;
-
-                        case "cashout":
-                        case "request_money": // You sent or requested money
-                          isPositive = false;
-                          color = "text-red-600";
-                          break;
-
-                        default:
-                          isPositive = transaction.amount > 0;
-                          color = isPositive ? "text-green-600" : "text-red-600";
-                      }
-
-                      return (
-                        <div className={`text-xl font-bold ${color}`}>
-                          {isPositive ? "+" : "-"}
-                          {transaction.currency || "BDT"} {Math.abs(transaction.amount).toFixed(2)}
-                        </div>
-                      );
-                    })()}
+                    <div className={`text-xl font-bold ${transaction.amount > 0 ? 'text-green-600' : 'text-gray-900'}`}>
+                      {transaction.amount > 0 ? '+' : ''}${Math.abs(transaction.amount).toFixed(2)}
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
+          </div> */}
+
+
+<div className="divide-y divide-gray-100">
+  {transactions.map((transaction) => (
+    <div
+      key={transaction._id}
+      className="p-5 hover:bg-gray-50 transition-all duration-300 cursor-pointer"
+    >
+      <div className="flex items-center justify-between gap-4">
+        {/* Left side: transaction info */}
+        <div className="flex flex-col flex-1 min-w-0">
+          <h3 className="font-semibold text-gray-900 text-base mb-1">
+            {transaction.type.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+          </h3>
+
+          {/* Sender & Receiver Info */}
+          <div className="text-sm text-gray-500 mb-1">
+            <p>
+              <span className="font-medium text-gray-700">From:</span>{" "}
+              {transaction.senderId?.name || "N/A"}{" "}
+              <span className="text-gray-400">({transaction.senderId?.email})</span>
+            </p>
+            <p>
+              <span className="font-medium text-gray-700">To:</span>{" "}
+              {transaction.receiverId?.name || "N/A"}{" "}
+              <span className="text-gray-400">({transaction.receiverId?.email})</span>
+            </p>
           </div>
+
+          {/* Meta message if available */}
+          {transaction.meta?.messageSender && (
+            <p className="text-sm text-gray-600 italic">
+              💬 {transaction.meta.messageSender}
+            </p>
+          )}
+
+          {/* Date + Status */}
+          <div className="flex items-center flex-wrap gap-2 mt-2 text-xs text-gray-500">
+            <span>{new Date(transaction.createdAt).toLocaleDateString()}</span>
+            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+            <span
+              className={`px-2 py-0.5 rounded-full font-medium ${
+                transaction.status === "completed"
+                  ? "bg-green-100 text-green-700"
+                  : transaction.status === "pending"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-red-100 text-red-700"
+              }`}
+            >
+              {transaction.status}
+            </span>
+            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+            <span className="text-gray-400">ID: {transaction._id.slice(-6)}</span>
+          </div>
+        </div>
+
+        {/* Right side: Amount */}
+        <div className="text-right ml-4 flex-shrink-0">
+          <div
+            className={`text-xl font-bold ${
+              transaction.amount > 0 ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {transaction.amount > 0 ? "+" : "-"}
+            {transaction.currency || "BDT"} {Math.abs(transaction.amount).toFixed(2)}
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
 
           {/* Pagination */}
           <div className="p-5 border-t border-gray-100 bg-gray-50 flex items-center justify-center gap-3">
@@ -475,7 +489,8 @@ export default function TransactionHistory() {
 
           {/* Export Buttons */}
           <div className="p-5 border-t border-gray-100 bg-gray-50 flex items-center justify-center gap-4">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-colors shadow-sm">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium
+            flex items-center gap-2 transition-colors shadow-sm">
               <Download size={18} />
               Export PDF
             </button>
