@@ -12,6 +12,12 @@ import {
   TrendingUp,
   CreditCard,
   UserPlus,
+  Bell,
+  FileText,
+  Wallet,
+  ShieldCheck,
+  Database,
+  ArrowUpRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import {
@@ -25,36 +31,16 @@ import {
   Bar,
 } from "recharts";
 
+// 💜 Theme Colors
+const COLORS = {
+  primary: "#5f4a94",
+  secondary: "#f5f2f9",
+  text: "#1f1f1f",
+  border: "#e5e7eb",
+};
+
 export default function AdminDashboard() {
-  const [activePage, setActivePage] = useState("statistics");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-  const pages = [
-    { id: "statistics", label: "Statistics", icon: Activity },
-    { id: "users", label: "Users", icon: Users },
-    { id: "payments", label: "Payments", icon: DollarSign },
-    { id: "reports", label: "Reports", icon: BarChart3 },
-    { id: "settings", label: "Settings", icon: Settings },
-  ];
-
-  // Demo data
-  const users = [
-    { id: 1, name: "John Doe", email: "john@example.com", role: "Member" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "Admin" },
-    { id: 3, name: "Michael Lee", email: "michael@example.com", role: "Member" },
-  ];
-
-  const payments = [
-    { id: 1, user: "John Doe", amount: "$120", status: "Paid" },
-    { id: 2, user: "Jane Smith", amount: "$90", status: "Pending" },
-    { id: 3, user: "Michael Lee", amount: "$150", status: "Paid" },
-  ];
-
-  const reports = [
-    { id: 1, title: "Monthly Income", value: "$2,400", change: "+12%" },
-    { id: 2, title: "New Users", value: "34", change: "+8%" },
-    { id: 3, title: "Pending Payments", value: "5", change: "-3%" },
-  ];
+  const [activePage, setActivePage] = useState("overview");
 
   const chartData = [
     { month: "Jan", revenue: 4000, users: 50 },
@@ -65,175 +51,218 @@ export default function AdminDashboard() {
     { month: "Jun", revenue: 8000, users: 100 },
   ];
 
-  const renderStatistics = () => (
-    <motion.div
-      key="stats"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <h2 className="text-2xl font-semibold mb-6">Statistics Overview</h2>
+  const latestUsers = [
+    { id: 1, name: "John Doe", email: "john@example.com", joined: "2d ago" },
+    { id: 2, name: "Jane Smith", email: "jane@example.com", joined: "5d ago" },
+    { id: 3, name: "Alex Kim", email: "alex@example.com", joined: "1w ago" },
+  ];
 
-      {/* Stat Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <motion.div whileHover={{ scale: 1.05 }} className="bg-blue-50 p-6 rounded-xl shadow-sm">
-          <TrendingUp className="w-8 h-8 text-blue-600 mb-2" />
-          <h3 className="text-lg font-medium">Total Revenue</h3>
-          <p className="text-2xl font-bold mt-1">$12,540</p>
-          <p className="text-sm text-gray-500 mt-1">+15% from last month</p>
-        </motion.div>
+  const recentTransactions = [
+    { id: 1, name: "John Doe", type: "Deposit", amount: "$250", status: "Completed" },
+    { id: 2, name: "Jane Smith", type: "Withdrawal", amount: "$120", status: "Pending" },
+    { id: 3, name: "Alex Kim", type: "Transfer", amount: "$400", status: "Completed" },
+  ];
 
-        <motion.div whileHover={{ scale: 1.05 }} className="bg-green-50 p-6 rounded-xl shadow-sm">
-          <UserPlus className="w-8 h-8 text-green-600 mb-2" />
-          <h3 className="text-lg font-medium">Active Users</h3>
-          <p className="text-2xl font-bold mt-1">342</p>
-          <p className="text-sm text-gray-500 mt-1">+24 new this week</p>
-        </motion.div>
+  const activities = [
+    "New user registered: Emily Rose",
+    "Admin updated system settings",
+    "Payment processed successfully",
+    "User John Doe upgraded to Premium",
+  ];
 
-        <motion.div whileHover={{ scale: 1.05 }} className="bg-yellow-50 p-6 rounded-xl shadow-sm">
-          <CreditCard className="w-8 h-8 text-yellow-600 mb-2" />
-          <h3 className="text-lg font-medium">Pending Payments</h3>
-          <p className="text-2xl font-bold mt-1">8</p>
-          <p className="text-sm text-gray-500 mt-1">-2 from last week</p>
-        </motion.div>
-      </div>
+  const menuItems = [
+    { id: "overview", label: "Overview", icon: Activity },
+    { id: "users", label: "Users", icon: Users },
+    { id: "transactions", label: "Transactions", icon: DollarSign },
+    { id: "reports", label: "Reports", icon: FileText },
+    { id: "settings", label: "Settings", icon: Settings },
+  ];
 
-      {/* Revenue & Users Chart */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h3 className="text-lg font-semibold mb-4">Revenue Growth</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={chartData}>
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={3} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h3 className="text-lg font-semibold mb-4">User Growth</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartData}>
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="users" fill="#10b981" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-    </motion.div>
-  );
-
+  // --- Render Section Based on Active Page ---
   const renderContent = () => {
     switch (activePage) {
-      case "statistics":
-        return renderStatistics();
-      case "users":
+      case "overview":
         return (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2 className="text-2xl font-semibold mb-6">User Management</h2>
-            <table className="w-full bg-white rounded-xl shadow-sm">
-              <thead className="bg-gray-100 text-gray-700">
-                <tr>
-                  <th className="p-3 text-left">Name</th>
-                  <th className="p-3 text-left">Email</th>
-                  <th className="p-3 text-left">Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((u) => (
-                  <tr key={u.id} className="border-t hover:bg-gray-50">
-                    <td className="p-3">{u.name}</td>
-                    <td className="p-3">{u.email}</td>
-                    <td className="p-3">{u.role}</td>
-                  </tr>
+          <motion.div
+            key="overview"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 className="text-2xl font-semibold mb-6">System Overview</h2>
+
+            {/* Top Stat Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+              <StatCard icon={Wallet} title="Total Revenue" value="$24,800" color="#5f4a94" change="+12%" />
+              <StatCard icon={UserPlus} title="New Users" value="185" color="#10b981" change="+9%" />
+              <StatCard icon={CreditCard} title="Transactions" value="1,240" color="#3b82f6" change="+5%" />
+              <StatCard icon={ShieldCheck} title="Active Admins" value="5" color="#f59e0b" change="Stable" />
+            </div>
+
+            {/* Charts Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <ChartCard title="Revenue Growth">
+                <ResponsiveContainer width="100%" height={250}>
+                  <LineChart data={chartData}>
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="revenue" stroke={COLORS.primary} strokeWidth={3} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </ChartCard>
+
+              <ChartCard title="User Growth">
+                <ResponsiveContainer width="100%" height={250}>
+                  <BarChart data={chartData}>
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Bar dataKey="users" fill={COLORS.primary} radius={[6, 6, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartCard>
+            </div>
+
+            {/* Latest Users & Recent Transactions */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <DataTable title="Latest Users" data={latestUsers} columns={["Name", "Email", "Joined"]} />
+              <DataTable
+                title="Recent Transactions"
+                data={recentTransactions}
+                columns={["Name", "Type", "Amount", "Status"]}
+              />
+            </div>
+
+            {/* Activity Feed */}
+            <div className="mt-8 bg-white p-6 rounded-xl shadow-sm">
+              <h3 className="text-lg font-semibold mb-4 text-[#5f4a94]">Recent Activity</h3>
+              <ul className="space-y-3 text-gray-700">
+                {activities.map((a, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <ArrowUpRight className="w-4 h-4 text-[#5f4a94]" />
+                    {a}
+                  </li>
                 ))}
-              </tbody>
-            </table>
-          </motion.div>
-        );
-      case "payments":
-        return (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2 className="text-2xl font-semibold mb-6">Payment Overview</h2>
-            <table className="w-full bg-white rounded-xl shadow-sm">
-              <thead className="bg-gray-100 text-gray-700">
-                <tr>
-                  <th className="p-3 text-left">User</th>
-                  <th className="p-3 text-left">Amount</th>
-                  <th className="p-3 text-left">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {payments.map((p) => (
-                  <tr key={p.id} className="border-t hover:bg-gray-50">
-                    <td className="p-3">{p.user}</td>
-                    <td className="p-3">{p.amount}</td>
-                    <td
-                      className={`p-3 font-medium ${
-                        p.status === "Paid" ? "text-green-600" : "text-yellow-600"
-                      }`}
-                    >
-                      {p.status}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
-        );
-      case "reports":
-        return (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2 className="text-2xl font-semibold mb-6">Reports & Analytics</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {reports.map((r) => (
-                <div key={r.id} className="bg-white p-6 rounded-xl shadow-sm">
-                  <h3 className="text-lg font-semibold">{r.title}</h3>
-                  <p className="text-2xl font-bold mt-2">{r.value}</p>
-                  <p
-                    className={`mt-1 text-sm font-medium ${
-                      r.change.startsWith("+") ? "text-green-600" : "text-red-600"
-                    }`}
-                  >
-                    {r.change} from last month
-                  </p>
-                </div>
-              ))}
+              </ul>
             </div>
           </motion.div>
         );
+
+      case "users":
+        return (
+          <SectionPage
+            title="User Management"
+            description="Manage user roles, view profiles, and control access permissions."
+          />
+        );
+
+      case "transactions":
+        return (
+          <SectionPage
+            title="Transactions"
+            description="Review and manage all transaction records and logs."
+          />
+        );
+
+      case "reports":
+        return (
+          <SectionPage
+            title="Reports & Analytics"
+            description="Generate and export business performance reports."
+          />
+        );
+
       case "settings":
         return (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2 className="text-2xl font-semibold mb-6">System Settings</h2>
-            <p className="text-gray-600">
-              Configure user roles, update site information, or manage security settings.
-            </p>
-          </motion.div>
+          <SectionPage
+            title="System Settings"
+            description="Configure platform preferences and security options."
+          />
         );
+
       default:
         return null;
     }
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-100">
+    <div className="min-h-screen flex bg-[#f5f5f5]">
 
       {/* Main Content */}
-      <div className="flex-1 p-8 overflow-y-auto">
-        <header className="mb-6 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-900">
-            {activePage.charAt(0).toUpperCase() + activePage.slice(1)}
+      <main className="flex-1 p-6 md:p-10 overflow-y-auto">
+        <header className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-semibold text-[#1f1f1f]">
+            {menuItems.find((m) => m.id === activePage)?.label}
           </h1>
-          <div className="text-sm text-gray-500">Admin Dashboard</div>
+          <Bell className="w-5 h-5 text-gray-500" />
         </header>
 
-        <div className="">{renderContent()}</div>
-      </div>
+        {renderContent()}
+      </main>
     </div>
   );
 }
+
+/* ------------------ Helper Components ------------------ */
+
+const StatCard = ({ icon: Icon, title, value, color, change }) => (
+  <motion.div
+    whileHover={{ scale: 1.03 }}
+    className="bg-white p-5 rounded-xl shadow-sm border border-gray-100"
+  >
+    <div className="flex items-center justify-between">
+      <Icon className="w-6 h-6" style={{ color }} />
+      <span className="text-xs font-medium text-gray-500">{change}</span>
+    </div>
+    <h3 className="text-sm text-gray-500 mt-2">{title}</h3>
+    <p className="text-2xl font-bold mt-1 text-gray-900">{value}</p>
+  </motion.div>
+);
+
+const ChartCard = ({ title, children }) => (
+  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+    <h3 className="text-lg font-semibold mb-4 text-[#5f4a94]">{title}</h3>
+    {children}
+  </div>
+);
+
+const DataTable = ({ title, data, columns }) => (
+  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+    <h3 className="text-lg font-semibold mb-4 text-[#5f4a94]">{title}</h3>
+    <table className="w-full text-sm text-gray-700">
+      <thead className="bg-[#f5f2f9] text-[#5f4a94]">
+        <tr>
+          {columns.map((col) => (
+            <th key={col} className="p-3 text-left font-medium">
+              {col}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((row, i) => (
+          <tr key={i} className="border-t hover:bg-gray-50">
+            {Object.values(row)
+              .slice(1)
+              .map((val, j) => (
+                <td key={j} className="p-3">
+                  {val}
+                </td>
+              ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
+const SectionPage = ({ title, description }) => (
+  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+    <h2 className="text-2xl font-semibold mb-4 text-[#5f4a94]">{title}</h2>
+    <p className="text-gray-600 mb-6">{description}</p>
+    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-gray-600">
+      Coming soon...
+    </div>
+  </motion.div>
+);
