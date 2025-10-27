@@ -222,55 +222,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen flex bg-gray-100">
-      {/* Sidebar */}
-      <div
-        className={`${
-          isSidebarOpen ? "w-64" : "w-20"
-        } bg-white border-r border-gray-200 transition-all duration-300 flex flex-col`}
-      >
-        <div className="flex items-center justify-between p-4 border-b">
-          <h1
-            className={`text-xl font-bold text-blue-600 transition-all duration-300 ${
-              isSidebarOpen ? "opacity-100" : "opacity-0 w-0"
-            }`}
-          >
-            Admin Panel
-          </h1>
-          <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 rounded-md hover:bg-gray-100"
-          >
-            <Menu className="w-5 h-5 text-gray-600" />
-          </button>
-        </div>
-
-        <nav className="flex-1 p-3 space-y-1">
-          {pages.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                onClick={() => setActivePage(item.id)}
-                className={`flex items-center w-full gap-3 px-4 py-2 rounded-lg transition-all ${
-                  activePage === item.id
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`}
-              >
-                <Icon className="w-5 h-5" />
-                {isSidebarOpen && <span className="text-sm font-medium">{item.label}</span>}
-              </button>
-            );
-          })}
-        </nav>
-
-        <div className="p-3 border-t">
-          <button className="flex items-center gap-3 w-full px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-            <LogOut className="w-5 h-5" />
-            {isSidebarOpen && <span className="text-sm font-medium">Logout</span>}
-          </button>
-        </div>
-      </div>
 
       {/* Main Content */}
       <div className="flex-1 p-8 overflow-y-auto">
