@@ -1,8 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Search, TrendingDown, TrendingUp, Wallet, Download, FileSpreadsheet } from 'lucide-react';
+import { Search, TrendingDown, TrendingUp, Wallet, Download, FileSpreadsheet, ArrowLeft } from 'lucide-react';
 import useUser from '@/hooks/useUser';
 import useAxiosSecure from '@/hooks/useAxiosSecure';
+import Link from 'next/link';
 
 export default function TransactionHistory() {
   const user = useUser();
@@ -55,6 +56,16 @@ export default function TransactionHistory() {
 
   return (
     <div className="min-h-screen bg-gray-50 rounded-2xl p-4 md:p-8 hover:shadow-2xl transition-all duration-500">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+              <Link href="/dashboard">
+                <button
+                  className="flex items-center gap-2 px-4 py-2 cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-200 text-gray-700 hover:text-primary mb-10"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                  Back to Dashboard
+                </button>
+              </Link>
+            </div>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
