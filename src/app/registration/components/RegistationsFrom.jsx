@@ -1,0 +1,257 @@
+"use client";
+
+import Link from "next/link";
+
+import {
+  Eye,
+  EyeOff,
+  Wallet,
+  Lock,
+  Mail,
+  User,
+  Phone,
+  ArrowRight,
+} from "lucide-react";
+import React, { useState } from "react";
+import { signIn } from "next-auth/react";
+import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import Swal from "sweetalert2";
+const RegistationsFrom = () => {
+  const [showPassword, setShowPassword] = useState(false);
+    const searchParams = useSearchParams();
+    const redirect = searchParams.get("redirect");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+    const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const formData = new FormData(form);
+  const formObj = Object.fromEntries(formData.entries());
+  const { firstName, lastName, email, password, phone } = formObj;
+  const name = `${firstName} ${lastName}`;
+
+  setIsLoading(true);
+
+
+  try {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`, {
+      name,
+      email,
+      password,
+      phone
+    });
+    if (res.data.message === "User created successfully") {
+
+    //       const loginRes = await axios.post(
+    //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`,
+    //   { email, password },
+    //   {withCredentials: 'true'}
+    // );
+    try {
+          const response = await signIn("credentials", {
+            email,
+            password,
+            redirect: true, 
+            callbackUrl: redirect ? redirect : "/dashboard", 
+          });
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        } finally {
+          setIsLoading(false);
+        }
+    }
+  } catch (error) {
+    console.error("Signup/Login error:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: error.response?.data?.message || "Signup/Login failed",
+    });
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
+  return (
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100 space-y-6"
+      >
+        {/* Name */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              First Name
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <User className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                name="firstName"
+                className="w-full pl-12 pr-4 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
+                placeholder="First name"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Last Name
+            </label>
+            <input
+              type="text"
+              name="lastName"
+              className="w-full pl-4 pr-4 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
+              placeholder="Last name"
+              required
+            />
+          </div>
+        </div>
+
+        {/* Email */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Email
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <Mail className="h-5 w-5 text-gray-400" />
+            </div>
+            <input
+              type="email"
+              name="email"
+              className="w-full pl-12 pr-4 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
+              placeholder="Email address"
+              required
+            />
+          </div>
+        </div>
+
+        {/* Phone */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Phone
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <Phone className="h-5 w-5 text-gray-400" />
+            </div>
+            <input
+              type="tel"
+              name="phone"
+              className="w-full pl-12 pr-4 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
+              placeholder="Phone number"
+              required
+            />
+          </div>
+        </div>
+
+        {/* Password */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Password
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <Lock className="h-5 w-5 text-gray-400" />
+            </div>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              className="w-full pl-12 pr-12 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
+              placeholder="Password"
+              required
+            />
+            <button
+              type="button"
+              className="absolute inset-y-0 right-0 pr-4 flex items-center"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <EyeOff className="h-5 w-5 text-gray-400" />
+              ) : (
+                <Eye className="h-5 w-5 text-gray-400" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Confirm Password */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Confirm Password
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <Lock className="h-5 w-5 text-gray-400" />
+            </div>
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              className="w-full pl-12 pr-12 py-3 border border-primary rounded-xl focus:ring-2 focus:ring-primary "
+              placeholder="Confirm Password"
+              required
+            />
+            <button
+              type="button"
+              className="absolute inset-y-0 right-0 pr-4 flex items-center"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? (
+                <EyeOff className="h-5 w-5 text-gray-400" />
+              ) : (
+                <Eye className="h-5 w-5 text-gray-400" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Terms */}
+        <div className="flex items-start space-x-2">
+          <input
+            type="checkbox"
+            name="agreeTerms"
+            className="h-4 w-4 text-primary border-primary rounded mt-1"
+            required
+          />
+          <label className="text-sm text-gray-700">
+            I agree to the{" "}
+            <a href="#" className="text-primary">
+              Terms & Privacy
+            </a>
+          </label>
+        </div>
+
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full py-3 cursor-pointer px-4 bg-primary text-white rounded-xl font-semibold hover:from-primary hover:to-primary  disabled:opacity-50"
+        >
+          {isLoading ? "Creating..." : "Create Account"}{" "}
+          <ArrowRight className="inline ml-2 h-4 w-4" />
+        </button>
+
+        <div className="text-center text-sm text-gray-500">
+          Already have an account?{" "}
+          <Link href="/login" className="text-primary font-medium">
+            Sign In
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default RegistationsFrom;
