@@ -14,7 +14,6 @@ export default async function page() {
   const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/email?email=${encodeURIComponent(email)}`);
   const user = res.data;
   const role=res?.data?.role;
-  console.log(role);
 
 
   if (!role) {
