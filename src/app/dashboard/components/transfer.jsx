@@ -2,9 +2,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { Send, CheckCircle, Clock } from 'lucide-react';
+import { Send, CheckCircle, Clock, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
-export default function MoneyTransfer({ user,session}) {
+export default function MoneyTransfer({ user, session }) {
   const [amount, setAmount] = useState('');
   const [recipient, setRecipient] = useState('');
   const [transferSpeed, setTransferSpeed] = useState('instant');
@@ -12,10 +13,10 @@ export default function MoneyTransfer({ user,session}) {
   const [loading, setLoading] = useState(false);
   const [transfers, setTransfers] = useState([]);
   const [fetching, setFetching] = useState(false);
-        const token = session.user.accessToken;
-      if (!session || !session.user || !session.user.accessToken) {
-  return <p>Loading user data...</p>;
-}
+  const token = session.user.accessToken;
+  if (!session || !session.user || !session.user.accessToken) {
+    return <p>Loading user data...</p>;
+  }
 
   const senderEmail = user.email;
   const quickAmounts = [10, 25, 50, 100];
@@ -39,10 +40,10 @@ export default function MoneyTransfer({ user,session}) {
     }
   };
 
-useEffect(() => {
-  if (!token) return; 
-  fetchTransfers();
-}, [token]);
+  useEffect(() => {
+    if (!token) return;
+    fetchTransfers();
+  }, [token]);
 
 
   const handleSendMoney = async () => {
@@ -98,6 +99,18 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen bg-gray-50 rounded-2xl transition-all duration-500">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+        <Link href="/dashboard">
+          <button
+            className="flex items-center gap-2 px-4 py-2 cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-200 text-gray-700 hover:text-primary"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Back to Dashboard
+          </button>
+        </Link>
+
+
+      </div>
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Send Money</h1>
@@ -210,9 +223,8 @@ useEffect(() => {
           <button
             onClick={handleSendMoney}
             disabled={loading}
-            className={`w-full flex items-center justify-center gap-2 bg-primary text-white py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl ${
-              loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
-            }`}
+            className={`w-full flex items-center justify-center gap-2 bg-primary text-white py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl ${loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
+              }`}
           >
             <Send className="w-5 h-5" />
             {loading ? 'Processing...' : 'Send Money'}
@@ -264,11 +276,10 @@ useEffect(() => {
                     <p className="text-xs text-gray-500">{new Date(t.createdAt).toLocaleString()}</p>
                   </div>
                   <span
-                    className={`text-sm font-medium px-3 py-1 rounded-full ${
-                      t.status === 'completed'
+                    className={`text-sm font-medium px-3 py-1 rounded-full ${t.status === 'completed'
                         ? 'bg-green-100 text-green-700'
                         : 'bg-yellow-100 text-yellow-700'
-                    }`}
+                      }`}
                   >
                     {t.status}
                   </span>
