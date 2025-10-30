@@ -4,19 +4,14 @@ import { useState } from "react";
 import {
   Users,
   DollarSign,
-  BarChart3,
   Settings,
-  LogOut,
-  Menu,
   Activity,
-  TrendingUp,
   CreditCard,
   UserPlus,
   Bell,
   FileText,
   Wallet,
   ShieldCheck,
-  Database,
   ArrowUpRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -28,7 +23,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   BarChart,
-  Bar,
+  Bar
 } from "recharts";
 
 // 💜 Theme Colors
