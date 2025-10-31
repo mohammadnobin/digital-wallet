@@ -14,11 +14,13 @@ import {
   Trash2,
   Bell,
   X,
+  ArrowLeft,
 } from "lucide-react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import useUser from "@/hooks/useUser";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+import Link from "next/link";
 
 export default function BillsPayment() {
   const user = useUser();
@@ -173,6 +175,16 @@ export default function BillsPayment() {
 
   return (
     <div className="min-h-screen bg-gray-50 rounded-2xl p-4 md:p-8">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+        <Link href="/dashboard">
+          <button
+            className="flex items-center gap-2 px-4 py-2 cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-200 text-gray-700 hover:text-primary mb-10"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Back to Dashboard
+          </button>
+        </Link>
+      </div>
       <div className="max-w-6xl mx-auto">
         {/* === Stats Section === */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -237,11 +249,10 @@ export default function BillsPayment() {
                   <div className="text-right">
                     <div className="text-xl font-bold">${bill.amount}</div>
                     <span
-                      className={`text-xs px-2 py-1 rounded-full ${
-                        bill.status === "pending"
+                      className={`text-xs px-2 py-1 rounded-full ${bill.status === "pending"
                           ? "bg-yellow-100 text-yellow-700"
                           : "bg-red-100 text-red-700"
-                      }`}
+                        }`}
                     >
                       {bill.status}
                     </span>
@@ -255,14 +266,12 @@ export default function BillsPayment() {
                     <span>AutoPay</span>
                     <button
                       onClick={() => toggleAutoPay(bill._id, bill.autoPay)}
-                      className={`relative cursor-pointer inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                        bill.autoPay ? "bg-green-500" : "bg-gray-300"
-                      }`}
+                      className={`relative cursor-pointer inline-flex h-6 w-11 items-center rounded-full transition-colors ${bill.autoPay ? "bg-green-500" : "bg-gray-300"
+                        }`}
                     >
                       <span
-                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                          bill.autoPay ? "translate-x-6" : "translate-x-1"
-                        }`}
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${bill.autoPay ? "translate-x-6" : "translate-x-1"
+                          }`}
                       />
                     </button>
                   </div>
@@ -273,11 +282,10 @@ export default function BillsPayment() {
                   <button
                     onClick={() => handlePay(bill._id)}
                     disabled={bill.status === "paid"} // ✅ যদি paid হয়, disabled হবে
-                    className={`flex-1 cursor-pointer py-2.5 rounded-lg font-medium transition-colors ${
-                      bill.status === "paid"
+                    className={`flex-1 cursor-pointer py-2.5 rounded-lg font-medium transition-colors ${bill.status === "paid"
                         ? "bg-gray-400 text-white" // Paid হলে gray
                         : "bg-blue-600 hover:bg-blue-700 text-white" // Otherwise blue
-                    }`}
+                      }`}
                   >
                     {bill.status === "paid" ? "Paid" : "Pay Now"}{" "}
                     {/* Paid হলে text দেখাবে */}

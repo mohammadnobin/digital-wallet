@@ -3,17 +3,19 @@
 import React, { useState, useEffect } from "react";
 import {
   Home,
-  Receipt,
+  Send,
   CreditCard,
-  PieChart,
+  FileText,
+  Bot,
+  BarChart2,
   Users,
+  Wallet,
+  Settings,
+  User,
   Menu,
   X,
-  Wallet,
-  User,
-  Settings,
-  FileText,
-  BarChart2,
+  Receipt,
+  History,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -40,26 +42,26 @@ export default function Sidebar({ user }) {
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
   }, []);
-
-  // সাধারণ menu items
-  const menuItems = [
+  // ✅ Menu items for normal users
+  const userMenuItems = [
     { icon: Home, label: "Dashboard", href: "/dashboard" },
-    { icon: Receipt, label: "Transfer", href: "/dashboard/transfer" },
+    { icon: Send, label: "Transfer", href: "/dashboard/transfer" },
     { icon: CreditCard, label: "My Cards", href: "/dashboard/cards" },
-    { icon: PieChart, label: "Bills", href: "/dashboard/bills" },
-    { icon: Users, label: "History", href: "/dashboard/history" },
-    { icon: Users, label: "AI", href: "/dashboard/aiChatBot" },
+    { icon: Receipt, label: "Bills", href: "/dashboard/bills" },
+    { icon: History, label: "History", href: "/dashboard/history" },
+    { icon: Bot, label: "AI Assistant", href: "/dashboard/aiChatBot" },
   ];
 
-  // যদি user admin হয়, extra menu items যোগ করা হচ্ছে
-  if (user?.role === "admin") {
-    menuItems.push(
-      { icon: Users, label: "User Management", href: "/dashboard/userManagement" },
-      { icon: BarChart2, label: "Admin Reports", href: "/dashboard/userReports" },
-      { icon: FileText, label: "All Transactions", href: "/dashboard/allHistory" }
-    );
-  }
+  // ✅ Menu items for admins only
+  const adminMenuItems = [
+    { icon: BarChart2, label: "Admin Dashboard", href: "/dashboard" },
+    { icon: Users, label: "User Management", href: "/dashboard/userManagement" },
+    { icon: FileText, label: "Admin Reports", href: "/dashboard/userReports" },
+    { icon: Receipt, label: "All Transactions", href: "/dashboard/allHistory" },
+  ];
 
+  // ✅ Final menu based on role
+  const menuItems = user?.role === "admin" ? adminMenuItems : userMenuItems;
   return (
     <>
       {/* Mobile Top Bar (Menu button + Logo) */}
@@ -117,9 +119,8 @@ export default function Sidebar({ user }) {
             return (
               <Link key={item.label} href={item.href}>
                 <button
-                  className={`w-full flex cursor-pointer items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${
-                    isActive ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm" : "text-gray-600 hover:bg-gray-50"
-                  }`}
+                  className={`w-full flex cursor-pointer items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${isActive ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm" : "text-gray-600 hover:bg-gray-50"
+                    }`}
                 >
                   <item.icon
                     className={`w-5 h-5 flex-shrink-0 ${isActive ? "text-[#5f4a94]" : "text-gray-500"}`}
@@ -135,9 +136,8 @@ export default function Sidebar({ user }) {
         <div className="absolute bottom-12 left-0 w-full px-4">
           <Link href="/dashboard/account">
             <button
-              className={`w-full flex cursor-pointer items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${
-                pathname === "/dashboard/account" ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm" : "text-gray-600 hover:bg-gray-50"
-              }`}
+              className={`w-full flex cursor-pointer items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${pathname === "/dashboard/account" ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm" : "text-gray-600 hover:bg-gray-50"
+                }`}
             >
               <User className="w-5 h-5" />
               <span>Account</span>
@@ -146,9 +146,8 @@ export default function Sidebar({ user }) {
 
           <Link href="/dashboard/settings">
             <button
-              className={`w-full flex mt-2.5 cursor-pointer items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${
-                pathname === "/dashboard/settings" ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm" : "text-gray-600 hover:bg-gray-50"
-              }`}
+              className={`w-full flex mt-2.5 cursor-pointer items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${pathname === "/dashboard/settings" ? "bg-[#f5f2f9] text-[#5f4a94] shadow-sm" : "text-gray-600 hover:bg-gray-50"
+                }`}
             >
               <Settings className="w-5 h-5" />
               <span>Settings</span>
