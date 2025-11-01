@@ -38,23 +38,23 @@ export default function AdminDashboard() {
   const [activePage, setActivePage] = useState("overview");
 
   const chartData = [
-    { month: "Jan", revenue: 4000, users: 50 },
-    { month: "Feb", revenue: 3000, users: 60 },
-    { month: "Mar", revenue: 5000, users: 80 },
-    { month: "Apr", revenue: 7000, users: 90 },
-    { month: "May", revenue: 6000, users: 70 },
-    { month: "Jun", revenue: 8000, users: 100 },
+    { month: "Jul", revenue: 4000, users: 50 },
+    { month: "Aug", revenue: 3000, users: 60 },
+    { month: "Sep", revenue: 5000, users: 80 },
+    { month: "Oct", revenue: 7000, users: 90 },
+    { month: "Nov", revenue: 6000, users: 70 },
+    { month: "Dec", revenue: 8000, users: 100 },
   ];
 
   const latestUsers = [
-    { id: 1, name: "John Doe", email: "john@example.com", joined: "2d ago" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", joined: "5d ago" },
-    { id: 3, name: "Alex Kim", email: "alex@example.com", joined: "1w ago" },
+    { id: 1, name: "John Doe", email: "md. nobin", joined: "1d ago" },
+    { id: 2, name: "Jannatul Fardous", email: "jane@example.com", joined: "2d ago" },
+    { id: 3, name: "fahad khan", email: "najrulislamnobin@gmail.com", joined: "5w ago" },
   ];
 
   const recentTransactions = [
-    { id: 1, name: "John Doe", type: "Deposit", amount: "$250", status: "Completed" },
-    { id: 2, name: "Jane Smith", type: "Withdrawal", amount: "$120", status: "Pending" },
+    { id: 1, name: "fahad khan", type: "Deposit", amount: "$250", status: "Completed" },
+    { id: 2, name: "md. nobin", type: "Withdrawal", amount: "$120", status: "Pending" },
     { id: 3, name: "Alex Kim", type: "Transfer", amount: "$400", status: "Completed" },
   ];
 
@@ -88,9 +88,9 @@ export default function AdminDashboard() {
 
             {/* Top Stat Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-              <StatCard icon={Wallet} title="Total Revenue" value="$24,800" color="#5f4a94" change="+12%" />
-              <StatCard icon={UserPlus} title="New Users" value="185" color="#10b981" change="+9%" />
-              <StatCard icon={CreditCard} title="Transactions" value="1,240" color="#3b82f6" change="+5%" />
+              <StatCard icon={Wallet} title="Total Revenue" value="$50,800" color="#5f4a94" change="+12%" />
+              <StatCard icon={UserPlus} title="New Users" value="35" color="#10b981" change="+9%" />
+              <StatCard icon={CreditCard} title="Transactions" value="40" color="#3b82f6" change="+5%" />
               <StatCard icon={ShieldCheck} title="Active Admins" value="5" color="#f59e0b" change="Stable" />
             </div>
 
